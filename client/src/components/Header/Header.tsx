@@ -2,8 +2,9 @@ import { Icon } from '@iconify/react';
 
 function Header() {
   return (
-    <header className='p-3 max-w-5xl m-auto flex flex-col justify-center h-[3.5rem]'>
-      <div className='flex justify-between h-full items-center'>
+    <header className='py-8 h-[3.5rem] border-b flex justify-center '>
+      <div className='px-3 max-w-5xl flex  justify-between h-full items-center bg-blue-400 w-full'>
+        {/* logo */}
         <a className='h-8 w-8' href=''>
           <Icon
             className='h-10 w-10'
@@ -11,6 +12,7 @@ function Header() {
             color='#ff385c'
           />
         </a>
+        {/* nav */}
         <div className='flex items-center gap-3'>
           <a
             className='p-3 bg-custom-red text-white rounded-md outline-none flex items-center gap-2'
