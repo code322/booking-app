@@ -1,11 +1,12 @@
+import Container from '../../components/Container';
+
 function Home() {
   return (
-    <section
-      className='max-w-5xl m-auto px-3
- '
-    >
-      Home
-    </section>
+    <Container>
+      <div>
+        <h1>home</h1>
+      </div>
+    </Container>
   );
 }
 
