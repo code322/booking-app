@@ -22,7 +22,7 @@ function Header() {
           <a href=''>
             <Icon
               className='text-gray-700'
-              height={30}
+              height={40}
               icon='mdi:user-circle'
             />
           </a>
