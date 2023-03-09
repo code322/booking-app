@@ -21,6 +21,11 @@ const Register = () => {
     });
   }
 
+  function handleSubmit(e: React.SyntheticEvent) {
+    e.preventDefault();
+    console.log(input);
+  }
+
   return (
     <>
       <AuthForm
@@ -28,6 +33,7 @@ const Register = () => {
         email={input.email}
         password={input.password}
         page='register'
+        handleSubmit={handleSubmit}
       >
         <InputFields
           handleChange={handleChange}

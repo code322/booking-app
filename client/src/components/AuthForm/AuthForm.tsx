@@ -9,9 +9,10 @@ type Props = {
   email: string;
   password: string;
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleSubmit: (e: React.SyntheticEvent) => void;
 };
 const AuthForm = (props: Props) => {
-  const { page, children, email, password, handleChange } = props;
+  const { page, children, email, password, handleChange, handleSubmit } = props;
   return (
     <Container>
       <div className='flex flex-col justify-center w-full items-center h-[calc(100vh-5rem)]'>
@@ -32,7 +33,7 @@ const AuthForm = (props: Props) => {
             type='password'
             handleChange={handleChange}
           />
-          <Button title={page} />
+          <Button handleSubmit={handleSubmit} title={page} />
         </form>
         {page === 'login' ? (
           <Message page='login' message="Don't have an account yet?" />

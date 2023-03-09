@@ -10,7 +10,7 @@ function InputFields({ placeholder, type, name, value, handleChange }: Props) {
   return (
     <input
       className='p-3 border border-gray-200 text-base outline-none'
-      type={'text' || type}
+      type={type || 'text'}
       placeholder={placeholder}
       name={name}
       value={value}

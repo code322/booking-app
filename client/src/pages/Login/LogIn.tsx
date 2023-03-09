@@ -18,8 +18,11 @@ function LogIn() {
     });
   }
 
+  function handleSubmit() {}
+
   return (
     <AuthForm
+      handleSubmit={handleSubmit}
       handleChange={handleChange}
       email={input.email}
       password={input.password}
