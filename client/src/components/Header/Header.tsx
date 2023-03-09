@@ -6,13 +6,15 @@ function Header() {
     <header className='py-8 h-[3.5rem] border-b flex justify-center '>
       <div className='px-3 max-w-5xl flex  justify-between h-full items-center w-full'>
         {/* logo */}
-        <a className='h-8 w-8' href=''>
-          <Icon
-            className='h-10 w-10'
-            icon='material-symbols:location-on'
-            color='#ff385c'
-          />
-        </a>
+        <Link to='/'>
+          <a className='h-8 w-8' href=''>
+            <Icon
+              className='h-10 w-10'
+              icon='material-symbols:location-on'
+              color='#ff385c'
+            />
+          </a>
+        </Link>
         {/* nav */}
         <div className='flex items-center gap-3'>
           <Link to='/listing'>
