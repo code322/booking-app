@@ -1,5 +1,6 @@
+import AuthForm from '../../components/AuthForm/AuthForm';
 function LogIn() {
-  return <div>LogIn</div>;
+  return <AuthForm page='login' />;
 }
 
 export default LogIn;
