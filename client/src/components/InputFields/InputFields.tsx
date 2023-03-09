@@ -1,6 +1,8 @@
 type Props = {
   placeholder: string;
   type: string;
+  name: string;
+  value: string;
 };
 
 function InputFields({ placeholder, type }: Props) {

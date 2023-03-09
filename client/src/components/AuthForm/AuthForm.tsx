@@ -5,16 +5,30 @@ import Button from '../Button/Button';
 
 type Props = {
   page: string;
+  children?: JSX.Element;
+  email: string;
+  password: string;
 };
 const AuthForm = (props: Props) => {
-  const { page } = props;
+  const { page, children, email, password } = props;
   return (
     <Container>
       <div className='flex flex-col justify-center w-full items-center h-[calc(100vh-5rem)]'>
         <h1 className='text-2xl mb-5 font-bold capitalize'>{page}</h1>
         <form className='flex flex-wrap w-full flex-col gap-3 max-w-xs'>
-          <InputFields placeholder='E-mail' type='text' />
-          <InputFields placeholder='Password' type='password' />
+          {children}
+          <InputFields
+            name={'email'}
+            value={email}
+            placeholder='E-mail'
+            type='text'
+          />
+          <InputFields
+            name={'password'}
+            value={password}
+            placeholder='Password'
+            type='password'
+          />
           <Button title={page} />
         </form>
         {page === 'login' ? (
