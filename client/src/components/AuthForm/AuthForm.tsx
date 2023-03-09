@@ -8,9 +8,10 @@ type Props = {
   children?: JSX.Element;
   email: string;
   password: string;
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 const AuthForm = (props: Props) => {
-  const { page, children, email, password } = props;
+  const { page, children, email, password, handleChange } = props;
   return (
     <Container>
       <div className='flex flex-col justify-center w-full items-center h-[calc(100vh-5rem)]'>
@@ -22,12 +23,14 @@ const AuthForm = (props: Props) => {
             value={email}
             placeholder='E-mail'
             type='text'
+            handleChange={handleChange}
           />
           <InputFields
             name={'password'}
             value={password}
             placeholder='Password'
             type='password'
+            handleChange={handleChange}
           />
           <Button title={page} />
         </form>
