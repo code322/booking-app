@@ -1,12 +1,15 @@
 import { useState } from 'react';
 import AuthForm from '../../components/AuthForm/AuthForm';
 import InputFields from '../../components/InputFields/InputFields';
+import { useAppDispatch, useAppSelector } from '../../hooks/userTypeSelector';
+import { register, userSelector } from '../../state/authSlicer/authSlicer';
+
+export type inputTypes = {
+  name: string;
+  email: string;
+  password: string;
+};
 const Register = () => {
-  type inputTypes = {
-    name: string;
-    email: string;
-    password: string;
-  };
   const [input, setInput] = useState<inputTypes>({
     name: '',
     email: '',
@@ -20,10 +23,13 @@ const Register = () => {
       [name]: value,
     });
   }
+  const dispatch = useAppDispatch();
+  const state = useAppSelector(userSelector);
+  console.log(state);
 
   function handleSubmit(e: React.SyntheticEvent) {
     e.preventDefault();
-    console.log(input);
+    dispatch(register(input) as any);
   }
 
   return (
