@@ -1,13 +1,15 @@
+import { RootState } from './../store';
+import { inputTypes } from './../../pages/Register/Register';
 import { createSlice, createAsyncThunk, isAnyOf } from '@reduxjs/toolkit';
 import { API_URL } from '../../helpers/api';
 import axios from 'axios';
 
 export const register = createAsyncThunk(
   'auth/register',
-  async (_, { rejectWithValue }) => {
+  async (body: inputTypes, { rejectWithValue }) => {
     try {
-      const { data } = await axios.get(`${API_URL}/api/auth/register`);
-      return data;
+      const { data } = await axios.post(`${API_URL}/api/auth/register`, body);
+      return data.user;
     } catch (error: any) {
       return rejectWithValue(error.response.data);
     }
@@ -73,4 +75,5 @@ const authSlice = createSlice({
   },
 });
 
+export const userSelector = (state: RootState) => state.authReducer.user;
 export default authSlice.reducer;
