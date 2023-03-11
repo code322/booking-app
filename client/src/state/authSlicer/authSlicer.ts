@@ -3,6 +3,7 @@ import { inputTypes } from './../../pages/Register/Register';
 import { createSlice, createAsyncThunk, isAnyOf } from '@reduxjs/toolkit';
 import { API_URL } from '../../helpers/api';
 import axios from 'axios';
+import { loginTypes } from '../../pages/Login/LogIn';
 
 export const register = createAsyncThunk(
   'auth/register',
@@ -17,9 +18,9 @@ export const register = createAsyncThunk(
 );
 export const login = createAsyncThunk(
   'auth/login',
-  async (_, { rejectWithValue }) => {
+  async (body: loginTypes, { rejectWithValue }) => {
     try {
-      const { data } = await axios.get(`${API_URL}/api/auth/login`);
+      const { data } = await axios.post(`${API_URL}/api/auth/login`, body);
       return data;
     } catch (error: any) {
       return rejectWithValue(error.response.data);

@@ -28,8 +28,6 @@ export const register = async (req, res) => {
       expiresIn: '30d',
     });
 
-    console.log(refreshToken);
-
     if (!accessToken) return res.status(409).json('No access token');
     if (!refreshToken) return res.status(409).json('No refresh token');
 
@@ -53,6 +51,52 @@ export const register = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
+    res.status(409).json(error);
+  }
+};
+
+export const login = async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    const user = await getUser(email);
+    if (!user) return res.status(409).json('User does not exist. ');
+
+    const validPassword = await bcrypt.compare(password, user.password);
+    if (!validPassword) return res.status(409).json('Password is not valid.');
+
+    const access_token = process.env.ACCESS_TOKEN;
+    const refresh_token = process.env.REFRESH_TOKEN;
+
+    const accessToken = jwt.sign({ id: user.id }, access_token, {
+      expiresIn: 60 * 30,
+    });
+    const refreshToken = jwt.sign({ id: user.id }, refresh_token, {
+      expiresIn: '30d',
+    });
+
+    if (!accessToken) return res.status(409).json('No access token');
+    if (!refreshToken) return res.status(409).json('No refresh token');
+
+    res.cookie('accessToken', `Bearer ${accessToken}`, {
+      httpOnly: false,
+      maxAge: 1000 * 60 * 30,
+      secure: true,
+    });
+    res.cookie('refreshToken', `Bearer ${refreshToken}`, {
+      httpOnly: false,
+      maxAge: 1000 * 60 * 60 * 24 * 30,
+      secure: true,
+      sameSite: 'none',
+    });
+
+    res.status(201).json({
+      user: {
+        name: user.name,
+        email: user.email,
+      },
+    });
+  } catch (error) {
     res.status(409).json(error);
   }
 };
