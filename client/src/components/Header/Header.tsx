@@ -1,7 +1,11 @@
 import { Icon } from '@iconify/react';
 import { Link } from 'react-router-dom';
+import { useAppSelector } from '../../hooks/userTypeSelector';
+import { userSelector } from '../../state/authSlicer/authSlicer';
 
 function Header() {
+  const user = useAppSelector(userSelector);
+  console.log(user.name);
   return (
     <header className='py-8 h-[3.5rem] border-b flex justify-center '>
       <div className='px-3 max-w-5xl flex  justify-between h-full items-center w-full'>
@@ -23,15 +27,24 @@ function Header() {
               <span>Add Listing</span>
             </a>
           </Link>
-          <Link to={'/login'}>
-            <a>
+          <Link to={user ? '/' : '/login'}>
+            {user ? (
+              <>
+                <Icon
+                  className='text-gray-700'
+                  height={30}
+                  icon='la:sign-out-alt'
+                />
+              </>
+            ) : (
               <Icon
-                className='text-gray-700'
+                className='text-gray-400'
                 height={30}
                 icon='mdi:user-circle'
               />
-            </a>
+            )}
           </Link>
+          {<p className='capitalize'>{user?.name}</p>}
         </div>
       </div>
     </header>
