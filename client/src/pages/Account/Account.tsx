@@ -3,16 +3,16 @@ import Container from '../../components/Container/Container';
 import { useAppSelector } from '../../hooks/userTypeSelector';
 import { userSelector } from '../../state/authSlicer/authSlicer';
 import { useEffect, useState } from 'react';
+import Places from '../Places/Places';
 
 function Account() {
   const user = useAppSelector(userSelector);
-  const [active, setActive] = useState<string | undefined>('profile');
+  const [active, setActive] = useState<string>('profile');
 
   function handleClick(title: string) {
     setActive(title);
   }
 
-  console.log(active);
   return (
     <Container>
       <nav className='w-full flex mt-8 gap-4 justify-center'>
@@ -30,6 +30,7 @@ function Account() {
           active={active}
         />
       </nav>
+      {active === 'accommodation' ? <Places /> : <></>}
     </Container>
   );
 }

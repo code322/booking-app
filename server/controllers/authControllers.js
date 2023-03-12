@@ -32,12 +32,13 @@ export const register = async (req, res) => {
     if (!refreshToken) return res.status(409).json('No refresh token');
 
     res.cookie('accessToken', `Bearer ${accessToken}`, {
-      httpOnly: false,
+      httpOnly: true,
       maxAge: 1000 * 60 * 30,
       secure: true,
+      sameSite: 'none',
     });
     res.cookie('refreshToken', `Bearer ${refreshToken}`, {
-      httpOnly: false,
+      httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24 * 30,
       secure: true,
       sameSite: 'none',
