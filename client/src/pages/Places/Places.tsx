@@ -2,9 +2,54 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Icon } from '@iconify/react';
 
+type perksTypes = {
+  wifi: boolean;
+  TV: boolean;
+  pet: boolean;
+  ['free parking spot']: boolean;
+  radio: boolean;
+  ['private entrance']: boolean;
+};
 function Places() {
   const [addedPhotos, setAddedPhots] = useState<[string] | null>();
   const [photoLink, setPhotoLink] = useState<string>();
+
+  const [isChecked, setIsChecked] = useState<perksTypes>({
+    wifi: false,
+    TV: false,
+    pet: false,
+    ['free parking spot']: false,
+    radio: false,
+    ['private entrance']: false,
+  });
+
+  const boxes = [
+    {
+      label: 'wifi',
+      icon: 'material-symbols:wifi',
+    },
+    {
+      label: 'free parking spot',
+      icon: 'fluent-mdl2:parking-location-mirrored',
+    },
+    {
+      label: 'TV',
+      icon: 'ic:round-tv',
+    },
+    {
+      label: 'radio',
+      icon: 'ic:outline-radio',
+    },
+    {
+      label: 'pet',
+      icon: 'map:pet-store',
+    },
+    {
+      label: 'private entrance',
+      icon: 'material-symbols:door-back-outline',
+    },
+  ];
+
   const [input, setInput] = useState({
     title: '',
     address: '',
@@ -23,6 +68,18 @@ function Places() {
     checkOut: '',
     guest: 1,
   });
+
+  function handleCheckBoxes(e: React.ChangeEvent<HTMLInputElement>) {
+    const { id, checked } = e.target;
+
+    setIsChecked({
+      ...isChecked,
+      [id]: checked,
+    });
+  }
+
+  console.log(isChecked);
+
   return (
     <div className='m-4'>
       <div>
@@ -78,18 +135,13 @@ function Places() {
               Selected all the perks of your place
             </small>
             <div className='mt-4 grid grid-cols-2 md:grid-cols-3 gap-2'>
-              <Boxes label='wifi' icon='material-symbols:wifi' />
-              <Boxes
-                label='free parking spot'
-                icon='fluent-mdl2:parking-location-mirrored'
-              />
-              <Boxes label='TV' icon='ic:round-tv' />
-              <Boxes label='radio' icon='ic:outline-radio' />
-              <Boxes label='pet' icon='map:pet-store' />
-              <Boxes
-                label='private entrance'
-                icon='material-symbols:door-back-outline'
-              />
+              {boxes.map(({ label, icon }) => (
+                <CheckBox
+                  handleBoxes={handleCheckBoxes}
+                  label={label}
+                  icon={icon}
+                />
+              ))}
             </div>
           </div>
           <div className='mt-4'>
@@ -163,18 +215,26 @@ const Fields = ({ label, placeholder, message }: fieldsType) => (
   </div>
 );
 
-type boxTypes = {
+type checkBoxType = {
   label: string;
   icon: string;
+  value?: string;
+  handleBoxes: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
-const Boxes = ({ label, icon }: boxTypes) => (
+const CheckBox = ({ label, icon, value, handleBoxes }: checkBoxType) => (
   <>
     <label
       className='capitalize text-sm cursor-pointer flex gap-2 items-center
       border p-2 rounded-md'
       htmlFor={label}
     >
-      <input id={label} type='checkbox' />
+      <input
+        id={label}
+        type='checkbox'
+        value={value}
+        onChange={handleBoxes}
+        // checked={true}
+      />
       <Icon className='text-gray-400' icon={icon} />
       {label}
     </label>
