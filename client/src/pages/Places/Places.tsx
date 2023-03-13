@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Icon } from '@iconify/react';
+import axios from 'axios';
+import { API_URL } from '../../helpers/api';
 
 type perksTypes = {
   wifi: boolean;
@@ -11,7 +13,7 @@ type perksTypes = {
   ['private entrance']: boolean;
 };
 function Places() {
-  const [addedPhotos, setAddedPhots] = useState<[string] | null>();
+  const [addedPhotos, setAddedPhots] = useState<any>([]);
   const [photoLink, setPhotoLink] = useState<string>();
 
   const [isChecked, setIsChecked] = useState<perksTypes>({
@@ -55,14 +57,6 @@ function Places() {
     address: '',
     photos: [],
     description: '',
-    perks: {
-      wifi: '',
-      tv: '',
-      pet: '',
-      parking: '',
-      radio: '',
-      private_entrance: '',
-    },
     extraInfo: '',
     checkIn: '',
     checkOut: '',
@@ -77,8 +71,41 @@ function Places() {
       [id]: checked,
     });
   }
+  function handleInput(e: React.ChangeEvent<HTMLInputElement>) {
+    setPhotoLink(e.target.value);
+  }
+  async function handleUploadPhoto(e: React.SyntheticEvent) {
+    e.preventDefault();
+    try {
+      let { data } = await axios.post(
+        `${API_URL}/api/tools/upload-by-link`,
+        {
+          link: photoLink,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      setAddedPhots([...addedPhotos, data]);
+      setPhotoLink('');
+    } catch (error: any) {
+      console.log(error.response);
+    }
+  }
 
-  console.log(isChecked);
+  async function handleFiles(e: React.ChangeEvent<HTMLInputElement>) {
+    let files: any = e.target.files;
+
+    const data = new FormData();
+    data.set('photos', files);
+    await axios.post('/upload', data, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+
+    console.log(files);
+  }
 
   return (
     <div className='m-4'>
@@ -108,17 +135,48 @@ function Places() {
               message='More = better'
               label='photos'
               placeholder='Add using a link ...jpg'
+              handleChange={handleInput}
+              value={photoLink}
             />
-            <button className='bg-custom-red rounded-md flex items-center gap-2 text-xs text-white self-end p-2 capitalize'>
+            <button
+              className='bg-custom-red rounded-md flex items-center gap-2 text-xs text-white self-end p-2 capitalize'
+              onClick={handleUploadPhoto}
+            >
               <Icon icon='ic:twotone-cloud-upload' />
               <span>add photo</span>
             </button>
           </div>
-          <div className='mt-2 grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6'>
-            <button className='border h-32 w-32 rounded-md text-gray-500'>
+          <div className='mt-2 grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2'>
+            <label
+              className='border h-28 w-28  rounded-md text-gray-500 flex justify-center items-center gap-2 cursor-pointer'
+              htmlFor='photoInput'
+            >
+              <Icon icon='ic:twotone-cloud-upload' />
               Upload
-            </button>
+              <input
+                id='photoInput'
+                className='hidden'
+                type='file'
+                accept='image/*'
+                multiple
+                onChange={handleFiles}
+              />
+            </label>
+
+            <>
+              {addedPhotos.length > 0 &&
+                addedPhotos.map((links: any) => (
+                  <div>
+                    <img
+                      className='h-28 w-28 object-cover center object-center rounded-md'
+                      src={`${API_URL}/uploads/` + links}
+                      alt=''
+                    />
+                  </div>
+                ))}
+            </>
           </div>
+
           <div className='mt-2 flex flex-col'>
             <label htmlFor='textarea'>Description</label>
             <small className='text-xs text-gray-400'>
@@ -198,9 +256,11 @@ type fieldsType = {
   label: string;
   placeholder: string;
   message: string;
+  handleChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  value?: string;
 };
 
-const Fields = ({ label, placeholder, message }: fieldsType) => (
+const Fields = ({ label, placeholder, message, handleChange }: fieldsType) => (
   <div className='flex flex-col flex-1'>
     <label className=' capitalize py-2' htmlFor={label}>
       {label}
@@ -211,6 +271,7 @@ const Fields = ({ label, placeholder, message }: fieldsType) => (
       id={label}
       type='text'
       placeholder={placeholder}
+      onChange={handleChange}
     />
   </div>
 );
