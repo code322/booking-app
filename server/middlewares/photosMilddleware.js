@@ -6,9 +6,10 @@ let storage = {
       callback(null, 'uploads/');
     },
     filename: function (req, file, callback) {
-      let ext = file.originalname.split('.');
+      let fileName = file.originalname.split('.');
+      let fileExtension = fileName[fileName.length - 1];
 
-      callback(null, file.fieldname + '_' + Date.now() + '.' + ext[1]);
+      callback(null, file.fieldname + '_' + Date.now() + '.' + fileExtension);
     },
   }),
 };
