@@ -98,14 +98,25 @@ function Places() {
   async function handleUpload(e: React.ChangeEvent<HTMLInputElement>) {
     let files: any = e.target.files;
 
-    const data = new FormData();
-    data.set('photos', files);
-    await axios.post('/api/data/upload', data, {
-      headers: { 'Content-Type': 'multipart/form-data' },
-    });
-
-    console.log(files);
+    const newData = new FormData();
+    for (let i = 0; i < files.length; i++) {
+      newData.append('photos', files[i]);
+    }
+    try {
+      let { data } = await axios.post(
+        `${API_URL}/api/upload/upload-from-local`,
+        newData,
+        {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        }
+      );
+      setAddedPhots([...addedPhotos, ...data]);
+    } catch (error) {
+      console.log(error);
+    }
   }
+
+  console.log(addedPhotos);
 
   return (
     <div className='m-4'>
