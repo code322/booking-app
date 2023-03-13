@@ -1,6 +1,6 @@
 import download from 'image-downloader';
 import path from 'path';
-export const uploadImage = async (req, res) => {
+export const uploadByLink = async (req, res) => {
   const { link } = req.body;
   const newName = Date.now() + '.jpg';
 

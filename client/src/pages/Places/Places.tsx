@@ -78,7 +78,7 @@ function Places() {
     e.preventDefault();
     try {
       let { data } = await axios.post(
-        `${API_URL}/api/tools/upload-by-link`,
+        `${API_URL}/api/upload/upload-by-link`,
         {
           link: photoLink,
         },
@@ -95,12 +95,12 @@ function Places() {
     }
   }
 
-  async function handleFiles(e: React.ChangeEvent<HTMLInputElement>) {
+  async function handleUpload(e: React.ChangeEvent<HTMLInputElement>) {
     let files: any = e.target.files;
 
     const data = new FormData();
     data.set('photos', files);
-    await axios.post('/upload', data, {
+    await axios.post('/api/data/upload', data, {
       headers: { 'Content-Type': 'multipart/form-data' },
     });
 
@@ -159,7 +159,7 @@ function Places() {
                 type='file'
                 accept='image/*'
                 multiple
-                onChange={handleFiles}
+                onChange={handleUpload}
               />
             </label>
 

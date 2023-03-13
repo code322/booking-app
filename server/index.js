@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import authRoutes from './routes/authRoutes.js';
-import uploadByLink from './routes/uploadByLink.js';
+import uploadPhotos from './routes/uploadPhotos.js';
 import cookieParser from 'cookie-parser';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -25,6 +25,6 @@ app.use(
 const PORT = process.env.PORT || 5000;
 
 app.use('/api/auth', authRoutes);
-app.use('/api/tools', uploadByLink);
+app.use('/api/upload', uploadPhotos);
 
 app.listen(PORT, () => console.log(`running in port ${PORT}`));
