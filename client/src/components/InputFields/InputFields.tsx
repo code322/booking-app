@@ -1,6 +1,6 @@
 type Props = {
-  placeholder: string;
-  type: string;
+  placeholder?: string;
+  type?: string;
   name: string;
   value: string;
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;

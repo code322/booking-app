@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { Icon } from '@iconify/react';
 import axios from 'axios';
 import { API_URL } from '../../helpers/api';
+import CheckBox from '../../components/CheckBoxes/CheckBoxes';
+import InputFields from '../../components/InputFields/InputFields';
+import { boxes } from '../../components/CheckBoxes/boxesList';
+import UploadPhotos from '../../components/UploadPhotos/UploadPhotos';
 
 type perksTypes = {
   wifi: boolean;
@@ -14,7 +17,7 @@ type perksTypes = {
 };
 function NewLocation() {
   const [addedPhotos, setAddedPhots] = useState<any>([]);
-  const [photoLink, setPhotoLink] = useState<string>();
+  const [photoLink, setPhotoLink] = useState<string>('');
 
   const [isChecked, setIsChecked] = useState<perksTypes>({
     wifi: false,
@@ -24,33 +27,6 @@ function NewLocation() {
     radio: false,
     ['private entrance']: false,
   });
-
-  const boxes = [
-    {
-      label: 'wifi',
-      icon: 'material-symbols:wifi',
-    },
-    {
-      label: 'free parking spot',
-      icon: 'fluent-mdl2:parking-location-mirrored',
-    },
-    {
-      label: 'TV',
-      icon: 'ic:round-tv',
-    },
-    {
-      label: 'radio',
-      icon: 'ic:outline-radio',
-    },
-    {
-      label: 'pet',
-      icon: 'map:pet-store',
-    },
-    {
-      label: 'private entrance',
-      icon: 'material-symbols:door-back-outline',
-    },
-  ];
 
   const [input, setInput] = useState({
     title: '',
@@ -75,51 +51,10 @@ function NewLocation() {
       | React.ChangeEvent<HTMLInputElement>
       | React.ChangeEvent<HTMLTextAreaElement>
   ) {
-    const { id, value } = e.target;
+    const { name, value } = e.target;
     setInput((preVal) => {
-      return { ...preVal, [id]: value };
+      return { ...preVal, [name]: value };
     });
-  }
-  async function handleUploadPhoto(e: React.SyntheticEvent) {
-    e.preventDefault();
-    try {
-      let { data } = await axios.post(
-        `${API_URL}/api/upload/upload-by-link`,
-        {
-          link: photoLink,
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
-      setAddedPhots([...addedPhotos, data]);
-      setPhotoLink('');
-    } catch (error: any) {
-      console.log(error.response);
-    }
-  }
-
-  async function handleUpload(e: React.ChangeEvent<HTMLInputElement>) {
-    let files: any = e.target.files;
-
-    const newData = new FormData();
-    for (let i = 0; i < files.length; i++) {
-      newData.append('photos', files[i]);
-    }
-    try {
-      let { data } = await axios.post(
-        `${API_URL}/api/upload/upload-from-local`,
-        newData,
-        {
-          headers: { 'Content-Type': 'multipart/form-data' },
-        }
-      );
-      setAddedPhots([...addedPhotos, ...data]);
-    } catch (error) {
-      console.log(error);
-    }
   }
 
   async function handleSubmit(e: React.FormEvent<HTMLButtonElement>) {
@@ -144,83 +79,96 @@ function NewLocation() {
     <div className='m-4'>
       <div className='mt-10'>
         <form className='flex flex-col'>
-          <Fields
-            message='Title for your place, should be short and catchy as in advertisement'
-            label='title'
-            placeholder='Title'
-            handleChange={handleInput}
-          />
-          <Fields
-            message='Address to this place'
-            label='address'
-            placeholder='Address'
-            handleChange={handleInput}
-          />
-          <div className='flex gap-2'>
-            <Fields
-              message='More = better'
-              label='photos'
-              placeholder='Add using a link ...jpg'
-              handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setPhotoLink(e.target.value)
-              }
-              value={photoLink}
+          <Content
+            label={'title'}
+            info='Title for your place, should be short and catchy as in advertisement'
+          >
+            <InputFields
+              type={'text'}
+              name='title'
+              handleChange={handleInput}
+              value={input.title}
             />
-            <button
-              className='bg-custom-red rounded-md flex items-center gap-2 text-xs text-white self-end p-2 capitalize'
-              onClick={handleUploadPhoto}
-            >
-              <Icon icon='ic:twotone-cloud-upload' />
-              <span>add photo</span>
-            </button>
-          </div>
-          <div className='mt-2 grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2'>
-            <label
-              className='border h-28 w-28  rounded-md text-gray-500 flex justify-center items-center gap-2 cursor-pointer'
-              htmlFor='photoInput'
-            >
-              <Icon icon='ic:twotone-cloud-upload' />
-              Upload
-              <input
-                id='photoInput'
-                className='hidden'
-                type='file'
-                accept='image/*'
-                multiple
-                onChange={handleUpload}
-              />
-            </label>
+          </Content>
+          <Content label={'address'} info='Address to this place'>
+            <InputFields
+              name='address'
+              handleChange={handleInput}
+              value={input.address}
+            />
+          </Content>
 
-            <>
-              {addedPhotos.length > 0 &&
-                addedPhotos.map((links: any) => (
-                  <div>
-                    <img
-                      className='h-28 w-28 object-cover center object-center rounded-md'
-                      src={`${API_URL}/uploads/` + links}
-                      alt=''
-                    />
-                  </div>
-                ))}
-            </>
-          </div>
+          {/* upload photo */}
+          <UploadPhotos
+            photoLink={photoLink}
+            setPhotoLink={setPhotoLink}
+            setAddedPhots={setAddedPhots}
+            addedPhotos={addedPhotos}
+          />
+          {/* <>
+            <div className='flex gap-2'>
+              <Content label={'photos'} info='More =  better'>
+                <InputFields
+                  name='photo'
+                  handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setPhotoLink(e.target.value)
+                  }
+                  placeholder='Add a photo link...'
+                  value={photoLink}
+                />
+              </Content>
+              <button
+                className='bg-custom-red rounded-md flex items-center gap-2 text-xs text-white self-end p-2 capitalize'
+                onClick={handleUploadPhoto}
+              >
+                <Icon icon='ic:twotone-cloud-upload' />
+                <span>add photo</span>
+              </button>
+            </div>
 
-          <div className='mt-2 flex flex-col'>
-            <label htmlFor='textarea'>Description</label>
-            <small className='text-xs text-gray-400'>
-              Description of the place
-            </small>
+            <div className='mt-2 grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2'>
+              <label
+                className='border h-28 w-28  rounded-md text-gray-500 flex justify-center items-center gap-2 cursor-pointer'
+                htmlFor='photoInput'
+              >
+                <Icon icon='ic:twotone-cloud-upload' />
+                Upload
+                <input
+                  id='photoInput'
+                  className='hidden'
+                  type='file'
+                  accept='image/*'
+                  multiple
+                  onChange={handleUpload}
+                />
+              </label>
+
+              <>
+                {addedPhotos.length > 0 &&
+                  addedPhotos.map((links: any) => (
+                    <div>
+                      <img
+                        className='h-28 w-28 object-cover center object-center rounded-md'
+                        src={`${API_URL}/uploads/` + links}
+                        alt=''
+                      />
+                    </div>
+                  ))}
+              </>
+            </div>
+          </> */}
+
+          {/* Description */}
+          <Content label='description' info='add description of the place'>
             <textarea
-              id='description'
+              name='description'
               className='w-full resize-none border min-h-[100px] mt-2 outline-none p-2'
               onChange={handleInput}
+              value={input.description}
             ></textarea>
-          </div>
-          <div className='mt-4'>
-            <h2>Perks</h2>
-            <small className='text-gray-400'>
-              Selected all the perks of your place
-            </small>
+          </Content>
+          {/* Perks */}
+          <Content label='perks' info='Selected all the perks of your place'>
             <div className='mt-4 grid grid-cols-2 md:grid-cols-3 gap-2'>
               {boxes.map(({ label, icon }) => (
                 <CheckBox
@@ -230,22 +178,23 @@ function NewLocation() {
                 />
               ))}
             </div>
-          </div>
-          <div className='mt-4'>
-            <h2 className=''>Extra Info</h2>
+          </Content>
 
+          {/* Extra info */}
+          <Content label='extra info' info='Add extra info'>
             <textarea
-              id='extraInfo'
+              name='extraInfo'
               className='w-full resize-none border min-h-[100px] mt-2 outline-none p-2'
               onChange={handleInput}
             ></textarea>
-          </div>
-          <div className='mt-4'>
-            <h2>Checking In and Out time</h2>
-            <small className='text-xs text-gray-400'>
-              Add check in and out times. Remember to have soe time window for
-              cleaning the room between guests.
-            </small>
+          </Content>
+
+          {/* checkIn and checkout time */}
+          <Content
+            label='checking in and out time'
+            info=' Add check in and out times. Remember to have soe time window for
+              cleaning the room between guests.'
+          >
             <div className='flex justify-between gap-2'>
               <div className='flex flex-col'>
                 <label htmlFor='checkIn'>Check in time</label>
@@ -277,7 +226,8 @@ function NewLocation() {
                 />
               </div>
             </div>
-          </div>
+          </Content>
+
           <button
             onClick={handleSubmit}
             className='bg-custom-red mt-4 text-white rounded-md capitalize py-2'
@@ -291,52 +241,19 @@ function NewLocation() {
 }
 
 export default NewLocation;
-type fieldsType = {
+
+type contentType = {
   label: string;
-  placeholder: string;
-  message: string;
-  handleChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  value?: string;
+  info: string;
+  children: JSX.Element;
 };
 
-const Fields = ({ label, placeholder, message, handleChange }: fieldsType) => (
-  <div className='flex flex-col flex-1'>
+export const Content = ({ label, info, children }: contentType) => (
+  <div className='mt-2 flex flex-col flex-1'>
     <label className=' capitalize py-2' htmlFor={label}>
       {label}
     </label>
-    <small className=' text-gray-400 text-xs'>{message}</small>
-    <input
-      className='rounded-full outline-none border px-4 py-2 text-base '
-      id={label}
-      type='text'
-      placeholder={placeholder}
-      onChange={handleChange}
-    />
+    <small className='text-xs text-gray-400'>{info}</small>
+    {children}
   </div>
-);
-
-type checkBoxType = {
-  label: string;
-  icon: string;
-  value?: string;
-  handleBoxes: (e: React.ChangeEvent<HTMLInputElement>) => void;
-};
-const CheckBox = ({ label, icon, value, handleBoxes }: checkBoxType) => (
-  <>
-    <label
-      className='capitalize text-sm cursor-pointer flex gap-2 items-center
-      border p-2 rounded-md'
-      htmlFor={label}
-    >
-      <input
-        id={label}
-        type='checkbox'
-        value={value}
-        onChange={handleBoxes}
-        // checked={true}
-      />
-      <Icon className='text-gray-400' icon={icon} />
-      {label}
-    </label>
-  </>
 );
