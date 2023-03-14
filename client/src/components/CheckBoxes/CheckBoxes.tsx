@@ -13,13 +13,7 @@ const CheckBox = ({ label, icon, value, handleBoxes }: checkBoxType) => (
       border p-2 rounded-md'
       htmlFor={label}
     >
-      <input
-        id={label}
-        type='checkbox'
-        value={value}
-        onChange={handleBoxes}
-        // checked={true}
-      />
+      <input id={label} type='checkbox' value={value} onChange={handleBoxes} />
       <Icon className='text-gray-400' icon={icon} />
       {label}
     </label>

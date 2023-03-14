@@ -1,61 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Content } from '../../pages/NewLocation/NewLocation';
 import InputFields from '../InputFields/InputFields';
 import { Icon } from '@iconify/react';
 import { API_URL } from '../../helpers/api';
-import axios from 'axios';
-type uploadPhotosType = {
-  photoLink: string;
-  setAddedPhots: (value: any) => void;
-  addedPhotos: any;
-  setPhotoLink: (value: React.SetStateAction<string>) => void;
-};
-function UploadPhotos({
-  photoLink,
-  addedPhotos,
-  setPhotoLink,
-  setAddedPhots,
-}: uploadPhotosType) {
+import { useAppDispatch, useAppSelector } from '../../hooks/userTypeSelector';
+import {
+  selectUploadedPhotos,
+  uploadByLinkPhoto,
+  uploadSelectedPhoto,
+} from '../../state/locations/upLoadPhotosSlicer';
+
+function UploadPhotos() {
+  const [photoLink, setPhotoLink] = useState('');
+  const dispatch = useAppDispatch();
+
   async function handleUploadPhoto(e: React.SyntheticEvent) {
     e.preventDefault();
-    try {
-      let { data } = await axios.post(
-        `${API_URL}/api/upload/upload-by-link`,
-        {
-          link: photoLink,
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
-      setAddedPhots([...addedPhotos, data]);
-      setPhotoLink('');
-    } catch (error: any) {
-      console.log(error.response);
-    }
+    dispatch(uploadByLinkPhoto(photoLink) as any);
+    setPhotoLink('');
   }
-
+  const addedPhotos = useAppSelector(selectUploadedPhotos);
+  console.log(addedPhotos);
   async function handleUpload(e: React.ChangeEvent<HTMLInputElement>) {
     let files: any = e.target.files;
-
-    const newData = new FormData();
-    for (let i = 0; i < files.length; i++) {
-      newData.append('photos', files[i]);
-    }
-    try {
-      let { data } = await axios.post(
-        `${API_URL}/api/upload/upload-from-local`,
-        newData,
-        {
-          headers: { 'Content-Type': 'multipart/form-data' },
-        }
-      );
-      setAddedPhots([...addedPhotos, ...data]);
-    } catch (error) {
-      console.log(error);
-    }
+    dispatch(uploadSelectedPhoto(files) as any);
   }
   return (
     <>
@@ -98,8 +66,8 @@ function UploadPhotos({
 
         <>
           {addedPhotos.length > 0 &&
-            addedPhotos.map((links: any) => (
-              <div>
+            addedPhotos.map((links: any, index: number) => (
+              <div key={index}>
                 <img
                   className='h-28 w-28 object-cover center object-center rounded-md'
                   src={`${API_URL}/uploads/` + links}

@@ -57,6 +57,8 @@ function NewLocation() {
     });
   }
 
+  console.log(input);
+
   async function handleSubmit(e: React.FormEvent<HTMLButtonElement>) {
     e.preventDefault();
     let newPlace = {
@@ -99,12 +101,7 @@ function NewLocation() {
           </Content>
 
           {/* upload photo */}
-          <UploadPhotos
-            photoLink={photoLink}
-            setPhotoLink={setPhotoLink}
-            setAddedPhots={setAddedPhots}
-            addedPhotos={addedPhotos}
-          />
+          <UploadPhotos />
 
           {/* Description */}
           <Content label='description' info='add description of the place'>
@@ -148,34 +145,38 @@ function NewLocation() {
                 <label htmlFor='checkIn'>Check in time</label>
                 <input
                   className='flex border w-full flex-1'
-                  id='checkIn'
+                  name='checkIn'
                   type='time'
                   onChange={handleInput}
+                  value={input.checkIn}
                 />
               </div>
               <div className='flex flex-col'>
                 <label htmlFor='checkOut'>Check out time</label>
                 <input
                   className='flex border w-full flex-1'
-                  id='checkOut'
+                  name='checkOut'
                   type='time'
                   onChange={handleInput}
+                  value={input.checkOut}
                 />
               </div>
               <div className='flex flex-col'>
                 <label htmlFor='guests'>Guests</label>
                 <input
                   className='flex border w-full flex-1'
-                  id='guests'
+                  name='guests'
                   type='number'
                   placeholder='Guests'
                   min={1}
                   onChange={handleInput}
+                  value={input.guests}
                 />
               </div>
             </div>
           </Content>
 
+          {/* submit button */}
           <button
             onClick={handleSubmit}
             className='bg-custom-red mt-4 text-white rounded-md capitalize py-2'
