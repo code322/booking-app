@@ -4,7 +4,7 @@ import Container from '../../components/Container/Container';
 import { useAppSelector } from '../../hooks/userTypeSelector';
 import { userSelector } from '../../state/authSlicer/authSlicer';
 import NewLocation from '../NewLocation/NewLocation';
-import Locations from '../Location/Location';
+import Locations from '../Locations/Locations';
 
 function Account() {
   const user = useAppSelector(userSelector);

@@ -4,7 +4,7 @@ import Home from './pages/Home/Home';
 import LogIn from './pages/Login/LogIn';
 import Register from './pages/Register/Register';
 import Account from './pages/Account/Account';
-import Locations from './pages/Location/Location';
+import Locations from './pages/Locations/Locations';
 import NewLocation from './pages/NewLocation/NewLocation';
 
 function App() {
