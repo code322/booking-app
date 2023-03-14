@@ -3,14 +3,15 @@ import { Content } from '../../pages/NewLocation/NewLocation';
 import InputFields from '../InputFields/InputFields';
 import { Icon } from '@iconify/react';
 import { API_URL } from '../../helpers/api';
-import { useAppDispatch, useAppSelector } from '../../hooks/userTypeSelector';
+import { useAppDispatch } from '../../hooks/userTypeSelector';
 import {
-  selectUploadedPhotos,
   uploadByLinkPhoto,
   uploadSelectedPhoto,
 } from '../../state/locations/upLoadPhotosSlicer';
-
-function UploadPhotos() {
+interface Props {
+  addedPhotos: string[];
+}
+function UploadPhotos({ addedPhotos }: Props) {
   const [photoLink, setPhotoLink] = useState('');
   const dispatch = useAppDispatch();
 
@@ -19,8 +20,7 @@ function UploadPhotos() {
     dispatch(uploadByLinkPhoto(photoLink) as any);
     setPhotoLink('');
   }
-  const addedPhotos = useAppSelector(selectUploadedPhotos);
-  console.log(addedPhotos);
+
   async function handleUpload(e: React.ChangeEvent<HTMLInputElement>) {
     let files: any = e.target.files;
     dispatch(uploadSelectedPhoto(files) as any);

@@ -6,6 +6,10 @@ import CheckBox from '../../components/CheckBoxes/CheckBoxes';
 import InputFields from '../../components/InputFields/InputFields';
 import { boxes } from '../../components/CheckBoxes/boxesList';
 import UploadPhotos from '../../components/UploadPhotos/UploadPhotos';
+import { useAppSelector } from '../../hooks/userTypeSelector';
+import { selectUploadedPhotos } from '../../state/locations/upLoadPhotosSlicer';
+import Container from '../../components/Container/Container';
+import Account from '../Account/Account';
 
 type perksTypes = {
   wifi: boolean;
@@ -16,8 +20,7 @@ type perksTypes = {
   ['private entrance']: boolean;
 };
 function NewLocation() {
-  const [addedPhotos, setAddedPhots] = useState<any>([]);
-  const [photoLink, setPhotoLink] = useState<string>('');
+  const addedPhotos = useAppSelector(selectUploadedPhotos);
 
   const [isChecked, setIsChecked] = useState<perksTypes>({
     wifi: false,
@@ -57,8 +60,6 @@ function NewLocation() {
     });
   }
 
-  console.log(input);
-
   async function handleSubmit(e: React.FormEvent<HTMLButtonElement>) {
     e.preventDefault();
     let newPlace = {
@@ -78,114 +79,116 @@ function NewLocation() {
   }
 
   return (
-    <div className='m-4'>
-      <div className='mt-10'>
-        <form className='flex flex-col'>
-          <Content
-            label={'title'}
-            info='Title for your place, should be short and catchy as in advertisement'
-          >
-            <InputFields
-              type={'text'}
-              name='title'
-              handleChange={handleInput}
-              value={input.title}
-            />
-          </Content>
-          <Content label={'address'} info='Address to this place'>
-            <InputFields
-              name='address'
-              handleChange={handleInput}
-              value={input.address}
-            />
-          </Content>
+    <Container>
+      <div className='m-4'>
+        <div className='mt-10'>
+          <form className='flex flex-col'>
+            <Content
+              label={'title'}
+              info='Title for your place, should be short and catchy as in advertisement'
+            >
+              <InputFields
+                type={'text'}
+                name='title'
+                handleChange={handleInput}
+                value={input.title}
+              />
+            </Content>
+            <Content label={'address'} info='Address to this place'>
+              <InputFields
+                name='address'
+                handleChange={handleInput}
+                value={input.address}
+              />
+            </Content>
 
-          {/* upload photo */}
-          <UploadPhotos />
+            {/* upload photo */}
+            <UploadPhotos addedPhotos={addedPhotos} />
 
-          {/* Description */}
-          <Content label='description' info='add description of the place'>
-            <textarea
-              name='description'
-              className='w-full resize-none border min-h-[100px] mt-2 outline-none p-2'
-              onChange={handleInput}
-              value={input.description}
-            ></textarea>
-          </Content>
-          {/* Perks */}
-          <Content label='perks' info='Selected all the perks of your place'>
-            <div className='mt-4 grid grid-cols-2 md:grid-cols-3 gap-2'>
-              {boxes.map(({ label, icon }) => (
-                <CheckBox
-                  handleBoxes={handleCheckBoxes}
-                  label={label}
-                  icon={icon}
-                />
-              ))}
-            </div>
-          </Content>
+            {/* Description */}
+            <Content label='description' info='add description of the place'>
+              <textarea
+                name='description'
+                className='w-full resize-none border min-h-[100px] mt-2 outline-none p-2'
+                onChange={handleInput}
+                value={input.description}
+              ></textarea>
+            </Content>
+            {/* Perks */}
+            <Content label='perks' info='Selected all the perks of your place'>
+              <div className='mt-4 grid grid-cols-2 md:grid-cols-3 gap-2'>
+                {boxes.map(({ label, icon }) => (
+                  <CheckBox
+                    handleBoxes={handleCheckBoxes}
+                    label={label}
+                    icon={icon}
+                  />
+                ))}
+              </div>
+            </Content>
 
-          {/* Extra info */}
-          <Content label='extra info' info='Add extra info'>
-            <textarea
-              name='extraInfo'
-              className='w-full resize-none border min-h-[100px] mt-2 outline-none p-2'
-              onChange={handleInput}
-            ></textarea>
-          </Content>
+            {/* Extra info */}
+            <Content label='extra info' info='Add extra info'>
+              <textarea
+                name='extraInfo'
+                className='w-full resize-none border min-h-[100px] mt-2 outline-none p-2'
+                onChange={handleInput}
+              ></textarea>
+            </Content>
 
-          {/* checkIn and checkout time */}
-          <Content
-            label='checking in and out time'
-            info=' Add check in and out times. Remember to have soe time window for
+            {/* checkIn and checkout time */}
+            <Content
+              label='checking in and out time'
+              info=' Add check in and out times. Remember to have soe time window for
               cleaning the room between guests.'
-          >
-            <div className='flex justify-between gap-2'>
-              <div className='flex flex-col'>
-                <label htmlFor='checkIn'>Check in time</label>
-                <input
-                  className='flex border w-full flex-1'
-                  name='checkIn'
-                  type='time'
-                  onChange={handleInput}
-                  value={input.checkIn}
-                />
+            >
+              <div className='flex justify-between gap-2'>
+                <div className='flex flex-col'>
+                  <label htmlFor='checkIn'>Check in time</label>
+                  <input
+                    className='flex border w-full flex-1'
+                    name='checkIn'
+                    type='time'
+                    onChange={handleInput}
+                    value={input.checkIn}
+                  />
+                </div>
+                <div className='flex flex-col'>
+                  <label htmlFor='checkOut'>Check out time</label>
+                  <input
+                    className='flex border w-full flex-1'
+                    name='checkOut'
+                    type='time'
+                    onChange={handleInput}
+                    value={input.checkOut}
+                  />
+                </div>
+                <div className='flex flex-col'>
+                  <label htmlFor='guests'>Guests</label>
+                  <input
+                    className='flex border w-full flex-1'
+                    name='guests'
+                    type='number'
+                    placeholder='Guests'
+                    min={1}
+                    onChange={handleInput}
+                    value={input.guests}
+                  />
+                </div>
               </div>
-              <div className='flex flex-col'>
-                <label htmlFor='checkOut'>Check out time</label>
-                <input
-                  className='flex border w-full flex-1'
-                  name='checkOut'
-                  type='time'
-                  onChange={handleInput}
-                  value={input.checkOut}
-                />
-              </div>
-              <div className='flex flex-col'>
-                <label htmlFor='guests'>Guests</label>
-                <input
-                  className='flex border w-full flex-1'
-                  name='guests'
-                  type='number'
-                  placeholder='Guests'
-                  min={1}
-                  onChange={handleInput}
-                  value={input.guests}
-                />
-              </div>
-            </div>
-          </Content>
+            </Content>
 
-          {/* submit button */}
-          <button
-            onClick={handleSubmit}
-            className='bg-custom-red mt-4 text-white rounded-md capitalize py-2'
-          >
-            submit
-          </button>
-        </form>
+            {/* submit button */}
+            <button
+              onClick={handleSubmit}
+              className='bg-custom-red mt-4 text-white rounded-md capitalize py-2'
+            >
+              submit
+            </button>
+          </form>
+        </div>
       </div>
-    </div>
+    </Container>
   );
 }
 
