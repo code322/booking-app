@@ -12,7 +12,7 @@ type perksTypes = {
   radio: boolean;
   ['private entrance']: boolean;
 };
-function Places() {
+function NewLocation() {
   const [addedPhotos, setAddedPhots] = useState<any>([]);
   const [photoLink, setPhotoLink] = useState<string>();
 
@@ -142,15 +142,6 @@ function Places() {
 
   return (
     <div className='m-4'>
-      <div>
-        <Link
-          className='bg-custom-red py-2 px-3 text-white rounded-md capitalize text-sm'
-          to={'/account/places/new'}
-        >
-          {' '}
-          + add new place
-        </Link>
-      </div>
       <div className='mt-10'>
         <form className='flex flex-col'>
           <Fields
@@ -299,7 +290,7 @@ function Places() {
   );
 }
 
-export default Places;
+export default NewLocation;
 type fieldsType = {
   label: string;
   placeholder: string;

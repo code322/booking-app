@@ -3,7 +3,7 @@ import Container from '../../components/Container/Container';
 import { useAppSelector } from '../../hooks/userTypeSelector';
 import { userSelector } from '../../state/authSlicer/authSlicer';
 import { useEffect, useState } from 'react';
-import Places from '../Places/Places';
+import Location from '../Location/Location';
 
 function Account() {
   const user = useAppSelector(userSelector);
@@ -13,6 +13,8 @@ function Account() {
     setActive(title);
   }
 
+  const { subpages } = useParams();
+  console.log(subpages);
   return (
     <Container>
       <nav className='w-full flex mt-8 gap-4 justify-center'>
@@ -30,7 +32,7 @@ function Account() {
           active={active}
         />
       </nav>
-      {active === 'accommodation' ? <Places /> : <></>}
+      {active === 'accommodation' ? <Location /> : <></>}
     </Container>
   );
 }
