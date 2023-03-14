@@ -55,12 +55,11 @@ function Places() {
   const [input, setInput] = useState({
     title: '',
     address: '',
-    photos: [],
     description: '',
     extraInfo: '',
     checkIn: '',
     checkOut: '',
-    guest: 1,
+    guests: 1,
   });
 
   function handleCheckBoxes(e: React.ChangeEvent<HTMLInputElement>) {
@@ -71,8 +70,15 @@ function Places() {
       [id]: checked,
     });
   }
-  function handleInput(e: React.ChangeEvent<HTMLInputElement>) {
-    setPhotoLink(e.target.value);
+  function handleInput(
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLTextAreaElement>
+  ) {
+    const { id, value } = e.target;
+    setInput((preVal) => {
+      return { ...preVal, [id]: value };
+    });
   }
   async function handleUploadPhoto(e: React.SyntheticEvent) {
     e.preventDefault();
@@ -116,7 +122,23 @@ function Places() {
     }
   }
 
-  console.log(addedPhotos);
+  async function handleSubmit(e: React.FormEvent<HTMLButtonElement>) {
+    e.preventDefault();
+    let newPlace = {
+      ...input,
+      photos: addedPhotos,
+      perks: isChecked,
+    };
+    try {
+      let { data } = await axios.post(
+        `${API_URL}/api/location/new-location`,
+        newPlace
+      );
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <div className='m-4'>
@@ -135,18 +157,22 @@ function Places() {
             message='Title for your place, should be short and catchy as in advertisement'
             label='title'
             placeholder='Title'
+            handleChange={handleInput}
           />
           <Fields
             message='Address to this place'
             label='address'
             placeholder='Address'
+            handleChange={handleInput}
           />
           <div className='flex gap-2'>
             <Fields
               message='More = better'
               label='photos'
               placeholder='Add using a link ...jpg'
-              handleChange={handleInput}
+              handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setPhotoLink(e.target.value)
+              }
               value={photoLink}
             />
             <button
@@ -196,6 +222,7 @@ function Places() {
             <textarea
               id='description'
               className='w-full resize-none border min-h-[100px] mt-2 outline-none p-2'
+              onChange={handleInput}
             ></textarea>
           </div>
           <div className='mt-4'>
@@ -219,6 +246,7 @@ function Places() {
             <textarea
               id='extraInfo'
               className='w-full resize-none border min-h-[100px] mt-2 outline-none p-2'
+              onChange={handleInput}
             ></textarea>
           </div>
           <div className='mt-4'>
@@ -234,6 +262,7 @@ function Places() {
                   className='flex border w-full flex-1'
                   id='checkIn'
                   type='time'
+                  onChange={handleInput}
                 />
               </div>
               <div className='flex flex-col'>
@@ -242,6 +271,7 @@ function Places() {
                   className='flex border w-full flex-1'
                   id='checkOut'
                   type='time'
+                  onChange={handleInput}
                 />
               </div>
               <div className='flex flex-col'>
@@ -252,10 +282,17 @@ function Places() {
                   type='number'
                   placeholder='Guests'
                   min={1}
+                  onChange={handleInput}
                 />
               </div>
             </div>
           </div>
+          <button
+            onClick={handleSubmit}
+            className='bg-custom-red mt-4 text-white rounded-md capitalize py-2'
+          >
+            submit
+          </button>
         </form>
       </div>
     </div>
