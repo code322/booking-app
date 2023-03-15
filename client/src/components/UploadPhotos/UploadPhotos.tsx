@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Content } from '../../pages/NewLocation/NewLocation';
+import { Content } from '../../pages/LocationForm/LocationForm';
 import InputFields from '../InputFields/InputFields';
 import { Icon } from '@iconify/react';
 import { API_URL } from '../../helpers/api';

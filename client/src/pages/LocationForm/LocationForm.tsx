@@ -38,7 +38,7 @@ function NewLocation() {
     extraInfo: '',
     checkIn: '',
     checkOut: '',
-    guests: 1,
+    guests: '1',
   });
 
   function handleCheckBoxes(e: React.ChangeEvent<HTMLInputElement>) {
@@ -77,7 +77,7 @@ function NewLocation() {
       console.log(error);
     }
   }
-
+  console.log(input);
   return (
     <Container>
       <div className='m-4'>

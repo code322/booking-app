@@ -1,12 +1,12 @@
-import { Link, useParams } from 'react-router-dom';
-
-import NewLocation from '../NewLocation/NewLocation';
+import { Link } from 'react-router-dom';
 import Container from '../../components/Container/Container';
-import Account from '../Account/Account';
+import dummyData from '../../dummyData';
 interface Props {
   setShowList: React.Dispatch<React.SetStateAction<boolean>>;
 }
+
 function Locations({ setShowList }: Props) {
+  console.log(dummyData);
   return (
     <Container>
       <div className='mt-4'>
@@ -18,6 +18,26 @@ function Locations({ setShowList }: Props) {
             {' '}
             + add new location
           </button>
+        </div>
+        <div className='mt-4'>
+          {dummyData.map((items) => (
+            <Link
+              to={'/account/locations/new/' + items.id}
+              className='flex gap-4'
+            >
+              {items.photos.length > 0 && (
+                <img
+                  className='w-32 h-32  grow shrink-0'
+                  src={items.photos[0]}
+                  alt=''
+                />
+              )}
+              <div className='shrink'>
+                <p className=' font-semibold capitalize'>{items.title}</p>
+                <p>{items.description}</p>
+              </div>
+            </Link>
+          ))}
         </div>
       </div>
     </Container>
