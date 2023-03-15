@@ -1,4 +1,9 @@
-export const boxes = [
+export type boxesType = {
+  label: string;
+  icon: string;
+};
+
+export const boxes: boxesType[] = [
   {
     label: 'wifi',
     icon: 'material-symbols:wifi',

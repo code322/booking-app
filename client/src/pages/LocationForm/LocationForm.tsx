@@ -4,43 +4,25 @@ import axios from 'axios';
 import { API_URL } from '../../helpers/api';
 import CheckBox from '../../components/CheckBoxes/CheckBoxes';
 import InputFields from '../../components/InputFields/InputFields';
-import { boxes } from '../../components/CheckBoxes/boxesList';
+import { boxes, boxesType } from '../../components/CheckBoxes/boxesList';
 import UploadPhotos from '../../components/UploadPhotos/UploadPhotos';
-import { useAppSelector } from '../../hooks/userTypeSelector';
-import { selectUploadedPhotos } from '../../state/locations/upLoadPhotosSlicer';
 import Container from '../../components/Container/Container';
-import Account from '../Account/Account';
+import { inputTypes, perksTypes } from '../Account/Account';
 
-type perksTypes = {
-  wifi: boolean;
-  TV: boolean;
-  pet: boolean;
-  ['free parking spot']: boolean;
-  radio: boolean;
-  ['private entrance']: boolean;
-};
-function NewLocation() {
-  const addedPhotos = useAppSelector(selectUploadedPhotos);
-
-  const [isChecked, setIsChecked] = useState<perksTypes>({
-    wifi: false,
-    TV: false,
-    pet: false,
-    ['free parking spot']: false,
-    radio: false,
-    ['private entrance']: false,
-  });
-
-  const [input, setInput] = useState({
-    title: '',
-    address: '',
-    description: '',
-    extraInfo: '',
-    checkIn: '',
-    checkOut: '',
-    guests: '1',
-  });
-
+interface Props {
+  input: inputTypes;
+  setInput: React.Dispatch<React.SetStateAction<inputTypes>>;
+  addedPhotos: string[];
+  isChecked: perksTypes;
+  setIsChecked: React.Dispatch<React.SetStateAction<perksTypes>>;
+}
+function LocationForm({
+  input,
+  setInput,
+  addedPhotos,
+  isChecked,
+  setIsChecked,
+}: Props) {
   function handleCheckBoxes(e: React.ChangeEvent<HTMLInputElement>) {
     const { id, checked } = e.target;
 
@@ -60,6 +42,8 @@ function NewLocation() {
     });
   }
 
+  console.log();
+
   async function handleSubmit(e: React.FormEvent<HTMLButtonElement>) {
     e.preventDefault();
     let newPlace = {
@@ -77,7 +61,6 @@ function NewLocation() {
       console.log(error);
     }
   }
-  console.log(input);
   return (
     <Container>
       <div className='m-4'>
@@ -117,13 +100,50 @@ function NewLocation() {
             {/* Perks */}
             <Content label='perks' info='Selected all the perks of your place'>
               <div className='mt-4 grid grid-cols-2 md:grid-cols-3 gap-2'>
-                {boxes.map(({ label, icon }) => (
+                {/* {boxes.map((items: boxesType) => (
                   <CheckBox
                     handleBoxes={handleCheckBoxes}
-                    label={label}
-                    icon={icon}
+                    label={items.label}
+                    icon={items.icon}
+                    checked={isChecked[`${items.label}`]}
                   />
-                ))}
+                ))} */}
+                <CheckBox
+                  handleBoxes={handleCheckBoxes}
+                  label={'wifi'}
+                  icon={'material-symbols:wifi'}
+                  checked={isChecked.wifi}
+                />
+                <CheckBox
+                  handleBoxes={handleCheckBoxes}
+                  label={'free parking spot'}
+                  icon={'fluent-mdl2:parking-location-mirrored'}
+                  checked={isChecked['free parking spot']}
+                />
+                <CheckBox
+                  handleBoxes={handleCheckBoxes}
+                  label={'TV'}
+                  icon={'ic:round-tv'}
+                  checked={isChecked.TV}
+                />
+                <CheckBox
+                  handleBoxes={handleCheckBoxes}
+                  label={'radio'}
+                  icon={'ic:outline-radio'}
+                  checked={isChecked.radio}
+                />
+                <CheckBox
+                  handleBoxes={handleCheckBoxes}
+                  label={'pet'}
+                  icon={'map:pet-store'}
+                  checked={isChecked.pet}
+                />
+                <CheckBox
+                  handleBoxes={handleCheckBoxes}
+                  label={'private entrance'}
+                  icon={'material-symbols:door-back-outline'}
+                  checked={isChecked['private entrance']}
+                />
               </div>
             </Content>
 
@@ -192,7 +212,7 @@ function NewLocation() {
   );
 }
 
-export default NewLocation;
+export default LocationForm;
 
 type contentType = {
   label: string;

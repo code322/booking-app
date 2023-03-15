@@ -2,28 +2,33 @@ import { Link } from 'react-router-dom';
 import Container from '../../components/Container/Container';
 import dummyData from '../../dummyData';
 interface Props {
-  setShowList: React.Dispatch<React.SetStateAction<boolean>>;
+  setShowForm: React.Dispatch<React.SetStateAction<boolean>>;
+  setEditMode: React.Dispatch<React.SetStateAction<boolean>>;
+  setListId: React.Dispatch<React.SetStateAction<number>>;
 }
 
-function Locations({ setShowList }: Props) {
-  console.log(dummyData);
+function Locations({ setShowForm, setEditMode, setListId }: Props) {
   return (
     <Container>
       <div className='mt-4'>
         <div>
           <button
-            onClick={() => setShowList((preVal) => !preVal)}
+            onClick={() => setShowForm((preVal) => !preVal)}
             className='bg-custom-red py-2 px-3 text-white rounded-md capitalize text-sm'
           >
             {' '}
             + add new location
           </button>
         </div>
-        <div className='mt-4'>
-          {dummyData.map((items) => (
-            <Link
-              to={'/account/locations/new/' + items.id}
-              className='flex gap-4'
+        <div className='mt-4 flex flex-col gap-4'>
+          {dummyData().map((items) => (
+            <span
+              onClick={() => {
+                setShowForm(true);
+                setEditMode(true);
+                setListId(items.id);
+              }}
+              className='flex gap-4 cursor-pointer'
             >
               {items.photos.length > 0 && (
                 <img
@@ -36,7 +41,7 @@ function Locations({ setShowList }: Props) {
                 <p className=' font-semibold capitalize'>{items.title}</p>
                 <p>{items.description}</p>
               </div>
-            </Link>
+            </span>
           ))}
         </div>
       </div>
