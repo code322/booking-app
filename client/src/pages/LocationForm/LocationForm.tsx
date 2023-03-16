@@ -8,6 +8,11 @@ import { boxes, boxesType } from '../../components/CheckBoxes/boxesList';
 import UploadPhotos from '../../components/UploadPhotos/UploadPhotos';
 import Container from '../../components/Container/Container';
 import { inputTypes, perksTypes } from '../Account/Account';
+import { useAppDispatch } from '../../hooks/userTypeSelector';
+import {
+  addNewLocation,
+  locationType,
+} from '../../state/locations/locationsSlicer';
 
 interface Props {
   input: inputTypes;
@@ -42,24 +47,15 @@ function LocationForm({
     });
   }
 
-  console.log();
-
+  const dispatch = useAppDispatch();
   async function handleSubmit(e: React.FormEvent<HTMLButtonElement>) {
     e.preventDefault();
-    let newPlace = {
+    let newLocation: locationType = {
       ...input,
       photos: addedPhotos,
       perks: isChecked,
     };
-    try {
-      let { data } = await axios.post(
-        `${API_URL}/api/location/new-location`,
-        newPlace
-      );
-      console.log(data);
-    } catch (error) {
-      console.log(error);
-    }
+    dispatch(addNewLocation(newLocation) as any);
   }
   return (
     <Container>

@@ -17,8 +17,24 @@ export const getAllLocations = createAsyncThunk(
   }
 );
 
-type locationType = {
-  id: number;
+export const addNewLocation = createAsyncThunk(
+  'locations/addNewLocation',
+  async (newLocation: locationType, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.post(
+        `${API_URL}/api/location/new-location`,
+        newLocation
+      );
+      console.log(data);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export type locationType = {
+  id?: number;
   title: string;
   address: string;
   photos: string[];
@@ -65,6 +81,17 @@ const locationSlice = createSlice({
       .addCase(getAllLocations.rejected, (state, action) => {
         state.status = 'failed';
         state.locations = [];
+        state.error = action.payload;
+      })
+      .addCase(addNewLocation.pending, (state) => {
+        state.status = 'idle';
+      })
+      .addCase(addNewLocation.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.locations.push(action.payload);
+      })
+      .addCase(addNewLocation.rejected, (state, action) => {
+        state.status = 'failed';
         state.error = action.payload;
       });
   },

@@ -3,7 +3,7 @@ import db from '../config/db.js';
 export const getAllLocations = async (req, res) => {
   try {
     const locations = 'SELECT * FROM Locations';
-    const data = await db.query(locations);
+    const [data] = await db.query(locations);
 
     res.status(201).json(data);
   } catch (error) {
@@ -46,9 +46,13 @@ export const addNewLocation = async (req, res) => {
       perks,
     ];
 
-    await db.query(insertPlace, values);
+    const [result] = await db.query(insertPlace, values);
 
-    res.status(200).json('New location added successfully');
+    const [data] = await db.query('SELECT * FROM Locations WHERE id=?', [
+      result.insertId,
+    ]);
+
+    res.status(200).json(data[0]);
   } catch (error) {
     res.status(400).json(error.message);
   }

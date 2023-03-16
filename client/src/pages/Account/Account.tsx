@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import Container from '../../components/Container/Container';
-import { useAppSelector } from '../../hooks/userTypeSelector';
+import { useAppDispatch, useAppSelector } from '../../hooks/userTypeSelector';
 import LocationForm from '../LocationForm/LocationForm';
 import Locations from '../Locations/Locations';
 import { selectUploadedPhotos } from '../../state/locations/upLoadPhotosSlicer';
 import dummyData from '../../dummyData';
+import {
+  getAllLocations,
+  selectLocations,
+} from '../../state/locations/locationsSlicer';
 
 export type perksTypes = {
   wifi: boolean;
@@ -100,6 +104,15 @@ function Account() {
   let inActiveNav = 'capitalize rounded-md p-2';
   let activeNav = 'capitalize rounded-md p-2 bg-custom-red text-white';
   // console.log(editPerks);
+
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(getAllLocations() as any);
+  }, []);
+
+  const state = useAppSelector(selectLocations);
+
+  console.log(state);
   return (
     <Container>
       <div className='w-full flex gap-4 justify-center'>
