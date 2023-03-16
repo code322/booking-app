@@ -4,10 +4,35 @@ export const getAllLocations = async (req, res) => {
   try {
     const locations = 'SELECT * FROM Locations';
     const [data] = await db.query(locations);
+    const response = data.map((items) => {
+      let photo = JSON.parse(items.photos);
+      return {
+        ...items,
+        perks: JSON.parse(items.perks),
+        photos: photo,
+      };
+    });
 
-    res.status(201).json(data);
+    res.status(201).json(response);
   } catch (error) {
     res.status(409).json(error.message);
+  }
+};
+
+export const getLocationById = async (req, res) => {
+  let { id } = req.params;
+  try {
+    const [data] = await db.query('SELECT * FROM Locations WHERE id=?', [id]);
+    let result = data[0];
+    let response = {
+      ...result,
+      photos: JSON.parse(result.photos),
+      perks: JSON.parse(result.perks),
+    };
+
+    res.status(201).json(response);
+  } catch (error) {
+    res.status(401).json(error.message);
   }
 };
 export const addNewLocation = async (req, res) => {

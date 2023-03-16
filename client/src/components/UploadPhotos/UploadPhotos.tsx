@@ -12,7 +12,7 @@ interface Props {
   addedPhotos: string[];
 }
 function UploadPhotos({ addedPhotos }: Props) {
-  const [photoLink, setPhotoLink] = useState('');
+  const [photoLink, setPhotoLink] = useState<string>('');
   const dispatch = useAppDispatch();
 
   async function handleUploadPhoto(e: React.SyntheticEvent) {
@@ -25,6 +25,7 @@ function UploadPhotos({ addedPhotos }: Props) {
     let files: any = e.target.files;
     dispatch(uploadSelectedPhoto(files) as any);
   }
+  console.log(addedPhotos);
   return (
     <>
       <div className='flex gap-2'>

@@ -2,6 +2,7 @@ import { RootState } from './../store';
 import { API_URL } from './../../helpers/api';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { newLocationType } from '../../pages/LocationForm/LocationForm';
 
 export const getAllLocations = createAsyncThunk(
   'locations/getAllLocations',
@@ -19,7 +20,7 @@ export const getAllLocations = createAsyncThunk(
 
 export const addNewLocation = createAsyncThunk(
   'locations/addNewLocation',
-  async (newLocation: locationType, { rejectWithValue }) => {
+  async (newLocation: newLocationType, { rejectWithValue }) => {
     try {
       const { data } = await axios.post(
         `${API_URL}/api/location/new-location`,
@@ -34,7 +35,7 @@ export const addNewLocation = createAsyncThunk(
 );
 
 export type locationType = {
-  id?: number;
+  id: number;
   title: string;
   address: string;
   photos: string[];
@@ -99,4 +100,5 @@ const locationSlice = createSlice({
 
 export default locationSlice.reducer;
 
-export const selectLocations = (state: RootState) => state.locationsSlicer;
+export const selectLocations = (state: RootState) =>
+  state.locationsSlicer.locations;

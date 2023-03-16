@@ -7,6 +7,7 @@ import { selectUploadedPhotos } from '../../state/locations/upLoadPhotosSlicer';
 import dummyData from '../../dummyData';
 import {
   getAllLocations,
+  locationType,
   selectLocations,
 } from '../../state/locations/locationsSlicer';
 
@@ -52,6 +53,7 @@ function Account() {
     checkOut: '',
     guests: '',
   });
+  const locationsList = useAppSelector(selectLocations);
 
   const [input, setInput] = useState<inputTypes>({
     title: '',
@@ -72,8 +74,12 @@ function Account() {
     ['private entrance']: false,
   });
 
-  let data = dummyData();
+  // ? Disabling type checking is always an option to get rid of TypeScript
+  // errors, but I personally don't recommend using it if there are other alternatives.
+  // @ts-ignore:next-line
+  const location: any = locationsList.find((item) => item.id === listId);
   const {
+    id,
     title,
     address,
     description,
@@ -83,7 +89,7 @@ function Account() {
     guests,
     perks,
     photos,
-  } = data[listId];
+  } = location;
 
   let inputData = {
     title,
@@ -110,9 +116,6 @@ function Account() {
     dispatch(getAllLocations() as any);
   }, []);
 
-  const state = useAppSelector(selectLocations);
-
-  console.log(state);
   return (
     <Container>
       <div className='w-full flex gap-4 justify-center'>
@@ -166,6 +169,7 @@ function Account() {
         )}
         {active === 'location' && !showForm && (
           <Locations
+            locationsList={locationsList}
             setShowForm={setShowForm}
             setEditMode={setEditMode}
             setListId={setListId}

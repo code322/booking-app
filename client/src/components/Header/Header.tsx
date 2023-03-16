@@ -21,7 +21,7 @@ function Header() {
         </Link>
         {/* nav */}
         <div className='flex items-center gap-3'>
-          <Link to='/listing'>
+          <Link to='/account'>
             <a className='p-3 bg-custom-red text-white rounded-md outline-none flex items-center gap-2'>
               <Icon icon='material-symbols:add' color='white' />
               <span>Add Listing</span>

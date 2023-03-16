@@ -5,7 +5,7 @@ import axios from 'axios';
 
 export const uploadSelectedPhoto = createAsyncThunk(
   'upload/uploadSelected',
-  async (photos: any, { rejectWithValue }) => {
+  async (photos: string[], { rejectWithValue }) => {
     const newData = new FormData();
     for (let i = 0; i < photos.length; i++) {
       newData.append('photos', photos[i]);
@@ -64,29 +64,36 @@ const uploadPhotosSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addMatcher(
-        isAnyOf(uploadSelectedPhoto.pending, uploadByLinkPhoto.pending),
-        (state) => {
-          state.status = 'idle';
-          state.error = null;
-        }
-      )
-      .addMatcher(
-        isAnyOf(uploadSelectedPhoto.fulfilled, uploadByLinkPhoto.fulfilled),
-        (state, action) => {
-          state.status = 'succeeded';
-          state.photos = [...state.photos, action.payload];
-          state.error = null;
-        }
-      )
-      .addMatcher(
-        isAnyOf(uploadSelectedPhoto.rejected, uploadByLinkPhoto.rejected),
-        (state, action) => {
-          state.status = 'failed';
-          state.photos = [];
-          state.error = action.payload;
-        }
-      );
+      .addCase(uploadSelectedPhoto.pending, (state) => {
+        state.status = 'idle';
+        state.error = null;
+      })
+      .addCase(uploadSelectedPhoto.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        action.payload.forEach((item: string) => {
+          state.photos.push(item);
+        });
+        state.error = null;
+      })
+      .addCase(uploadSelectedPhoto.rejected, (state, action) => {
+        state.status = 'failed';
+        state.photos = [];
+        state.error = action.payload;
+      })
+      .addCase(uploadByLinkPhoto.pending, (state) => {
+        state.status = 'idle';
+        state.error = null;
+      })
+      .addCase(uploadByLinkPhoto.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.photos.push(action.payload);
+        state.error = null;
+      })
+      .addCase(uploadByLinkPhoto.rejected, (state, action) => {
+        state.status = 'failed';
+        state.photos = [];
+        state.error = action.payload;
+      });
   },
 });
 

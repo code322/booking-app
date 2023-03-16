@@ -9,11 +9,26 @@ import UploadPhotos from '../../components/UploadPhotos/UploadPhotos';
 import Container from '../../components/Container/Container';
 import { inputTypes, perksTypes } from '../Account/Account';
 import { useAppDispatch } from '../../hooks/userTypeSelector';
-import {
-  addNewLocation,
-  locationType,
-} from '../../state/locations/locationsSlicer';
+import { addNewLocation } from '../../state/locations/locationsSlicer';
 
+export type newLocationType = {
+  title: string;
+  address: string;
+  photos: string[];
+  description: string;
+  perks: {
+    wifi: boolean;
+    TV: boolean;
+    pet: boolean;
+    ['free parking spot']: boolean;
+    radio: boolean;
+    ['private entrance']: boolean;
+  };
+  extraInfo: string;
+  checkIn: string;
+  checkOut: string;
+  guests: string;
+};
 interface Props {
   input: inputTypes;
   setInput: React.Dispatch<React.SetStateAction<inputTypes>>;
@@ -50,7 +65,7 @@ function LocationForm({
   const dispatch = useAppDispatch();
   async function handleSubmit(e: React.FormEvent<HTMLButtonElement>) {
     e.preventDefault();
-    let newLocation: locationType = {
+    let newLocation: newLocationType = {
       ...input,
       photos: addedPhotos,
       perks: isChecked,
