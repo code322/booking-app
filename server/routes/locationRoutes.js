@@ -7,7 +7,7 @@ import {
 const router = express.Router();
 
 router.get('/get-all-locations', getAllLocations);
-router.get('/get-all-locations', getLocationById);
+router.get('/get-location-by-id', getLocationById);
 router.post('/new-location', addNewLocation);
 
 export default router;
