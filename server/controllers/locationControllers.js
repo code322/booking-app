@@ -1,5 +1,15 @@
 import db from '../config/db.js';
 
+export const getAllLocations = async (req, res) => {
+  try {
+    const locations = 'SELECT * FROM Locations';
+    const data = await db.query(locations);
+
+    res.status(201).json(data);
+  } catch (error) {
+    res.status(409).json(error.message);
+  }
+};
 export const addNewLocation = async (req, res) => {
   const newPlace = req.body;
 
