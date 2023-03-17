@@ -9,7 +9,7 @@ import {
   uploadSelectedPhoto,
 } from '../../state/locations/upLoadPhotosSlicer';
 interface Props {
-  addedPhotos: string[];
+  addedPhotos?: string[];
 }
 function UploadPhotos({ addedPhotos }: Props) {
   const [photoLink, setPhotoLink] = useState<string>('');
@@ -25,7 +25,6 @@ function UploadPhotos({ addedPhotos }: Props) {
     let files: any = e.target.files;
     dispatch(uploadSelectedPhoto(files) as any);
   }
-  console.log(addedPhotos);
   return (
     <>
       <div className='flex gap-2'>
@@ -66,7 +65,8 @@ function UploadPhotos({ addedPhotos }: Props) {
         </label>
 
         <>
-          {addedPhotos.length > 0 &&
+          {addedPhotos &&
+            addedPhotos.length > 0 &&
             addedPhotos.map((links: any, index: number) => (
               <div key={index}>
                 <img

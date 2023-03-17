@@ -7,9 +7,14 @@ import InputFields from '../../components/InputFields/InputFields';
 import { boxes, boxesType } from '../../components/CheckBoxes/boxesList';
 import UploadPhotos from '../../components/UploadPhotos/UploadPhotos';
 import Container from '../../components/Container/Container';
-import { inputTypes, perksTypes } from '../Account/Account';
 import { useAppDispatch } from '../../hooks/userTypeSelector';
 import { addNewLocation } from '../../state/locations/locationsSlicer';
+import {
+  initialInput,
+  initialPerks,
+  inputTypes,
+  perksTypes,
+} from '../../helpers/types';
 
 export type newLocationType = {
   title: string;
@@ -30,19 +35,15 @@ export type newLocationType = {
   guests: string;
 };
 interface Props {
-  input: inputTypes;
-  setInput: React.Dispatch<React.SetStateAction<inputTypes>>;
-  addedPhotos: string[];
-  isChecked: perksTypes;
-  setIsChecked: React.Dispatch<React.SetStateAction<perksTypes>>;
+  inputData?: inputTypes;
+  photosData?: string[];
+  perksData?: perksTypes;
 }
-function LocationForm({
-  input,
-  setInput,
-  addedPhotos,
-  isChecked,
-  setIsChecked,
-}: Props) {
+function LocationForm({ inputData, photosData, perksData }: Props) {
+  const [isChecked, setIsChecked] = useState<perksTypes>(initialPerks);
+  const [photos, setPhotos] = useState<string[]>([]);
+  const [input, setInput] = useState<inputTypes>(initialInput);
+
   function handleCheckBoxes(e: React.ChangeEvent<HTMLInputElement>) {
     const { id, checked } = e.target;
 
@@ -67,11 +68,12 @@ function LocationForm({
     e.preventDefault();
     let newLocation: newLocationType = {
       ...input,
-      photos: addedPhotos,
+      photos: photos,
       perks: isChecked,
     };
     dispatch(addNewLocation(newLocation) as any);
   }
+
   return (
     <Container>
       <div className='m-4'>
@@ -85,19 +87,19 @@ function LocationForm({
                 type={'text'}
                 name='title'
                 handleChange={handleInput}
-                value={input.title}
+                defaultValue={inputData?.title}
               />
             </Content>
             <Content label={'address'} info='Address to this place'>
               <InputFields
                 name='address'
                 handleChange={handleInput}
-                value={input.address}
+                defaultValue={inputData?.address}
               />
             </Content>
 
             {/* upload photo */}
-            <UploadPhotos addedPhotos={addedPhotos} />
+            <UploadPhotos addedPhotos={photosData} />
 
             {/* Description */}
             <Content label='description' info='add description of the place'>
@@ -105,7 +107,7 @@ function LocationForm({
                 name='description'
                 className='w-full resize-none border min-h-[100px] mt-2 outline-none p-2'
                 onChange={handleInput}
-                value={input.description}
+                defaultValue={inputData?.description}
               ></textarea>
             </Content>
             {/* Perks */}
@@ -123,37 +125,37 @@ function LocationForm({
                   handleBoxes={handleCheckBoxes}
                   label={'wifi'}
                   icon={'material-symbols:wifi'}
-                  checked={isChecked.wifi}
+                  defaultChecked={perksData?.wifi}
                 />
                 <CheckBox
                   handleBoxes={handleCheckBoxes}
                   label={'free parking spot'}
                   icon={'fluent-mdl2:parking-location-mirrored'}
-                  checked={isChecked['free parking spot']}
+                  defaultChecked={perksData?.['free parking spot']}
                 />
                 <CheckBox
                   handleBoxes={handleCheckBoxes}
                   label={'TV'}
                   icon={'ic:round-tv'}
-                  checked={isChecked.TV}
+                  defaultChecked={perksData?.TV}
                 />
                 <CheckBox
                   handleBoxes={handleCheckBoxes}
                   label={'radio'}
                   icon={'ic:outline-radio'}
-                  checked={isChecked.radio}
+                  defaultChecked={perksData?.radio}
                 />
                 <CheckBox
                   handleBoxes={handleCheckBoxes}
                   label={'pet'}
                   icon={'map:pet-store'}
-                  checked={isChecked.pet}
+                  defaultChecked={perksData?.pet}
                 />
                 <CheckBox
                   handleBoxes={handleCheckBoxes}
                   label={'private entrance'}
                   icon={'material-symbols:door-back-outline'}
-                  checked={isChecked['private entrance']}
+                  defaultChecked={perksData?.['private entrance']}
                 />
               </div>
             </Content>

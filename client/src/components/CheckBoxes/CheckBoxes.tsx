@@ -3,7 +3,8 @@ type checkBoxType = {
   label: string;
   icon: string;
   value?: string;
-  checked: boolean;
+  checked?: boolean;
+  defaultChecked?: boolean;
   handleBoxes: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
@@ -13,6 +14,7 @@ const CheckBox = ({
   value,
   checked,
   handleBoxes,
+  defaultChecked,
 }: checkBoxType) => (
   <>
     <label
@@ -26,6 +28,7 @@ const CheckBox = ({
         value={value}
         onChange={handleBoxes}
         checked={checked}
+        defaultChecked={defaultChecked}
       />
       <Icon className='text-gray-400' icon={icon} />
       {label}

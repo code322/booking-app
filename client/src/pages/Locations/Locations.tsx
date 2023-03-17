@@ -1,12 +1,16 @@
 import { Link } from 'react-router-dom';
 import Container from '../../components/Container/Container';
 import dummyData from '../../dummyData';
-import { useAppSelector } from '../../hooks/userTypeSelector';
+import { useAppDispatch, useAppSelector } from '../../hooks/userTypeSelector';
 import {
   locationType,
   selectLocations,
 } from '../../state/locations/locationsSlicer';
 import { API_URL } from '../../helpers/api';
+import {
+  getLocationById,
+  selectLocationByIdStatus,
+} from '../../state/locations/locationByIdSlicer';
 interface Props {
   setShowForm: React.Dispatch<React.SetStateAction<boolean>>;
   setEditMode: React.Dispatch<React.SetStateAction<boolean>>;
@@ -20,6 +24,9 @@ function Locations({
   setListId,
   locationsList,
 }: Props) {
+  const dispatch = useAppDispatch();
+  const selectGetByIdStatus = useAppSelector(selectLocationByIdStatus);
+
   return (
     <Container>
       <div className='mt-4'>
@@ -40,6 +47,7 @@ function Locations({
                 onClick={() => {
                   setShowForm(true);
                   setEditMode(true);
+                  dispatch(getLocationById(items.id) as any);
                   setListId(items.id);
                 }}
                 className='flex gap-4 cursor-pointer'

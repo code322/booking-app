@@ -1,6 +1,6 @@
 import { RootState } from './../store';
 import { API_URL } from './../../helpers/api';
-import { createSlice, createAsyncThunk, isAnyOf } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 export const uploadSelectedPhoto = createAsyncThunk(

@@ -9,7 +9,7 @@ export const getLocationById = createAsyncThunk(
   async (id: number, { rejectWithValue }) => {
     try {
       const { data } = await axios.get(
-        `${API_URL}/api/location/get-location-by-id/:${id}`
+        `${API_URL}/api/location/get-location-by-id/${id}`
       );
       return data;
     } catch (error) {
@@ -20,13 +20,34 @@ export const getLocationById = createAsyncThunk(
 
 interface locationByIdInterface {
   status: 'idle' | 'succeeded' | 'failed';
-  location: locationType | null;
+
+  location: locationType;
   error: any;
 }
 
+export const locationInitialState = {
+  id: 0,
+  title: '',
+  address: '',
+  description: '',
+  extraInfo: '',
+  checkIn: '',
+  checkOut: '',
+  guests: '1',
+  photos: [],
+  perks: {
+    wifi: false,
+    TV: false,
+    pet: false,
+    ['free parking spot']: false,
+    radio: false,
+    ['private entrance']: false,
+  },
+};
+
 let initialState: locationByIdInterface = {
   status: 'idle',
-  location: null,
+  location: locationInitialState,
   error: null,
 };
 const getLocationByIdSlice = createSlice({
@@ -36,7 +57,7 @@ const getLocationByIdSlice = createSlice({
   extraReducers(builder) {
     builder
       .addCase(getLocationById.pending, (state) => {
-        state = initialState;
+        state.status = 'idle';
       })
       .addCase(getLocationById.fulfilled, (state, action) => {
         state.status = 'succeeded';
@@ -45,7 +66,7 @@ const getLocationByIdSlice = createSlice({
       })
       .addCase(getLocationById.rejected, (state, action) => {
         state.status = 'failed';
-        state.location = null;
+        state.location = initialState.location;
         state.error = action.payload;
       });
   },
@@ -54,3 +75,5 @@ const getLocationByIdSlice = createSlice({
 export default getLocationByIdSlice.reducer;
 export const selectLocationById = (state: RootState) =>
   state.locationByIdSlicer.location;
+export const selectLocationByIdStatus = (state: RootState) =>
+  state.locationByIdSlicer.status;

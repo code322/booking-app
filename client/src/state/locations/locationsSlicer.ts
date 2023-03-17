@@ -38,7 +38,6 @@ export type locationType = {
   id: number;
   title: string;
   address: string;
-  photos: string[];
   description: string;
   perks: {
     wifi: boolean;
@@ -48,6 +47,7 @@ export type locationType = {
     radio: boolean;
     ['private entrance']: boolean;
   };
+  photos: string[];
   extraInfo: string;
   checkIn: string;
   checkOut: string;

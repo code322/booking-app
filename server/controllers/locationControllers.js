@@ -21,6 +21,7 @@ export const getAllLocations = async (req, res) => {
 
 export const getLocationById = async (req, res) => {
   let { id } = req.params;
+
   try {
     const [data] = await db.query('SELECT * FROM Locations WHERE id=?', [id]);
     let result = data[0];
@@ -29,6 +30,7 @@ export const getLocationById = async (req, res) => {
       photos: JSON.parse(result.photos),
       perks: JSON.parse(result.perks),
     };
+    console.log(response);
 
     res.status(201).json(response);
   } catch (error) {
