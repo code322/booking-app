@@ -17,10 +17,16 @@ import {
 } from '../../helpers/types';
 
 export type newLocationType = {
-  title: string;
-  address: string;
+  details: {
+    title: string;
+    address: string;
+    description: string;
+    extraInfo: string;
+    checkIn: string;
+    checkOut: string;
+    guests: string;
+  };
   photos: string[];
-  description: string;
   utils: {
     wifi: boolean;
     netflex: boolean;
@@ -29,14 +35,10 @@ export type newLocationType = {
     water: boolean;
     gym: boolean;
   };
-  extraInfo: string;
-  checkIn: string;
-  checkOut: string;
-  guests: string;
 };
 interface Props {
   detailsData?: detailsTypes;
-  photosData?: string[];
+  photosData: string[];
   utilsData?: utilsTypes;
 }
 function LocationForm({ detailsData, photosData, utilsData }: Props) {
@@ -67,9 +69,9 @@ function LocationForm({ detailsData, photosData, utilsData }: Props) {
   async function handleSubmit(e: React.FormEvent<HTMLButtonElement>) {
     e.preventDefault();
     let newLocation: newLocationType = {
-      ...details,
-      photos: photos,
-      utils: utils,
+      details,
+      photos: photosData,
+      utils,
     };
     dispatch(addNewLocation(newLocation) as any);
   }

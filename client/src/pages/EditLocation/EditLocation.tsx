@@ -5,34 +5,11 @@ import {
   selectLocationById,
   selectLocationByIdStatus,
 } from '../../state/locations/locationByIdSlicer';
-import {} from '../../helpers/types';
-interface Props {
-  id: number;
-}
 
-const EditLocation = ({ id }: Props) => {
+const EditLocation = () => {
   const location = useAppSelector(selectLocationById);
 
-  const {
-    title,
-    address,
-    description,
-    extraInfo,
-    checkIn,
-    checkOut,
-    guests,
-    utils,
-    photos,
-  } = location;
-  const detailsData = {
-    title,
-    address,
-    description,
-    extraInfo,
-    checkIn,
-    checkOut,
-    guests,
-  };
+  const { details, utils, photos } = location;
   const status = useAppSelector(selectLocationByIdStatus);
 
   return (
@@ -41,7 +18,7 @@ const EditLocation = ({ id }: Props) => {
         <div>loading...</div>
       ) : (
         <LocationForm
-          detailsData={detailsData}
+          detailsData={details}
           photosData={photos}
           utilsData={utils}
         />

@@ -36,13 +36,15 @@ export const addNewLocation = createAsyncThunk(
 
 export type locationType = {
   id: number;
-  title: string;
-  address: string;
-  description: string;
-  extraInfo: string;
-  checkIn: string;
-  checkOut: string;
-  guests: string;
+  details: {
+    title: string;
+    address: string;
+    description: string;
+    extraInfo: string;
+    checkIn: string;
+    checkOut: string;
+    guests: string;
+  };
   utils: {
     wifi: boolean;
     netflex: boolean;

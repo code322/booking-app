@@ -5,11 +5,11 @@ export const getAllLocations = async (req, res) => {
     const locations = 'SELECT * FROM Locations';
     const [data] = await db.query(locations);
     const response = data.map((items) => {
-      let photo = JSON.parse(items.photos);
       return {
         ...items,
         utils: JSON.parse(items.utils),
-        photos: photo,
+        photos: JSON.parse(items.photos),
+        details: JSON.parse(items.details),
       };
     });
 
@@ -27,6 +27,7 @@ export const getLocationById = async (req, res) => {
     let result = data[0];
     let response = {
       ...result,
+      details: JSON.parse(result.details),
       photos: JSON.parse(result.photos),
       utils: JSON.parse(result.utils),
     };
@@ -37,41 +38,17 @@ export const getLocationById = async (req, res) => {
     res.status(401).json(error.message);
   }
 };
+
 export const addNewLocation = async (req, res) => {
-  const newPlace = req.body;
-
-  let perksStringify = JSON.stringify(newPlace.utils);
-  let photosStringify = JSON.stringify(newPlace.photos);
-
-  newPlace.utils = perksStringify;
-  newPlace.photos = photosStringify;
-
-  const {
-    title,
-    address,
-    description,
-    extraInfo,
-    checkIn,
-    checkOut,
-    guests,
-    photos,
-    utils,
-  } = newPlace;
+  let location = req.body;
+  let details = JSON.stringify(location.details);
+  let photos = JSON.stringify(location.photos);
+  let utils = JSON.stringify(location.utils);
 
   try {
-    const insertPlace = `INSERT INTO Locations(title, address, description, extraInfo, checkIn, checkOut, guests, photos, utils) VALUES (?,?,?,?,?,?,?,?,?)`;
+    const insertPlace = `INSERT INTO Locations(details, photos, utils) VALUES (?,?,?)`;
 
-    let values = [
-      title,
-      address,
-      description,
-      extraInfo,
-      checkIn,
-      checkOut,
-      guests,
-      photos,
-      utils,
-    ];
+    let values = [details, photos, utils];
 
     const [result] = await db.query(insertPlace, values);
 

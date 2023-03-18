@@ -27,13 +27,15 @@ interface locationByIdInterface {
 
 export const locationInitialState = {
   id: 0,
-  title: '',
-  address: '',
-  description: '',
-  extraInfo: '',
-  checkIn: '',
-  checkOut: '',
-  guests: '1',
+  details: {
+    title: '',
+    address: '',
+    description: '',
+    extraInfo: '',
+    checkIn: '',
+    checkOut: '',
+    guests: '1',
+  },
   photos: [],
   utils: {
     wifi: false,
