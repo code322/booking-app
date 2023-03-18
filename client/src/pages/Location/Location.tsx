@@ -30,19 +30,21 @@ const Location = () => {
       <div className='grid gap-2 sm:grid-cols-[2fr_1fr] mt-6'>
         <div>
           <img
-            className='aspect-square object-cover'
+            onClick={() => setIsExpanded(true)}
+            className='aspect-square object-cover hover:cursor-pointer'
             src={`${API_URL}/uploads/${location?.photos?.[0]}`}
             alt=''
           />
         </div>
-        <div className='grid relative '>
+        <div className='grid relative overflow-hidden'>
           {location?.photos?.map((photos, index) =>
             index === 0 || index > 2 ? (
               ''
             ) : (
               <div className={``}>
                 <img
-                  className={`border border-gray-200 relative ${
+                  onClick={() => setIsExpanded(true)}
+                  className={`border border-gray-200 relative hover:cursor-pointer ${
                     index === 2 ? ' top-2' : ''
                   }`}
                   src={`${API_URL}/uploads/${location?.photos?.[index]}`}
