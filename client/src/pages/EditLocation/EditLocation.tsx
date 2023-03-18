@@ -21,7 +21,7 @@ const EditLocation = ({ id }: Props) => {
     checkIn,
     checkOut,
     guests,
-    perks,
+    utils,
     photos,
   } = location;
   const inputData = {
@@ -43,7 +43,7 @@ const EditLocation = ({ id }: Props) => {
         <LocationForm
           inputData={inputData}
           photosData={photos}
-          perksData={perks}
+          perksData={utils}
         />
       )}
     </>

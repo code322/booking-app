@@ -39,7 +39,7 @@ export type locationType = {
   title: string;
   address: string;
   description: string;
-  perks: {
+  utils: {
     wifi: boolean;
     TV: boolean;
     pet: boolean;

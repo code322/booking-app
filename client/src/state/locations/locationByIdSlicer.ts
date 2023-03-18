@@ -35,7 +35,7 @@ export const locationInitialState = {
   checkOut: '',
   guests: '1',
   photos: [],
-  perks: {
+  utils: {
     wifi: false,
     TV: false,
     pet: false,

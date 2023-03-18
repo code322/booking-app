@@ -21,7 +21,7 @@ export type newLocationType = {
   address: string;
   photos: string[];
   description: string;
-  perks: {
+  utils: {
     wifi: boolean;
     TV: boolean;
     pet: boolean;
@@ -69,7 +69,7 @@ function LocationForm({ inputData, photosData, perksData }: Props) {
     let newLocation: newLocationType = {
       ...input,
       photos: photos,
-      perks: isChecked,
+      utils: isChecked,
     };
     dispatch(addNewLocation(newLocation) as any);
   }
@@ -111,7 +111,7 @@ function LocationForm({ inputData, photosData, perksData }: Props) {
               ></textarea>
             </Content>
             {/* Perks */}
-            <Content label='perks' info='Selected all the perks of your place'>
+            <Content label='utils' info='Selected all the utils of your place'>
               <div className='mt-4 grid grid-cols-2 md:grid-cols-3 gap-2'>
                 {/* {boxes.map((items: boxesType) => (
                   <CheckBox
