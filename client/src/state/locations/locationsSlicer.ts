@@ -1,3 +1,4 @@
+import { detailsTypes, utilsTypes } from './../../helpers/types';
 import { RootState } from './../store';
 import { API_URL } from './../../helpers/api';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
@@ -36,23 +37,8 @@ export const addNewLocation = createAsyncThunk(
 
 export type locationType = {
   id: number;
-  details: {
-    title: string;
-    address: string;
-    description: string;
-    extraInfo: string;
-    checkIn: string;
-    checkOut: string;
-    guests: string;
-  };
-  utils: {
-    wifi: boolean;
-    netflex: boolean;
-    hydro: boolean;
-    parking: boolean;
-    water: boolean;
-    gym: boolean;
-  };
+  details: detailsTypes;
+  utils: utilsTypes;
   photos: string[];
 };
 interface locationInterface {

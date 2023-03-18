@@ -1,3 +1,4 @@
+import { initialDetails, initialUtils } from './../../helpers/types';
 import { locationType } from './locationsSlicer';
 import { RootState } from '../store';
 import { API_URL } from '../../helpers/api';
@@ -25,26 +26,11 @@ interface locationByIdInterface {
   error: any;
 }
 
-export const locationInitialState = {
+export const locationInitialState: locationType = {
   id: 0,
-  details: {
-    title: '',
-    address: '',
-    description: '',
-    extraInfo: '',
-    checkIn: '',
-    checkOut: '',
-    guests: '1',
-  },
+  details: initialDetails,
   photos: [],
-  utils: {
-    wifi: false,
-    netflex: false,
-    hydro: false,
-    parking: false,
-    water: false,
-    gym: false,
-  },
+  utils: initialUtils,
 };
 
 let initialState: locationByIdInterface = {

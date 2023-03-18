@@ -37,14 +37,14 @@ export type newLocationType = {
   };
 };
 interface Props {
-  detailsData?: detailsTypes;
+  detailsData: detailsTypes;
   photosData: string[];
-  utilsData?: utilsTypes;
+  utilsData: utilsTypes;
 }
 function LocationForm({ detailsData, photosData, utilsData }: Props) {
-  const [utils, setUtils] = useState<utilsTypes>(initialUtils);
-  const [photos, setPhotos] = useState<string[]>([]);
-  const [details, setDetails] = useState<detailsTypes>(initialDetails);
+  const [utils, setUtils] = useState<utilsTypes>(utilsData);
+  const [photos, setPhotos] = useState<string[]>(photosData);
+  const [details, setDetails] = useState<detailsTypes>(detailsData);
 
   function handleCheckBoxes(e: React.ChangeEvent<HTMLInputElement>) {
     const { id, checked } = e.target;
@@ -64,6 +64,7 @@ function LocationForm({ detailsData, photosData, utilsData }: Props) {
       return { ...preVal, [name]: value };
     });
   }
+  console.log(details);
 
   const dispatch = useAppDispatch();
   async function handleSubmit(e: React.FormEvent<HTMLButtonElement>) {
@@ -89,19 +90,19 @@ function LocationForm({ detailsData, photosData, utilsData }: Props) {
                 type={'text'}
                 name='title'
                 handleChange={handleInput}
-                defaultValue={detailsData?.title}
+                value={details.title}
               />
             </Content>
             <Content label={'address'} info='Address to this place'>
               <InputFields
                 name='address'
                 handleChange={handleInput}
-                defaultValue={detailsData?.address}
+                value={details.address}
               />
             </Content>
 
             {/* upload photo */}
-            <UploadPhotos addedPhotos={photosData} />
+            <UploadPhotos addedPhotos={photos} />
 
             {/* Description */}
             <Content label='description' info='add description of the place'>
@@ -109,7 +110,7 @@ function LocationForm({ detailsData, photosData, utilsData }: Props) {
                 name='description'
                 className='w-full resize-none border min-h-[100px] mt-2 outline-none p-2'
                 onChange={handleInput}
-                defaultValue={detailsData?.description}
+                value={details.description}
               ></textarea>
             </Content>
             {/* Perks */}
@@ -128,36 +129,39 @@ function LocationForm({ detailsData, photosData, utilsData }: Props) {
                   label={'wifi'}
                   icon={'material-symbols:wifi'}
                   defaultChecked={utilsData?.wifi}
+                  checked={utils?.wifi}
                 />
                 <CheckBox
                   handleBoxes={handleCheckBoxes}
                   label={'parking'}
                   icon={'fluent-mdl2:parking-location-mirrored'}
                   defaultChecked={utilsData?.parking}
+                  checked={utils?.parking}
                 />
                 <CheckBox
                   handleBoxes={handleCheckBoxes}
                   label={'netflex'}
                   icon={'ic:round-tv'}
                   defaultChecked={utilsData?.netflex}
+                  checked={utils?.netflex}
                 />
                 <CheckBox
                   handleBoxes={handleCheckBoxes}
                   label={'water'}
                   icon={'ic:outline-water'}
-                  defaultChecked={utilsData?.water}
+                  checked={utils?.water}
                 />
                 <CheckBox
                   handleBoxes={handleCheckBoxes}
                   label={'hydro'}
                   icon={'material-symbols:light-outline-rounded'}
-                  defaultChecked={utilsData?.hydro}
+                  checked={utils?.hydro}
                 />
                 <CheckBox
                   handleBoxes={handleCheckBoxes}
                   label={'gym'}
                   icon={'iconoir:gym'}
-                  defaultChecked={utilsData?.gym}
+                  checked={utils?.gym}
                 />
               </div>
             </Content>
@@ -168,7 +172,7 @@ function LocationForm({ detailsData, photosData, utilsData }: Props) {
                 name='extraInfo'
                 className='w-full resize-none border min-h-[100px] mt-2 outline-none p-2'
                 onChange={handleInput}
-                defaultValue={detailsData?.extraInfo}
+                value={details?.extraInfo}
               ></textarea>
             </Content>
 
@@ -186,7 +190,7 @@ function LocationForm({ detailsData, photosData, utilsData }: Props) {
                     name='checkIn'
                     type='time'
                     onChange={handleInput}
-                    defaultValue={detailsData?.checkIn}
+                    value={details?.checkIn}
                   />
                 </div>
                 <div className='flex flex-col'>
@@ -196,7 +200,7 @@ function LocationForm({ detailsData, photosData, utilsData }: Props) {
                     name='checkOut'
                     type='time'
                     onChange={handleInput}
-                    defaultValue={detailsData?.checkOut}
+                    value={details?.checkOut}
                   />
                 </div>
                 <div className='flex flex-col'>
@@ -208,7 +212,19 @@ function LocationForm({ detailsData, photosData, utilsData }: Props) {
                     placeholder='Guests'
                     min={1}
                     onChange={handleInput}
-                    defaultValue={detailsData?.guests}
+                    value={details?.guests}
+                  />
+                </div>
+                <div className='flex flex-col'>
+                  <label htmlFor='guests'>Guests</label>
+                  <input
+                    className='flex border w-full flex-1'
+                    name='guests'
+                    type='number'
+                    placeholder='Guests'
+                    min={1}
+                    onChange={handleInput}
+                    value={details?.guests}
                   />
                 </div>
               </div>

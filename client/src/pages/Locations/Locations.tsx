@@ -38,7 +38,6 @@ function Locations({ setShowForm, setEditMode, setListId }: Props) {
         <div className='mt-4 flex flex-col gap-4'>
           {locationsList &&
             locationsList.map((items, index) => {
-              console.log(items.photos);
               return (
                 <span
                   key={index}
