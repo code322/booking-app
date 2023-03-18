@@ -7,7 +7,7 @@ export type utilsTypes = {
   gym: boolean;
 };
 
-export type inputTypes = {
+export type detailsTypes = {
   title: string;
   address: string;
   description: string;
@@ -17,7 +17,7 @@ export type inputTypes = {
   guests: string;
 };
 
-export const initialInput: inputTypes = {
+export const initialDetails: detailsTypes = {
   title: '',
   address: '',
   description: '',

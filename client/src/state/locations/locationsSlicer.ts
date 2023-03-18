@@ -39,6 +39,10 @@ export type locationType = {
   title: string;
   address: string;
   description: string;
+  extraInfo: string;
+  checkIn: string;
+  checkOut: string;
+  guests: string;
   utils: {
     wifi: boolean;
     netflex: boolean;
@@ -48,10 +52,6 @@ export type locationType = {
     gym: boolean;
   };
   photos: string[];
-  extraInfo: string;
-  checkIn: string;
-  checkOut: string;
-  guests: string;
 };
 interface locationInterface {
   status: 'idle' | 'succeeded' | 'failed';

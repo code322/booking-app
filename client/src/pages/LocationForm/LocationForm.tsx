@@ -10,9 +10,9 @@ import Container from '../../components/Container/Container';
 import { useAppDispatch } from '../../hooks/userTypeSelector';
 import { addNewLocation } from '../../state/locations/locationsSlicer';
 import {
-  initialInput,
+  initialDetails,
   initialUtils,
-  inputTypes,
+  detailsTypes,
   utilsTypes,
 } from '../../helpers/types';
 
@@ -35,14 +35,14 @@ export type newLocationType = {
   guests: string;
 };
 interface Props {
-  inputData?: inputTypes;
+  detailsData?: detailsTypes;
   photosData?: string[];
   utilsData?: utilsTypes;
 }
-function LocationForm({ inputData, photosData, utilsData }: Props) {
+function LocationForm({ detailsData, photosData, utilsData }: Props) {
   const [utils, setUtils] = useState<utilsTypes>(initialUtils);
   const [photos, setPhotos] = useState<string[]>([]);
-  const [input, setInput] = useState<inputTypes>(initialInput);
+  const [details, setDetails] = useState<detailsTypes>(initialDetails);
 
   function handleCheckBoxes(e: React.ChangeEvent<HTMLInputElement>) {
     const { id, checked } = e.target;
@@ -58,7 +58,7 @@ function LocationForm({ inputData, photosData, utilsData }: Props) {
       | React.ChangeEvent<HTMLTextAreaElement>
   ) {
     const { name, value } = e.target;
-    setInput((preVal) => {
+    setDetails((preVal) => {
       return { ...preVal, [name]: value };
     });
   }
@@ -67,7 +67,7 @@ function LocationForm({ inputData, photosData, utilsData }: Props) {
   async function handleSubmit(e: React.FormEvent<HTMLButtonElement>) {
     e.preventDefault();
     let newLocation: newLocationType = {
-      ...input,
+      ...details,
       photos: photos,
       utils: utils,
     };
@@ -87,14 +87,14 @@ function LocationForm({ inputData, photosData, utilsData }: Props) {
                 type={'text'}
                 name='title'
                 handleChange={handleInput}
-                defaultValue={inputData?.title}
+                defaultValue={detailsData?.title}
               />
             </Content>
             <Content label={'address'} info='Address to this place'>
               <InputFields
                 name='address'
                 handleChange={handleInput}
-                defaultValue={inputData?.address}
+                defaultValue={detailsData?.address}
               />
             </Content>
 
@@ -107,7 +107,7 @@ function LocationForm({ inputData, photosData, utilsData }: Props) {
                 name='description'
                 className='w-full resize-none border min-h-[100px] mt-2 outline-none p-2'
                 onChange={handleInput}
-                defaultValue={inputData?.description}
+                defaultValue={detailsData?.description}
               ></textarea>
             </Content>
             {/* Perks */}
@@ -166,7 +166,7 @@ function LocationForm({ inputData, photosData, utilsData }: Props) {
                 name='extraInfo'
                 className='w-full resize-none border min-h-[100px] mt-2 outline-none p-2'
                 onChange={handleInput}
-                defaultValue={inputData?.extraInfo}
+                defaultValue={detailsData?.extraInfo}
               ></textarea>
             </Content>
 
@@ -184,7 +184,7 @@ function LocationForm({ inputData, photosData, utilsData }: Props) {
                     name='checkIn'
                     type='time'
                     onChange={handleInput}
-                    defaultValue={inputData?.checkIn}
+                    defaultValue={detailsData?.checkIn}
                   />
                 </div>
                 <div className='flex flex-col'>
@@ -194,7 +194,7 @@ function LocationForm({ inputData, photosData, utilsData }: Props) {
                     name='checkOut'
                     type='time'
                     onChange={handleInput}
-                    defaultValue={inputData?.checkOut}
+                    defaultValue={detailsData?.checkOut}
                   />
                 </div>
                 <div className='flex flex-col'>
@@ -206,7 +206,7 @@ function LocationForm({ inputData, photosData, utilsData }: Props) {
                     placeholder='Guests'
                     min={1}
                     onChange={handleInput}
-                    defaultValue={inputData?.guests}
+                    defaultValue={detailsData?.guests}
                   />
                 </div>
               </div>

@@ -24,7 +24,7 @@ const EditLocation = ({ id }: Props) => {
     utils,
     photos,
   } = location;
-  const inputData = {
+  const detailsData = {
     title,
     address,
     description,
@@ -41,7 +41,7 @@ const EditLocation = ({ id }: Props) => {
         <div>loading...</div>
       ) : (
         <LocationForm
-          inputData={inputData}
+          detailsData={detailsData}
           photosData={photos}
           utilsData={utils}
         />
