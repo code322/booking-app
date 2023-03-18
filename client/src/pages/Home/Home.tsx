@@ -36,7 +36,7 @@ function Home() {
             return (
               <div className='rounded-md shadow-customShadow bg-gray-100 '>
                 <div className='relative'>
-                  <Link to={'/'}>
+                  <Link to={`/location/${locations.id}`}>
                     <img
                       className='bg-blue-200 aspect-square object-cover'
                       src={`${API_URL}/uploads/${locations.photos[0]}`}
