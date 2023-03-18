@@ -37,11 +37,11 @@ export const locationInitialState = {
   photos: [],
   utils: {
     wifi: false,
-    TV: false,
+    netflex: false,
     hydro: false,
     parking: false,
     water: false,
-    cable: false,
+    gym: false,
   },
 };
 

@@ -41,11 +41,11 @@ export type locationType = {
   description: string;
   utils: {
     wifi: boolean;
-    TV: boolean;
+    netflex: boolean;
     hydro: boolean;
     parking: boolean;
     water: boolean;
-    cable: boolean;
+    gym: boolean;
   };
   photos: string[];
   extraInfo: string;

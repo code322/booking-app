@@ -23,11 +23,11 @@ export type newLocationType = {
   description: string;
   utils: {
     wifi: boolean;
-    TV: boolean;
+    netflex: boolean;
     hydro: boolean;
     parking: boolean;
     water: boolean;
-    cable: boolean;
+    gym: boolean;
   };
   extraInfo: string;
   checkIn: string;
@@ -135,9 +135,9 @@ function LocationForm({ inputData, photosData, utilsData }: Props) {
                 />
                 <CheckBox
                   handleBoxes={handleCheckBoxes}
-                  label={'TV'}
+                  label={'netflex'}
                   icon={'ic:round-tv'}
-                  defaultChecked={utilsData?.TV}
+                  defaultChecked={utilsData?.netflex}
                 />
                 <CheckBox
                   handleBoxes={handleCheckBoxes}
@@ -148,14 +148,14 @@ function LocationForm({ inputData, photosData, utilsData }: Props) {
                 <CheckBox
                   handleBoxes={handleCheckBoxes}
                   label={'hydro'}
-                  icon={'map:hydro-store'}
+                  icon={'material-symbols:light-outline-rounded'}
                   defaultChecked={utilsData?.hydro}
                 />
                 <CheckBox
                   handleBoxes={handleCheckBoxes}
-                  label={'cable'}
-                  icon={'material-symbols:door-back-outline'}
-                  defaultChecked={utilsData?.cable}
+                  label={'gym'}
+                  icon={'iconoir:gym'}
+                  defaultChecked={utilsData?.gym}
                 />
               </div>
             </Content>

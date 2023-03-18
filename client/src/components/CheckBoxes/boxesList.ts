@@ -13,8 +13,8 @@ export const boxes: boxesType[] = [
     icon: 'fluent-mdl2:parking-location-mirrored',
   },
   {
-    label: 'TV',
-    icon: 'ic:round-tv',
+    label: 'netflex',
+    icon: 'ic:round-netflex',
   },
   {
     label: 'water',
@@ -22,10 +22,10 @@ export const boxes: boxesType[] = [
   },
   {
     label: 'hydro',
-    icon: 'map:hydro-store',
+    icon: 'material-symbols:light-outline-rounded',
   },
   {
-    label: 'cable',
+    label: 'gym',
     icon: 'material-symbols:door-back-outline',
   },
 ];
