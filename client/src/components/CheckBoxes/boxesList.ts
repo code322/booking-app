@@ -9,7 +9,7 @@ export const boxes: boxesType[] = [
     icon: 'material-symbols:wifi',
   },
   {
-    label: 'free parking spot',
+    label: 'parking',
     icon: 'fluent-mdl2:parking-location-mirrored',
   },
   {
@@ -17,15 +17,15 @@ export const boxes: boxesType[] = [
     icon: 'ic:round-tv',
   },
   {
-    label: 'radio',
-    icon: 'ic:outline-radio',
+    label: 'water',
+    icon: 'ic:outline-water',
   },
   {
-    label: 'pet',
-    icon: 'map:pet-store',
+    label: 'hydro',
+    icon: 'map:hydro-store',
   },
   {
-    label: 'private entrance',
+    label: 'cable',
     icon: 'material-symbols:door-back-outline',
   },
 ];

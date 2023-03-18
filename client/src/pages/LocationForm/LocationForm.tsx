@@ -24,10 +24,10 @@ export type newLocationType = {
   utils: {
     wifi: boolean;
     TV: boolean;
-    pet: boolean;
-    ['free parking spot']: boolean;
-    radio: boolean;
-    ['private entrance']: boolean;
+    hydro: boolean;
+    parking: boolean;
+    water: boolean;
+    cable: boolean;
   };
   extraInfo: string;
   checkIn: string;
@@ -129,9 +129,9 @@ function LocationForm({ inputData, photosData, utilsData }: Props) {
                 />
                 <CheckBox
                   handleBoxes={handleCheckBoxes}
-                  label={'free parking spot'}
+                  label={'parking'}
                   icon={'fluent-mdl2:parking-location-mirrored'}
-                  defaultChecked={utilsData?.['free parking spot']}
+                  defaultChecked={utilsData?.parking}
                 />
                 <CheckBox
                   handleBoxes={handleCheckBoxes}
@@ -141,21 +141,21 @@ function LocationForm({ inputData, photosData, utilsData }: Props) {
                 />
                 <CheckBox
                   handleBoxes={handleCheckBoxes}
-                  label={'radio'}
-                  icon={'ic:outline-radio'}
-                  defaultChecked={utilsData?.radio}
+                  label={'water'}
+                  icon={'ic:outline-water'}
+                  defaultChecked={utilsData?.water}
                 />
                 <CheckBox
                   handleBoxes={handleCheckBoxes}
-                  label={'pet'}
-                  icon={'map:pet-store'}
-                  defaultChecked={utilsData?.pet}
+                  label={'hydro'}
+                  icon={'map:hydro-store'}
+                  defaultChecked={utilsData?.hydro}
                 />
                 <CheckBox
                   handleBoxes={handleCheckBoxes}
-                  label={'private entrance'}
+                  label={'cable'}
                   icon={'material-symbols:door-back-outline'}
-                  defaultChecked={utilsData?.['private entrance']}
+                  defaultChecked={utilsData?.cable}
                 />
               </div>
             </Content>

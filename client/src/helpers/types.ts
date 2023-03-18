@@ -1,10 +1,10 @@
 export type utilsTypes = {
   wifi: boolean;
   TV: boolean;
-  pet: boolean;
-  ['free parking spot']: boolean;
-  radio: boolean;
-  ['private entrance']: boolean;
+  hydro: boolean;
+  parking: boolean;
+  water: boolean;
+  cable: boolean;
 };
 
 export type inputTypes = {
@@ -30,8 +30,8 @@ export const initialInput: inputTypes = {
 export const initialUtils: utilsTypes = {
   wifi: false,
   TV: false,
-  pet: false,
-  ['free parking spot']: false,
-  radio: false,
-  ['private entrance']: false,
+  hydro: false,
+  parking: false,
+  water: false,
+  cable: false,
 };

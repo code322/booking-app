@@ -38,10 +38,10 @@ export const locationInitialState = {
   utils: {
     wifi: false,
     TV: false,
-    pet: false,
-    ['free parking spot']: false,
-    radio: false,
-    ['private entrance']: false,
+    hydro: false,
+    parking: false,
+    water: false,
+    cable: false,
   },
 };
 

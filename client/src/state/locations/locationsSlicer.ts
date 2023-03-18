@@ -42,10 +42,10 @@ export type locationType = {
   utils: {
     wifi: boolean;
     TV: boolean;
-    pet: boolean;
-    ['free parking spot']: boolean;
-    radio: boolean;
-    ['private entrance']: boolean;
+    hydro: boolean;
+    parking: boolean;
+    water: boolean;
+    cable: boolean;
   };
   photos: string[];
   extraInfo: string;
