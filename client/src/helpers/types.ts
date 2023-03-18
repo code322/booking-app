@@ -27,7 +27,7 @@ export const initialInput: inputTypes = {
   guests: '1',
 };
 
-export const initialPerks: utilsTypes = {
+export const initialUtils: utilsTypes = {
   wifi: false,
   TV: false,
   pet: false,

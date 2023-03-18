@@ -43,7 +43,7 @@ const EditLocation = ({ id }: Props) => {
         <LocationForm
           inputData={inputData}
           photosData={photos}
-          perksData={utils}
+          utilsData={utils}
         />
       )}
     </>

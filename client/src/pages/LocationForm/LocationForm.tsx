@@ -11,7 +11,7 @@ import { useAppDispatch } from '../../hooks/userTypeSelector';
 import { addNewLocation } from '../../state/locations/locationsSlicer';
 import {
   initialInput,
-  initialPerks,
+  initialUtils,
   inputTypes,
   utilsTypes,
 } from '../../helpers/types';
@@ -37,18 +37,18 @@ export type newLocationType = {
 interface Props {
   inputData?: inputTypes;
   photosData?: string[];
-  perksData?: utilsTypes;
+  utilsData?: utilsTypes;
 }
-function LocationForm({ inputData, photosData, perksData }: Props) {
-  const [isChecked, setIsChecked] = useState<utilsTypes>(initialPerks);
+function LocationForm({ inputData, photosData, utilsData }: Props) {
+  const [utils, setUtils] = useState<utilsTypes>(initialUtils);
   const [photos, setPhotos] = useState<string[]>([]);
   const [input, setInput] = useState<inputTypes>(initialInput);
 
   function handleCheckBoxes(e: React.ChangeEvent<HTMLInputElement>) {
     const { id, checked } = e.target;
 
-    setIsChecked({
-      ...isChecked,
+    setUtils({
+      ...utils,
       [id]: checked,
     });
   }
@@ -69,7 +69,7 @@ function LocationForm({ inputData, photosData, perksData }: Props) {
     let newLocation: newLocationType = {
       ...input,
       photos: photos,
-      utils: isChecked,
+      utils: utils,
     };
     dispatch(addNewLocation(newLocation) as any);
   }
@@ -118,44 +118,44 @@ function LocationForm({ inputData, photosData, perksData }: Props) {
                     handleBoxes={handleCheckBoxes}
                     label={items.label}
                     icon={items.icon}
-                    checked={isChecked[`${items.label}`]}
+                    checked={utils[`${items.label}`]}
                   />
                 ))} */}
                 <CheckBox
                   handleBoxes={handleCheckBoxes}
                   label={'wifi'}
                   icon={'material-symbols:wifi'}
-                  defaultChecked={perksData?.wifi}
+                  defaultChecked={utilsData?.wifi}
                 />
                 <CheckBox
                   handleBoxes={handleCheckBoxes}
                   label={'free parking spot'}
                   icon={'fluent-mdl2:parking-location-mirrored'}
-                  defaultChecked={perksData?.['free parking spot']}
+                  defaultChecked={utilsData?.['free parking spot']}
                 />
                 <CheckBox
                   handleBoxes={handleCheckBoxes}
                   label={'TV'}
                   icon={'ic:round-tv'}
-                  defaultChecked={perksData?.TV}
+                  defaultChecked={utilsData?.TV}
                 />
                 <CheckBox
                   handleBoxes={handleCheckBoxes}
                   label={'radio'}
                   icon={'ic:outline-radio'}
-                  defaultChecked={perksData?.radio}
+                  defaultChecked={utilsData?.radio}
                 />
                 <CheckBox
                   handleBoxes={handleCheckBoxes}
                   label={'pet'}
                   icon={'map:pet-store'}
-                  defaultChecked={perksData?.pet}
+                  defaultChecked={utilsData?.pet}
                 />
                 <CheckBox
                   handleBoxes={handleCheckBoxes}
                   label={'private entrance'}
                   icon={'material-symbols:door-back-outline'}
-                  defaultChecked={perksData?.['private entrance']}
+                  defaultChecked={utilsData?.['private entrance']}
                 />
               </div>
             </Content>
@@ -166,6 +166,7 @@ function LocationForm({ inputData, photosData, perksData }: Props) {
                 name='extraInfo'
                 className='w-full resize-none border min-h-[100px] mt-2 outline-none p-2'
                 onChange={handleInput}
+                defaultValue={inputData?.extraInfo}
               ></textarea>
             </Content>
 
@@ -183,7 +184,7 @@ function LocationForm({ inputData, photosData, perksData }: Props) {
                     name='checkIn'
                     type='time'
                     onChange={handleInput}
-                    value={input.checkIn}
+                    defaultValue={inputData?.checkIn}
                   />
                 </div>
                 <div className='flex flex-col'>
@@ -193,7 +194,7 @@ function LocationForm({ inputData, photosData, perksData }: Props) {
                     name='checkOut'
                     type='time'
                     onChange={handleInput}
-                    value={input.checkOut}
+                    defaultValue={inputData?.checkOut}
                   />
                 </div>
                 <div className='flex flex-col'>
@@ -205,7 +206,7 @@ function LocationForm({ inputData, photosData, perksData }: Props) {
                     placeholder='Guests'
                     min={1}
                     onChange={handleInput}
-                    value={input.guests}
+                    defaultValue={inputData?.guests}
                   />
                 </div>
               </div>
