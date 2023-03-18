@@ -1,4 +1,4 @@
-export type perksTypes = {
+export type utilsTypes = {
   wifi: boolean;
   TV: boolean;
   pet: boolean;
@@ -27,7 +27,7 @@ export const initialInput: inputTypes = {
   guests: '1',
 };
 
-export const initialPerks: perksTypes = {
+export const initialPerks: utilsTypes = {
   wifi: false,
   TV: false,
   pet: false,

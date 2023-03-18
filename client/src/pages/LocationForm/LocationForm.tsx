@@ -13,7 +13,7 @@ import {
   initialInput,
   initialPerks,
   inputTypes,
-  perksTypes,
+  utilsTypes,
 } from '../../helpers/types';
 
 export type newLocationType = {
@@ -37,10 +37,10 @@ export type newLocationType = {
 interface Props {
   inputData?: inputTypes;
   photosData?: string[];
-  perksData?: perksTypes;
+  perksData?: utilsTypes;
 }
 function LocationForm({ inputData, photosData, perksData }: Props) {
-  const [isChecked, setIsChecked] = useState<perksTypes>(initialPerks);
+  const [isChecked, setIsChecked] = useState<utilsTypes>(initialPerks);
   const [photos, setPhotos] = useState<string[]>([]);
   const [input, setInput] = useState<inputTypes>(initialInput);
 
