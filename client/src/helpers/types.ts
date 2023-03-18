@@ -15,6 +15,7 @@ export type detailsTypes = {
   checkIn: string;
   checkOut: string;
   guests: string;
+  price?: string;
 };
 
 export const initialDetails: detailsTypes = {
@@ -25,6 +26,7 @@ export const initialDetails: detailsTypes = {
   checkIn: '',
   checkOut: '',
   guests: '1',
+  price: '',
 };
 
 export const initialUtils: utilsTypes = {

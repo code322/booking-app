@@ -102,7 +102,7 @@ function LocationForm({ detailsData, photosData, utilsData }: Props) {
             </Content>
 
             {/* upload photo */}
-            <UploadPhotos addedPhotos={photos} />
+            <UploadPhotos addedPhotos={photosData} />
 
             {/* Description */}
             <Content label='description' info='add description of the place'>
@@ -216,15 +216,15 @@ function LocationForm({ detailsData, photosData, utilsData }: Props) {
                   />
                 </div>
                 <div className='flex flex-col'>
-                  <label htmlFor='guests'>Guests</label>
+                  <label htmlFor='guests'>Price</label>
                   <input
                     className='flex border w-full flex-1'
-                    name='guests'
+                    name='price'
                     type='number'
-                    placeholder='Guests'
+                    placeholder='Price'
                     min={1}
                     onChange={handleInput}
-                    value={details?.guests}
+                    value={details?.price}
                   />
                 </div>
               </div>

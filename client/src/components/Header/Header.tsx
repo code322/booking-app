@@ -10,22 +10,21 @@ function Header() {
     <header className='py-8 h-[3.5rem] border-b flex justify-center '>
       <div className='px-3 max-w-5xl flex  justify-between h-full items-center w-full'>
         {/* logo */}
-        <Link to='/'>
-          <a className='h-8 w-8' href=''>
-            <Icon
-              className='h-10 w-10'
-              icon='material-symbols:location-on'
-              color='#ff385c'
-            />
-          </a>
+        <Link to={'/'} className='h-8 w-8'>
+          <Icon
+            className='h-10 w-10'
+            icon='material-symbols:location-on'
+            color='#ff385c'
+          />
         </Link>
         {/* nav */}
         <div className='flex items-center gap-3'>
-          <Link to='/account'>
-            <a className='p-3 bg-custom-red text-white rounded-md outline-none flex items-center gap-2'>
-              <Icon icon='material-symbols:add' color='white' />
-              <span>Add Listing</span>
-            </a>
+          <Link
+            to={'/account'}
+            className='p-3 bg-custom-red text-white rounded-md outline-none flex items-center gap-2'
+          >
+            <Icon icon='material-symbols:add' color='white' />
+            <span>Add Listing</span>
           </Link>
           <Link to={user ? '/' : '/login'}>
             {user ? (
