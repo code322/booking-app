@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import {
   getLocationById,
@@ -9,12 +9,25 @@ import { useAppDispatch, useAppSelector } from '../../hooks/userTypeSelector';
 import Container from '../../components/Container/Container';
 import { API_URL } from '../../helpers/api';
 import { Icon } from '@iconify/react';
-import ReactLoading from 'react-loading';
 import Spinner from '../../components/Spinner';
+import { differenceInCalendarDays } from 'date-fns';
+import { convertToDollars } from '../../utils';
 
+type bookingFormType = {
+  checkIn: string;
+  checkOut: string;
+  guests: string;
+};
 const Location = () => {
   const { id } = useParams();
-  const [isExpanded, setIsExpanded] = useState(false);
+
+  const [isExpanded, setIsExpanded] = useState<boolean>(false);
+  const [bookingData, setBookingData] = useState<bookingFormType>({
+    checkIn: '',
+    checkOut: '',
+    guests: '1',
+  });
+
   const dispatch = useAppDispatch();
   useLayoutEffect(() => {
     if (!id) return;
@@ -22,30 +35,68 @@ const Location = () => {
   }, [id, dispatch]);
 
   const location = useAppSelector(selectLocationById);
+  const status = useAppSelector(selectLocationByIdStatus);
   const [current, setCurrent] = useState(0);
 
-  let photoLength = location?.photos?.length - 1;
+  let photosLength = location?.photos?.length - 1;
 
+  //right button
   function handleRight() {
-    if (current < photoLength) {
+    if (current < photosLength) {
       return setCurrent((preVal) => preVal + 1);
     }
     return setCurrent(0);
   }
+
+  //left button
   function handleLeft() {
     if (current > 0) {
       return setCurrent((preVal) => preVal - 1);
     }
-    return setCurrent(photoLength);
+    return setCurrent(photosLength);
   }
-  const status = useAppSelector(selectLocationByIdStatus);
 
-  let nights = 5;
-  let totalPerNight = 40;
-  let cleaningFee = 200;
-  let serviceFee = 300;
-  let tax = 323;
+  let totalCost = useMemo(() => {
+    let cleaningFee = 10;
+    let serviceFee = 20;
+    let numberOfNights = 0;
+    if (bookingData.checkIn && bookingData.checkOut) {
+      numberOfNights = differenceInCalendarDays(
+        new Date(bookingData.checkOut),
+        new Date(bookingData.checkIn)
+      );
 
+      let costPerNight =
+        Number(location?.details?.price) *
+        Number(bookingData.guests) *
+        numberOfNights;
+
+      let taxes = (costPerNight + cleaningFee + serviceFee) * 0.13;
+      let total = costPerNight + cleaningFee + serviceFee + taxes;
+
+      return {
+        numberOfNights,
+        costPerNight,
+        cleaningFee,
+        serviceFee,
+        taxes,
+        total,
+      };
+    }
+    return {
+      numberOfNights,
+      costPerNight: 0,
+      cleaningFee: 0,
+      serviceFee: 0,
+      taxes: 0,
+      total: 0,
+    };
+  }, [bookingData]);
+
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const { id, value } = e.target;
+    setBookingData((preVal) => ({ ...preVal, [id]: value }));
+  }
   return (
     <>
       {status !== 'succeeded' ? (
@@ -166,15 +217,17 @@ const Location = () => {
                   <div className='flex border-b'>
                     <div className='flex flex-col flex-1 p-2 border-r'>
                       <label
-                        className=' font-bold uppercase text-xs'
+                        className='font-bold uppercase text-xs'
                         htmlFor='check-in'
                       >
                         check-in
                       </label>
                       <input
+                        onChange={handleChange}
                         className='text-xs outline-none'
-                        id='check-in'
+                        id='checkIn'
                         type='date'
+                        value={bookingData.checkIn}
                       />
                     </div>
                     <div className='flex flex-col flex-1 p-2'>
@@ -185,9 +238,11 @@ const Location = () => {
                         checkout
                       </label>
                       <input
+                        onChange={handleChange}
                         className='text-xs outline-none'
-                        id='checkout'
+                        id='checkOut'
                         type='date'
+                        value={bookingData.checkOut}
                       />
                     </div>
                   </div>
@@ -199,9 +254,12 @@ const Location = () => {
                       Number of guests
                     </label>
                     <input
+                      onChange={handleChange}
                       min={1}
                       className='border mx-2 text-base p-1 outline-none'
                       type='number'
+                      id='guests'
+                      value={bookingData.guests}
                     />
                   </div>
                 </div>
@@ -214,16 +272,25 @@ const Location = () => {
                       <TableRow
                         label={
                           <>
-                            <span>${location?.details.price}</span>
-                            <span> X {nights} guest(s)</span>
-                            <span> X {nights} nights</span>
+                            <span>${location?.details?.price}</span>
+                            <span> X {bookingData.guests} guest(s)</span>
+                            <span> X {totalCost.numberOfNights} night(s)</span>
                           </>
                         }
-                        data={400}
+                        data={convertToDollars(totalCost.costPerNight)}
                       />
-                      <TableRow label={<span>Cleaning fee</span>} data={400} />
-                      <TableRow label={<span>Service fee</span>} data={400} />
-                      <TableRow label={<span>Taxes</span>} data={400} />
+                      <TableRow
+                        label={<span>Cleaning fee</span>}
+                        data={convertToDollars(totalCost.cleaningFee)}
+                      />
+                      <TableRow
+                        label={<span>Service fee</span>}
+                        data={convertToDollars(totalCost.serviceFee)}
+                      />
+                      <TableRow
+                        label={<span>Taxes</span>}
+                        data={convertToDollars(totalCost.taxes)}
+                      />
                       <hr />
                       <TableRow
                         label={
@@ -234,7 +301,7 @@ const Location = () => {
                             Total
                           </span>
                         }
-                        data={400}
+                        data={convertToDollars(totalCost.total)}
                       />
                     </tbody>
                   </table>
@@ -251,7 +318,7 @@ const Location = () => {
 export default Location;
 type tableRowTypes = {
   label?: JSX.Element;
-  data?: number;
+  data?: string;
 };
 const TableRow = ({ label, data }: tableRowTypes) => {
   return (
