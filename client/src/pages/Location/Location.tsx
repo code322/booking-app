@@ -19,6 +19,23 @@ const Location = () => {
   }, [id, dispatch]);
 
   const location = useAppSelector(selectLocationById);
+  const [current, setCurrent] = useState(0);
+
+  let photoLength = location?.photos?.length - 1;
+
+  function handleRight() {
+    if (current < photoLength) {
+      return setCurrent((preVal) => preVal + 1);
+    }
+    return setCurrent(0);
+  }
+  function handleLeft() {
+    if (current > 0) {
+      return setCurrent((preVal) => preVal - 1);
+    }
+    return setCurrent(photoLength);
+  }
+  console.log(current);
   return (
     <Container>
       <div className='flex flex-col'>
@@ -28,10 +45,13 @@ const Location = () => {
         </small>
       </div>
       <div className='grid gap-2 sm:grid-cols-[2fr_1fr] mt-6'>
-        <div>
+        <div className='w-full'>
           <img
-            onClick={() => setIsExpanded(true)}
-            className='aspect-square object-cover hover:cursor-pointer'
+            onClick={() => {
+              setIsExpanded(true);
+              setCurrent(0);
+            }}
+            className='aspect-square object-cover hover:cursor-pointer rounded-md min-w-full'
             src={`${API_URL}/uploads/${location?.photos?.[0]}`}
             alt=''
           />
@@ -43,8 +63,11 @@ const Location = () => {
             ) : (
               <div className={``}>
                 <img
-                  onClick={() => setIsExpanded(true)}
-                  className={`border border-gray-200 relative hover:cursor-pointer ${
+                  onClick={() => {
+                    setIsExpanded(true);
+                    setCurrent(index);
+                  }}
+                  className={`'aspect-square object-cover relative hover:cursor-pointer w-full rounded-md ${
                     index === 2 ? ' top-2' : ''
                   }`}
                   src={`${API_URL}/uploads/${location?.photos?.[index]}`}
@@ -66,24 +89,39 @@ const Location = () => {
             isExpanded ? 'h-full' : 'h-0'
           }`}
         >
-          <div className='bg-gray-900'>
-            <Container>
+          <div className='bg-gray-900 h-full flex justify-center items-center '>
+            <div className='max-w-5xl m-auto px-3 py-4   w-full'>
               <button
                 onClick={() => setIsExpanded(false)}
-                className='text-white'
+                className='text-white relative left-0'
               >
                 X Close
               </button>
-              <div className='flex flex-col gap-2 mt-2'>
-                {location?.photos?.length > 0 &&
-                  location.photos.map((photo, index) => (
-                    <img
-                      src={`${API_URL}/uploads/${location?.photos?.[index]}`}
-                      alt=''
-                    />
-                  ))}
+              <div className='flex flex-col gap-2 mt-2 min-h-full relative'>
+                <div className='absolute flex justify-between items-center  px-2 w-full h-full'>
+                  <button
+                    onClick={handleLeft}
+                    className='text-gray-900 text-5xl'
+                  >
+                    <Icon icon='material-symbols:arrow-circle-left' />{' '}
+                  </button>
+                  <button
+                    onClick={handleRight}
+                    className='text-gray-900 text-5xl'
+                  >
+                    <Icon icon='material-symbols:arrow-circle-right' />{' '}
+                  </button>
+                </div>
+
+                {location?.photos && (
+                  <img
+                    className='rounded-md'
+                    src={`${API_URL}/uploads/${location?.photos[current]}`}
+                    alt=''
+                  />
+                )}
               </div>
-            </Container>
+            </div>
           </div>
         </div>
       </div>
