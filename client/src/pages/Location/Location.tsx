@@ -40,6 +40,12 @@ const Location = () => {
   }
   const status = useAppSelector(selectLocationByIdStatus);
 
+  let nights = 5;
+  let totalPerNight = 40;
+  let cleaningFee = 200;
+  let serviceFee = 300;
+  let tax = 323;
+
   return (
     <>
       {status !== 'succeeded' ? (
@@ -138,7 +144,7 @@ const Location = () => {
             </div>
           </div>
           {/* ---DESCRIPTION AND BOOKING--- */}
-          <div>
+          <div className='flex flex-col'>
             <div className='mt-6 grid gap-4 sm:grid-cols-[2fr_1fr]'>
               {/* ---DESCRIPTION--- */}
 
@@ -147,7 +153,7 @@ const Location = () => {
                 <p>{location.details.description}</p>
               </div>
               {/* ---BOOKING--- */}
-              <div className='shadow-customShadow border p-6 rounded-md'>
+              <div className='shadow-customShadow p-6 rounded-md'>
                 <div className='mb-2'>
                   <p className='text-xs'>
                     <span className='font-bold text-xl'>
@@ -165,7 +171,11 @@ const Location = () => {
                       >
                         check-in
                       </label>
-                      <input className='text-xs' id='check-in' type='date' />
+                      <input
+                        className='text-xs outline-none'
+                        id='check-in'
+                        type='date'
+                      />
                     </div>
                     <div className='flex flex-col flex-1 p-2'>
                       <label
@@ -174,7 +184,11 @@ const Location = () => {
                       >
                         checkout
                       </label>
-                      <input className='text-xs' id='checkout' type='date' />
+                      <input
+                        className='text-xs outline-none'
+                        id='checkout'
+                        type='date'
+                      />
                     </div>
                   </div>
                   <div className='flex flex-col py-4'>
@@ -194,6 +208,37 @@ const Location = () => {
                 <button className='text-white bg-custom-red text-center w-full rounded-md outline-none py-2 mt-2 capitalize'>
                   reserve
                 </button>
+                <>
+                  <table className='w-full mt-6'>
+                    <tbody>
+                      <TableRow
+                        label={
+                          <>
+                            <span>${location?.details.price}</span>
+                            <span> X {nights} guest(s)</span>
+                            <span> X {nights} nights</span>
+                          </>
+                        }
+                        data={400}
+                      />
+                      <TableRow label={<span>Cleaning fee</span>} data={400} />
+                      <TableRow label={<span>Service fee</span>} data={400} />
+                      <TableRow label={<span>Taxes</span>} data={400} />
+                      <hr />
+                      <TableRow
+                        label={
+                          <span
+                            className='font-bold text-lg
+                      '
+                          >
+                            Total
+                          </span>
+                        }
+                        data={400}
+                      />
+                    </tbody>
+                  </table>
+                </>
               </div>
             </div>
           </div>
@@ -204,3 +249,15 @@ const Location = () => {
 };
 
 export default Location;
+type tableRowTypes = {
+  label?: JSX.Element;
+  data?: number;
+};
+const TableRow = ({ label, data }: tableRowTypes) => {
+  return (
+    <tr className='flex justify-between '>
+      <td>{label}</td>
+      <td>{data}</td>
+    </tr>
+  );
+};

@@ -23,7 +23,7 @@ function Home() {
       <div className='grid sm:grid-cols-2 lg:grid-cols-3 gap-8'>
         {allLocations &&
           allLocations.map((locations) => {
-            let price = Number(locations.details.price).toLocaleString(
+            let price = Number(locations?.details?.price).toLocaleString(
               'en-US',
               {
                 style: 'currency',
@@ -36,10 +36,10 @@ function Home() {
             return (
               <div>
                 <div className='relative'>
-                  <Link to={`/location/${locations.id}`}>
+                  <Link to={`/location/${locations?.id}`}>
                     <img
                       className='bg-blue-200 aspect-square object-cover rounded-lg'
-                      src={`${API_URL}/uploads/${locations.photos[0]}`}
+                      src={`${API_URL}/uploads/${locations?.photos?.[0]}`}
                       alt='no_image'
                     />
                     <div className='absolute bg-gradient-to-b from-transparent to-gray-700 opacity-60 h-full w-full top-0 left-0 rounded-lg'></div>
@@ -53,7 +53,7 @@ function Home() {
                 </div>
                 <div className='py-3 '>
                   <h2 className='font-semibold text-base capitalize text-gray-700'>
-                    {locations.details.title}
+                    {locations?.details?.title}
                   </h2>
                   <div className='flex items-center justify-start'>
                     <Icon
@@ -61,7 +61,7 @@ function Home() {
                       icon='material-symbols:location-on-outline'
                     />
                     <h2 className='text-gray-600 capitalize text-sm'>
-                      {locations.details.address}
+                      {locations?.details?.address}
                     </h2>
                   </div>
                   <div className='flex items-center justify-start'>
@@ -70,7 +70,7 @@ function Home() {
                       icon='mdi:bed-double-outline'
                     />
                     <h2 className='text-gray-600 text-sm'>
-                      {locations.details.guests}
+                      {locations?.details?.guests}
                     </h2>
                   </div>
                 </div>
