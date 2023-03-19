@@ -94,6 +94,8 @@ const Location = () => {
                 <span>Show more photos</span>
               </button>
             </div>
+
+            {/* ---SLIDE SHOWS--- */}
             <div
               className={`fixed bottom-0 w-full bg-white left-0 transition-all duration-200 ease-in-out  pb-4 ${
                 isExpanded ? 'h-full' : 'h-0'
@@ -132,6 +134,66 @@ const Location = () => {
                     )}
                   </div>
                 </div>
+              </div>
+            </div>
+          </div>
+          {/* ---DESCRIPTION AND BOOKING--- */}
+          <div>
+            <div className='mt-6 grid gap-4 sm:grid-cols-[2fr_1fr]'>
+              {/* ---DESCRIPTION--- */}
+
+              <div>
+                <h2 className='font-bold text-xl text-black'>Description</h2>
+                <p>{location.details.description}</p>
+              </div>
+              {/* ---BOOKING--- */}
+              <div className='shadow-customShadow border p-6 rounded-md'>
+                <div className='mb-2'>
+                  <p className='text-xs'>
+                    <span className='font-bold text-xl'>
+                      ${location?.details?.price}
+                    </span>
+                    <span>/night</span>
+                  </p>
+                </div>
+                <div className='rounded-md border'>
+                  <div className='flex border-b'>
+                    <div className='flex flex-col flex-1 p-2 border-r'>
+                      <label
+                        className=' font-bold uppercase text-xs'
+                        htmlFor='check-in'
+                      >
+                        check-in
+                      </label>
+                      <input className='text-xs' id='check-in' type='date' />
+                    </div>
+                    <div className='flex flex-col flex-1 p-2'>
+                      <label
+                        className=' font-bold uppercase text-xs'
+                        htmlFor='check-in'
+                      >
+                        checkout
+                      </label>
+                      <input className='text-xs' id='checkout' type='date' />
+                    </div>
+                  </div>
+                  <div className='flex flex-col py-4'>
+                    <label
+                      className='capitalize text-xs font-bold px-2 pb-1'
+                      htmlFor=''
+                    >
+                      Number of guests
+                    </label>
+                    <input
+                      min={1}
+                      className='border mx-2 text-base p-1 outline-none'
+                      type='number'
+                    />
+                  </div>
+                </div>
+                <button className='text-white bg-custom-red text-center w-full rounded-md outline-none py-2 mt-2 capitalize'>
+                  reserve
+                </button>
               </div>
             </div>
           </div>
