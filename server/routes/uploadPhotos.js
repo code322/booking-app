@@ -1,5 +1,9 @@
 import express from 'express';
-import { uploadByLink, uploadFromLocal } from '../controllers/uploadPhotos.js';
+import {
+  removePhoto,
+  uploadByLink,
+  uploadFromLocal,
+} from '../controllers/uploadPhotos.js';
 import { photoMiddleware } from '../middlewares/photosMilddleware.js';
 
 const router = express.Router();
@@ -11,5 +15,7 @@ router.post(
   photoMiddleware.array('photos', 100),
   uploadFromLocal
 );
+
+router.delete('/remove-photo/:id', removePhoto);
 
 export default router;

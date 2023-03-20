@@ -8,11 +8,13 @@ import {
   uploadByLinkPhoto,
   uploadSelectedPhoto,
 } from '../../state/locations/upLoadPhotosSlicer';
+import axios from 'axios';
 interface Props {
-  addedPhotos?: string[];
+  addedPhotos: string[];
 }
 function UploadPhotos({ addedPhotos }: Props) {
   const [photoLink, setPhotoLink] = useState<string>('');
+  const [locationPhotos, setLocationPhotos] = useState<string[]>([]);
   const dispatch = useAppDispatch();
 
   async function handleUploadPhoto(e: React.SyntheticEvent) {
@@ -22,9 +24,42 @@ function UploadPhotos({ addedPhotos }: Props) {
   }
 
   async function handleUpload(e: React.ChangeEvent<HTMLInputElement>) {
-    let files: any = e.target.files;
-    dispatch(uploadSelectedPhoto(files) as any);
+    let photos: any = e.target.files;
+    // dispatch(uploadSelectedPhoto(files) as any);
+
+    const newData = new FormData();
+    for (let i = 0; i < photos.length; i++) {
+      newData.append('photos', photos[i]);
+    }
+    try {
+      const { data } = await axios.post(
+        `${API_URL}/api/upload/upload-from-local`,
+        newData,
+        {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        }
+      );
+
+      setLocationPhotos((preVal) => [...preVal, data]);
+    } catch (error) {
+      console.log(error);
+    }
   }
+
+  async function removePhoto(link: string, index: number) {
+    // console.log(index);
+    try {
+      await axios.delete(`${API_URL}/api/upload/remove-photo/${index}`, {
+        data: {
+          link,
+        },
+      });
+      setLocationPhotos(() => locationPhotos.filter((_, i) => i !== index));
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  console.log(locationPhotos);
   return (
     <>
       <div className='flex gap-2'>
@@ -65,15 +100,28 @@ function UploadPhotos({ addedPhotos }: Props) {
         </label>
 
         <>
-          {addedPhotos &&
-            addedPhotos.length > 0 &&
-            addedPhotos.map((links: any, index: number) => (
-              <div key={index}>
+          {locationPhotos &&
+            locationPhotos.length > 0 &&
+            locationPhotos.map((links: any, index: number) => (
+              <div className='relative ' key={index}>
                 <img
-                  className='h-28 w-28 object-cover center object-center rounded-md'
+                  className='h-28 w-28 object-cover rounded-md'
                   src={`${API_URL}/uploads/` + links}
                   alt=''
                 />
+                <button
+                  className='absolute -bottom-4 -left-3 z-10 bg-black rounded-full p-2 opacity-80'
+                  onClick={(e) => {
+                    e.preventDefault();
+                    removePhoto(links, index);
+                    console.log(index);
+                  }}
+                >
+                  <Icon
+                    icon='ic:baseline-delete-forever'
+                    className='text-xl text-white'
+                  />
+                </button>
               </div>
             ))}
         </>

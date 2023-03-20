@@ -1,3 +1,4 @@
+import { unlink, unlinkSync } from 'fs';
 import download from 'image-downloader';
 import path from 'path';
 
@@ -23,4 +24,17 @@ export const uploadFromLocal = async (req, res) => {
     uploadedFiles.push(req.files[i].filename);
   }
   res.json(uploadedFiles);
+};
+
+export const removePhoto = (req, res) => {
+  const [link] = req.body.link;
+  console.log(link);
+  let photoPath = path.resolve('uploads/' + link);
+  unlink(photoPath, (err) => {
+    if (err) {
+      console.log(err);
+      throw err;
+    }
+    res.status(200).json('Photo deleted');
+  });
 };
