@@ -2,7 +2,13 @@ import { useState } from 'react';
 import AuthForm from '../../components/AuthForm/AuthForm';
 import InputFields from '../../components/InputFields/InputFields';
 import { useAppDispatch, useAppSelector } from '../../hooks/userTypeSelector';
-import { register, userSelector } from '../../state/authSlicer/authSlicer';
+import {
+  authStatusSelector,
+  register,
+  userSelector,
+} from '../../state/authSlicer/authSlicer';
+import { Navigate } from 'react-router-dom';
+import { IsLoggedLocalStorage } from '../../utils/auth';
 
 export type inputTypes = {
   name: string;
@@ -30,6 +36,13 @@ const Register = () => {
   function handleSubmit(e: React.SyntheticEvent) {
     e.preventDefault();
     dispatch(register(input) as any);
+  }
+
+  const authStatus = useAppSelector(authStatusSelector);
+  const isLoggedIn = IsLoggedLocalStorage.getIsLoggedIn();
+
+  if (authStatus === 'succeeded' && isLoggedIn) {
+    return <Navigate to={'/'} />;
   }
 
   return (

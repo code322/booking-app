@@ -7,7 +7,7 @@ import { IsLoggedLocalStorage } from '../../utils/auth';
 function Header() {
   const user = useAppSelector(userSelector);
   const dispatch = useAppDispatch();
-  console.log(user);
+  console.log(user.name);
   return (
     <header className='py-8 h-[3.5rem] border-b flex justify-center '>
       <div className='px-3 max-w-5xl flex  justify-between h-full items-center w-full'>
@@ -28,8 +28,8 @@ function Header() {
             <Icon icon='material-symbols:add' color='white' />
             <span>Add Listing</span>
           </Link>
-          <Link to={user ? '/' : '/login'}>
-            {user ? (
+          <Link to={user.name ? '/' : '/login'}>
+            {user.name ? (
               <>
                 <Icon
                   onClick={() => {

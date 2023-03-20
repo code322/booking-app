@@ -1,6 +1,7 @@
 import db from '../config/db.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import { generateTokens } from '../utils/generateTokens.js';
 export const register = async (req, res) => {
   const { name, email, password } = req.body;
 
@@ -104,10 +105,18 @@ export const login = async (req, res) => {
 
 export const logout = async (req, res) => {
   try {
-    res.cookie('accessToken', '');
-    res.cookie('refreshToken', '');
+    res.cookie('accessToken', '', {
+      maxAge: 0,
+      httpOnly: true,
+    });
+    res.cookie('refreshToken', '', {
+      maxAge: 0,
+      httpOnly: true,
+    });
     res.status(200).json('Successfully Logged Out');
-  } catch (error) {}
+  } catch (error) {
+    res.status(200).json(error.message);
+  }
 };
 
 async function getUser(email) {
