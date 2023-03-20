@@ -67,25 +67,18 @@ export const login = async (req, res) => {
     const validPassword = await bcrypt.compare(password, user.password);
     if (!validPassword) return res.status(409).json('Password is not valid.');
 
-    const access_token = process.env.ACCESS_TOKEN;
-    const refresh_token = process.env.REFRESH_TOKEN;
-
-    const accessToken = jwt.sign({ id: user.id }, access_token, {
-      expiresIn: 60 * 30,
-    });
-    const refreshToken = jwt.sign({ id: user.id }, refresh_token, {
-      expiresIn: '30d',
-    });
+    const accessToken = generateTokens.accessToken(user.id);
+    const refreshToken = generateTokens.refreshToken(user.id);
 
     if (!accessToken) return res.status(409).json('No access token');
     if (!refreshToken) return res.status(409).json('No refresh token');
 
-    res.cookie('accessToken', `Bearer ${accessToken}`, {
+    res.cookie('accessToken', accessToken, {
       httpOnly: false,
       maxAge: 1000 * 60 * 30,
       secure: true,
     });
-    res.cookie('refreshToken', `Bearer ${refreshToken}`, {
+    res.cookie('refreshToken', refreshToken, {
       httpOnly: false,
       maxAge: 1000 * 60 * 60 * 24 * 30,
       secure: true,
@@ -127,3 +120,31 @@ async function getUser(email) {
     return error;
   }
 }
+export const refreshToken = (req, res) => {
+  const cookies = req.cookies;
+  const refreshToken = cookies.refreshToken?.split(' ')[1];
+  console.log(cookies, 'refresh page');
+
+  if (!refreshToken)
+    return res
+      .status(401)
+      .json({ message: 'no refresh token. please login again' });
+
+  const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN);
+
+  if (decoded.exp * 1000 > new Date().getTime()) {
+    req.user = decoded;
+    const id = req.user.id;
+    const accessToken = generateTokens.accessToken(id);
+    res.cookie('accessToken', accessToken, {
+      httpOnly: true,
+      sameSite: 'none',
+      secure: true,
+      maxAge: 1000 * 60 * 30, // Units are in milliseconds. Sets to expire in 30 mins
+    });
+
+    res.status(200).json({ message: 'access token created' });
+  } else {
+    res.status(400).json({ message: 'token can not be verified' });
+  }
+};

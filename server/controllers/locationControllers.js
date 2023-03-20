@@ -31,7 +31,6 @@ export const getLocationById = async (req, res) => {
       photos: JSON.parse(result.photos),
       utils: JSON.parse(result.utils),
     };
-    console.log(response);
 
     res.status(201).json(response);
   } catch (error) {

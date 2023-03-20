@@ -5,7 +5,7 @@ dotenv.config();
 
 export const authMiddleware = async (req, res, next) => {
   let accessToken = req.cookies?.accessToken?.split(' ')[1];
-  console.log(accessToken);
+  // console.log(accessToken);
 
   if (!accessToken) {
     res.redirect('http://localhost:5000/login');
