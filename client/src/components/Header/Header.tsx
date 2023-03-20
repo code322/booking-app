@@ -1,11 +1,13 @@
 import { Icon } from '@iconify/react';
 import { Link } from 'react-router-dom';
-import { useAppSelector } from '../../hooks/userTypeSelector';
-import { userSelector } from '../../state/authSlicer/authSlicer';
+import { useAppDispatch, useAppSelector } from '../../hooks/userTypeSelector';
+import { logout, userSelector } from '../../state/authSlicer/authSlicer';
+import { IsLoggedLocalStorage } from '../../utils/auth';
 
 function Header() {
   const user = useAppSelector(userSelector);
-  console.log(user.name);
+  const dispatch = useAppDispatch();
+  console.log(user);
   return (
     <header className='py-8 h-[3.5rem] border-b flex justify-center '>
       <div className='px-3 max-w-5xl flex  justify-between h-full items-center w-full'>
@@ -30,6 +32,10 @@ function Header() {
             {user ? (
               <>
                 <Icon
+                  onClick={() => {
+                    IsLoggedLocalStorage.setIsLoggedInFalse();
+                    dispatch(logout() as any);
+                  }}
                   className='text-gray-700'
                   height={30}
                   icon='la:sign-out-alt'

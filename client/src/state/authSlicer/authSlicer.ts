@@ -1,3 +1,4 @@
+import { IsLoggedLocalStorage } from './../../utils/auth';
 import { RootState } from './../store';
 import { inputTypes } from './../../pages/Register/Register';
 import { createSlice, createAsyncThunk, isAnyOf } from '@reduxjs/toolkit';
@@ -21,7 +22,20 @@ export const login = createAsyncThunk(
   async (body: loginTypes, { rejectWithValue }) => {
     try {
       const { data } = await axios.post(`${API_URL}/api/auth/login`, body);
+      IsLoggedLocalStorage.setIsLoggedInTrue();
       return data;
+    } catch (error: any) {
+      IsLoggedLocalStorage.setIsLoggedInFalse();
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const logout = createAsyncThunk(
+  'auth/logout',
+  async (_, { rejectWithValue }) => {
+    try {
+      await axios.post(`${API_URL}/api/auth/logout`);
     } catch (error: any) {
       return rejectWithValue(error.response.data);
     }
@@ -29,7 +43,7 @@ export const login = createAsyncThunk(
 );
 
 interface authInterface {
-  status: 'idle' | 'succeeded' | 'failed';
+  status: 'idle' | 'succeeded' | 'failed' | 'loggedOut';
   user: {
     email: string;
     name: string;
@@ -51,6 +65,17 @@ const authSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+      .addCase(logout.fulfilled, (state) => {
+        state.status = 'loggedOut';
+        state.user = {
+          email: '',
+          name: '',
+        };
+        state.error = null;
+      })
+      .addCase(logout.rejected, (state) => {
+        state.status = 'failed';
+      })
       .addMatcher(isAnyOf(register.pending, login.pending), (state) => {
         state.status = 'idle';
       })
@@ -58,7 +83,7 @@ const authSlice = createSlice({
         isAnyOf(register.fulfilled, login.fulfilled),
         (state, action) => {
           state.status = 'succeeded';
-          state.user = action.payload;
+          state.user = action.payload.user;
           state.error = null;
         }
       )
@@ -77,4 +102,6 @@ const authSlice = createSlice({
 });
 
 export const userSelector = (state: RootState) => state.authReducer.user;
+export const authStatusSelector = (state: RootState) =>
+  state.authReducer.status;
 export default authSlice.reducer;

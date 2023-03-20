@@ -102,6 +102,14 @@ export const login = async (req, res) => {
   }
 };
 
+export const logout = async (req, res) => {
+  try {
+    res.cookie('accessToken', '');
+    res.cookie('refreshToken', '');
+    res.status(200).json('Successfully Logged Out');
+  } catch (error) {}
+};
+
 async function getUser(email) {
   try {
     const [user] = await db.query('SELECT * From Users WHERE email=?', [email]);
