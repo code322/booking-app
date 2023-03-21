@@ -110,7 +110,7 @@ function UploadPhotos({ addedPhotos }: Props) {
                   alt=''
                 />
                 <button
-                  className='absolute -bottom-4 -left-3 z-10 bg-black rounded-full p-2 opacity-80'
+                  className='absolute -bottom-4 -left-3 z-10 bg-gray-200 rounded-full p-2 opacity-80'
                   onClick={(e) => {
                     e.preventDefault();
                     removePhoto(links, index);
@@ -118,8 +118,8 @@ function UploadPhotos({ addedPhotos }: Props) {
                   }}
                 >
                   <Icon
-                    icon='ic:baseline-delete-forever'
-                    className='text-xl text-white'
+                    icon='ic:baseline-delete'
+                    className='text-xl text-gray-800'
                   />
                 </button>
               </div>
