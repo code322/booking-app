@@ -17,12 +17,14 @@ const AddNewLocation = () => {
   const [details, setDetails] = useState<detailsTypes>(initialDetails);
   return (
     <Container>
-      <Account />
-      <LocationForm
-        photosData={addedPhotos}
-        detailsData={details}
-        utilsData={utils}
-      />
+      <div className='flex gap-6 flex-col sm:flex-row'>
+        <Account />
+        <LocationForm
+          photosData={addedPhotos}
+          detailsData={details}
+          utilsData={utils}
+        />
+      </div>
     </Container>
   );
 };
