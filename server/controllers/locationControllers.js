@@ -49,13 +49,18 @@ export const addNewLocation = async (req, res) => {
 
     let values = [details, photos, utils];
 
-    const [result] = await db.query(insertPlace, values);
+    const [data] = await db.query(insertPlace, values);
 
-    const [data] = await db.query('SELECT * FROM Locations WHERE id=?', [
-      result.insertId,
-    ]);
+    let result = await getLocation(data.insertId);
 
-    res.status(200).json(data[0]);
+    let response = {
+      ...result,
+      details: JSON.parse(result?.details),
+      photos: JSON.parse(result?.photos),
+      utils: JSON.parse(result?.utils),
+    };
+
+    res.status(200).json(response);
   } catch (error) {
     res.status(400).json(error.message);
   }
@@ -70,4 +75,37 @@ export const deleteLocation = async (req, res) => {
   } catch (error) {
     return res.status(400).json(error.message);
   }
+};
+
+export const updateLocation = async (req, res) => {
+  let location = req.body;
+  let id = location.id;
+  let details = JSON.stringify(location.details);
+  let photos = JSON.stringify(location.photos);
+  let utils = JSON.stringify(location.utils);
+
+  const update =
+    'UPDATE Locations SET details=?, photos=?, utils=?, WHERE id=?';
+  let values = [details, photos, utils];
+  console.log(id);
+
+  try {
+    const [data] = await db.query(update, values);
+
+    let result = await getLocation(id);
+    let response = {
+      ...result,
+      details: JSON.parse(result?.details),
+      photos: JSON.parse(result?.photos),
+      utils: JSON.parse(result?.utils),
+    };
+    res.status(200).json(response);
+  } catch (error) {
+    res.status(400).json(error.message);
+  }
+};
+
+const getLocation = async (id) => {
+  const [result] = await db.query('SELECT * FROM Locations WHERE id=?', [id]);
+  return result[0];
 };
