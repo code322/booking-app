@@ -11,7 +11,7 @@ const router = express.Router();
 
 router.get('/get-all-locations', getAllLocations);
 router.get('/get-location-by-id/:id', getLocationById);
-router.post('/new-location', addNewLocation);
+router.post('/new-location', authMiddleware, addNewLocation);
 router.delete('/delete-location/:id', deleteLocation);
 
 export default router;

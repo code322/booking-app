@@ -39,7 +39,7 @@ export const deleteLocation = createAsyncThunk(
   'locations/deleteLocation',
   async (id: number, { rejectWithValue }) => {
     try {
-      await axios.delete(`${API_URL}/api/delete-location/${id}`);
+      await axios.delete(`${API_URL}/api/location/delete-location/${id}`);
       return id;
     } catch (error) {
       return rejectWithValue(error);

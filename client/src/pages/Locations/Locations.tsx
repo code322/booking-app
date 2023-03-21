@@ -4,11 +4,11 @@ import Container from '../../components/Container/Container';
 import dummyData from '../../dummyData';
 import { useAppDispatch, useAppSelector } from '../../hooks/userTypeSelector';
 import {
+  deleteLocation,
   getAllLocations,
   selectLocations,
 } from '../../state/locations/locationsSlicer';
 import { API_URL } from '../../helpers/api';
-import { getLocationById } from '../../state/locations/locationByIdSlicer';
 import Account from '../Account/Account';
 import { Icon } from '@iconify/react';
 interface Props {
@@ -88,7 +88,10 @@ function Locations() {
                         icon='material-symbols:edit'
                       />
                     </button>
-                    <button className='bg-gray-200 w-fit h-fit p-2 rounded-md outline-none'>
+                    <button
+                      onClick={() => dispatch(deleteLocation(items.id) as any)}
+                      className='bg-gray-200 w-fit h-fit p-2 rounded-md outline-none'
+                    >
                       <Icon
                         className='text-gray-600'
                         icon='ic:baseline-delete'
