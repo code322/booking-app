@@ -15,6 +15,7 @@ import {
   detailsTypes,
   utilsTypes,
 } from '../../helpers/types';
+import { useNavigate } from 'react-router-dom';
 
 export type newLocationType = {
   details: {
@@ -45,6 +46,7 @@ function LocationForm({ detailsData, photosData, utilsData }: Props) {
   const [utils, setUtils] = useState<utilsTypes>(utilsData);
   const [photos, setPhotos] = useState<string[]>(photosData);
   const [details, setDetails] = useState<detailsTypes>(detailsData);
+  const navigate = useNavigate();
 
   function handleCheckBoxes(e: React.ChangeEvent<HTMLInputElement>) {
     const { id, checked } = e.target;
@@ -235,7 +237,10 @@ function LocationForm({ detailsData, photosData, utilsData }: Props) {
           submit
         </button>
         <button
-          // onClick={handleSubmit}
+          onClick={(e) => {
+            e.preventDefault();
+            navigate(-1);
+          }}
           className='mt-4 text-black rounded-md capitalize py-2 flex-1 border  outline-none'
         >
           cancel

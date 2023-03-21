@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Container from '../../components/Container/Container';
 import dummyData from '../../dummyData';
 import { useAppDispatch, useAppSelector } from '../../hooks/userTypeSelector';
@@ -24,6 +24,7 @@ function Locations() {
   }, [dispatch]);
 
   const locationsList = useAppSelector(selectLocations);
+  const navigate = useNavigate();
 
   return (
     <Container>
@@ -66,7 +67,12 @@ function Locations() {
                     </div>
                   </div>
                   <div className='flex flex-col justify-between'>
-                    <button className='bg-gray-200 w-fit h-fit p-2 rounded-md outline-none'>
+                    <button
+                      className='bg-gray-200 w-fit h-fit p-2 rounded-md outline-none'
+                      onClick={() =>
+                        navigate(`/account/edit-listing-location/${items?.id}`)
+                      }
+                    >
                       <Icon
                         className='text-gray-600'
                         icon='material-symbols:edit'

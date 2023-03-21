@@ -9,6 +9,7 @@ import PrivateRoutes from './utils/PrivateRoutes';
 import Locations from './pages/Locations/Locations';
 import AddNewLocation from './pages/AddNewLocation/AddNewLocation';
 import MyBooking from './pages/MyBooking/MyBooking';
+import EditLocation from './pages/EditLocation/EditLocation';
 
 function App() {
   return (
@@ -23,6 +24,10 @@ function App() {
           <Route path='/account' element={<Locations />} />
           <Route path='/account/new-listing' element={<AddNewLocation />} />
           <Route path='/account/my-booking' element={<MyBooking />} />
+          <Route
+            path='/account/edit-listing-location/:id'
+            element={<EditLocation />}
+          />
         </Route>
       </Routes>
     </>
