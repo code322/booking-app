@@ -35,6 +35,18 @@ export const addNewLocation = createAsyncThunk(
   }
 );
 
+export const deleteLocation = createAsyncThunk(
+  'locations/deleteLocation',
+  async (id: number, { rejectWithValue }) => {
+    try {
+      await axios.delete(`${API_URL}/api/delete-location/${id}`);
+      return id;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
 export type locationType = {
   id: number;
   details: detailsTypes;
@@ -80,6 +92,21 @@ const locationSlice = createSlice({
         state.locations.push(action.payload);
       })
       .addCase(addNewLocation.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.payload;
+      })
+      .addCase(deleteLocation.pending, (state) => {
+        state.status = 'idle';
+      })
+      .addCase(deleteLocation.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        let data = state.locations.filter(
+          (items) => items.id !== action.payload
+        );
+        state.locations = data;
+        state.error = null;
+      })
+      .addCase(deleteLocation.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.payload;
       });
