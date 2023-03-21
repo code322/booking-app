@@ -58,10 +58,20 @@ function Locations() {
                           {items?.details?.address}
                         </p>
                       </div>
-                      <div className='flex items-end gap-2 text-gray-600'>
-                        <Icon icon='material-symbols:bed-outline' />
-                        <p className='text-xs text-gray-600'>
-                          {items?.details?.guests}
+                      <div
+                        className='flex gap-2
+                      '
+                      >
+                        <div className='flex items-end gap-1 text-gray-600'>
+                          <Icon icon='material-symbols:bed-outline' />
+                          <p className='text-xs text-gray-600'>
+                            {items?.details?.guests}
+                          </p>
+                        </div>
+                        <p className='flex items-center  text-xs text-gray-600'>
+                          {items?.utils?.gym && (
+                            <Icon icon='material-symbols:wifi' />
+                          )}
                         </p>
                       </div>
                     </div>
