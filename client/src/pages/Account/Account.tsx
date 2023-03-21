@@ -5,6 +5,7 @@ import {} from '../../state/locations/locationByIdSlicer';
 
 import EditLocation from '../EditLocation/EditLocation';
 import AddNewLocation from '../AddNewLocation/AddNewLocation';
+import { Link, useLocation } from 'react-router-dom';
 
 function Account() {
   const [active, setActive] = useState<string>('profile');
@@ -15,9 +16,37 @@ function Account() {
   let inActiveNav = 'capitalize rounded-md p-2';
   let activeNav = 'capitalize rounded-md p-2 bg-custom-red text-white';
 
+  let { pathname } = useLocation();
+
   return (
-    <Container>
-      <div className='w-full flex gap-4 justify-center'>
+    <>
+      <div className='flex sm:flex-col gap-2'>
+        <Link
+          className={pathname === '/account' ? activeNav : inActiveNav}
+          to='/account'
+        >
+          My Listing
+        </Link>
+
+        <Link
+          className={
+            pathname === '/account/my-booking' ? activeNav : inActiveNav
+          }
+          to='/account/my-booking'
+        >
+          My Booking
+        </Link>
+        <Link
+          className={
+            pathname === '/account/new-listing' ? activeNav : inActiveNav
+          }
+          to='/account/new-listing'
+        >
+          add Listing
+        </Link>
+      </div>
+
+      {/* <div className='w-full flex gap-4 justify-center'>
         <button
           className={active === 'profile' ? activeNav : inActiveNav}
           onClick={() => {
@@ -46,8 +75,8 @@ function Account() {
         >
           Locations
         </button>
-      </div>
-      <>
+      </div> */}
+      {/* <>
         {active === 'location' && editMode && showForm && <EditLocation />}
         {active === 'location' && !editMode && showForm && <AddNewLocation />}
         {active === 'location' && !showForm && (
@@ -60,8 +89,8 @@ function Account() {
 
         {active === 'profile' && 'profile'}
         {active === 'booking' && 'booking'}
-      </>
-    </Container>
+      </> */}
+    </>
   );
 }
 

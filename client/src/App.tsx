@@ -6,6 +6,8 @@ import Register from './pages/Register/Register';
 import Account from './pages/Account/Account';
 import Location from './pages/Location/Location';
 import PrivateRoutes from './utils/PrivateRoutes';
+import Locations from './pages/Locations/Locations';
+import AddNewLocation from './pages/AddNewLocation/AddNewLocation';
 
 function App() {
   return (
@@ -17,7 +19,8 @@ function App() {
         <Route path='/register' element={<Register />} />
         <Route path='/location/:id' element={<Location />} />
         <Route element={<PrivateRoutes />}>
-          <Route path='/account' element={<Account />} />
+          <Route path='/account' element={<Locations />} />
+          <Route path='/account/new-listing' element={<AddNewLocation />} />
         </Route>
       </Routes>
     </>

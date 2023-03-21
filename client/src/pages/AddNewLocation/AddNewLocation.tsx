@@ -8,17 +8,22 @@ import {
   initialUtils,
   utilsTypes,
 } from '../../helpers/types';
+import Account from '../Account/Account';
+import Container from '../../components/Container/Container';
 
 const AddNewLocation = () => {
   const addedPhotos = useAppSelector(selectUploadedPhotos);
   const [utils, setUtils] = useState<utilsTypes>(initialUtils);
   const [details, setDetails] = useState<detailsTypes>(initialDetails);
   return (
-    <LocationForm
-      photosData={addedPhotos}
-      detailsData={details}
-      utilsData={utils}
-    />
+    <Container>
+      <Account />
+      <LocationForm
+        photosData={addedPhotos}
+        detailsData={details}
+        utilsData={utils}
+      />
+    </Container>
   );
 };
 

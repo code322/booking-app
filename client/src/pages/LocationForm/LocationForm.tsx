@@ -64,7 +64,6 @@ function LocationForm({ detailsData, photosData, utilsData }: Props) {
       return { ...preVal, [name]: value };
     });
   }
-  console.log(details);
 
   const dispatch = useAppDispatch();
   async function handleSubmit(e: React.FormEvent<HTMLButtonElement>) {
@@ -78,7 +77,7 @@ function LocationForm({ detailsData, photosData, utilsData }: Props) {
   }
 
   return (
-    <Container>
+    <div>
       <div className='m-4'>
         <div className='mt-10'>
           <form className='flex flex-col'>
@@ -231,16 +230,24 @@ function LocationForm({ detailsData, photosData, utilsData }: Props) {
             </Content>
 
             {/* submit button */}
-            <button
-              onClick={handleSubmit}
-              className='bg-custom-red mt-4 text-white rounded-md capitalize py-2'
-            >
-              submit
-            </button>
+            <div className='flex flex-col sm:flex-row sm:gap-4 justify-between mt-4'>
+              <button
+                onClick={handleSubmit}
+                className='bg-custom-red mt-4 text-white rounded-md capitalize py-2 flex-1 border-transparent outline-none '
+              >
+                submit
+              </button>
+              <button
+                // onClick={handleSubmit}
+                className='mt-4 text-black rounded-md capitalize py-2 flex-1 border  outline-none'
+              >
+                cancel
+              </button>
+            </div>
           </form>
         </div>
       </div>
-    </Container>
+    </div>
   );
 }
 

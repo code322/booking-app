@@ -14,7 +14,7 @@ interface Props {
 }
 function UploadPhotos({ addedPhotos }: Props) {
   const [photoLink, setPhotoLink] = useState<string>('');
-  const [locationPhotos, setLocationPhotos] = useState<string[]>([]);
+  const [locationPhotos, setLocationPhotos] = useState<string[]>(addedPhotos);
   const dispatch = useAppDispatch();
 
   async function handleUploadPhoto(e: React.SyntheticEvent) {
