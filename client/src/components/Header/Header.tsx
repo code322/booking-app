@@ -25,8 +25,7 @@ function Header() {
             to={'/account'}
             className='p-3 bg-custom-red text-white rounded-md outline-none flex items-center gap-2'
           >
-            <Icon icon='material-symbols:add' color='white' />
-            <span>Add Listing</span>
+            <span>My Listing</span>
           </Link>
           <Link to={user.name ? '/' : '/login'}>
             {user.name ? (

@@ -10,6 +10,7 @@ import {
 import { API_URL } from '../../helpers/api';
 import { getLocationById } from '../../state/locations/locationByIdSlicer';
 import Account from '../Account/Account';
+import { Icon } from '@iconify/react';
 interface Props {
   setShowForm: React.Dispatch<React.SetStateAction<boolean>>;
   setEditMode: React.Dispatch<React.SetStateAction<boolean>>;
@@ -28,37 +29,60 @@ function Locations() {
     <Container>
       <div className='flex flex-col sm:flex-row gap-6'>
         <Account />
-        <div className='flex flex-col gap-4'>
+        <ul className='flex flex-col gap-4 flex-1'>
           {locationsList &&
             locationsList.map((items, index) => {
               return (
-                <span
+                <li
                   key={index}
-                  onClick={() => {
-                    // setShowForm(true);
-                    // setEditMode(true);
-                    dispatch(getLocationById(items.id) as any);
-                    // setListId(items.id);
-                  }}
-                  className='flex gap-4 cursor-pointer'
+                  onClick={() => {}}
+                  className='flex gap-4  justify-between shadow-customShadow rounded-lg p-2 overflow-hidden'
                 >
-                  {items.photos.length > 0 && (
-                    <img
-                      className='w-32 h-32 '
-                      src={`${API_URL}/uploads/${items.photos[0]}`}
-                      alt=''
-                    />
-                  )}
-                  <div className='shrink'>
-                    <p className=' font-semibold capitalize'>
-                      {items.details?.title}
-                    </p>
-                    {/* <p>{items.details?.description}</p> */}
+                  <div className='flex gap-4 '>
+                    {items.photos.length > 0 && (
+                      <Link to={`/location/${items?.id}`}>
+                        <img
+                          className='w-32 h-32 rounded-md'
+                          src={`${API_URL}/uploads/${items.photos[0]}`}
+                          alt=''
+                        />
+                      </Link>
+                    )}
+                    <div className='flex flex-col justify-between'>
+                      <div>
+                        <p className=' font-semibold capitalize'>
+                          {items.details?.title}
+                        </p>
+                        <p className='text-gray-600'>
+                          {items?.details?.address}
+                        </p>
+                      </div>
+                      <div className='flex items-end gap-2 text-gray-600'>
+                        <Icon icon='material-symbols:bed-outline' />
+                        <p className='text-xs text-gray-600'>
+                          {items?.details?.guests}
+                        </p>
+                      </div>
+                    </div>
                   </div>
-                </span>
+                  <div className='flex flex-col justify-between'>
+                    <button className='bg-gray-200 w-fit h-fit p-2 rounded-md outline-none'>
+                      <Icon
+                        className='text-gray-600'
+                        icon='material-symbols:edit'
+                      />
+                    </button>
+                    <button className='bg-gray-200 w-fit h-fit p-2 rounded-md outline-none'>
+                      <Icon
+                        className='text-gray-600'
+                        icon='ic:baseline-delete'
+                      />
+                    </button>
+                  </div>
+                </li>
               );
             })}
-        </div>
+        </ul>
       </div>
     </Container>
   );
