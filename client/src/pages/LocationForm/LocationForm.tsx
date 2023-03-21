@@ -1,20 +1,11 @@
 import React, { useState } from 'react';
-import { Icon } from '@iconify/react';
-import axios from 'axios';
-import { API_URL } from '../../helpers/api';
+
 import CheckBox from '../../components/CheckBoxes/CheckBoxes';
 import InputFields from '../../components/InputFields/InputFields';
-import { boxes, boxesType } from '../../components/CheckBoxes/boxesList';
 import UploadPhotos from '../../components/UploadPhotos/UploadPhotos';
-import Container from '../../components/Container/Container';
 import { useAppDispatch } from '../../hooks/userTypeSelector';
 import { addNewLocation } from '../../state/locations/locationsSlicer';
-import {
-  initialDetails,
-  initialUtils,
-  detailsTypes,
-  utilsTypes,
-} from '../../helpers/types';
+import { detailsTypes, utilsTypes } from '../../helpers/types';
 import { useNavigate } from 'react-router-dom';
 
 export type newLocationType = {
@@ -41,8 +32,9 @@ interface Props {
   detailsData: detailsTypes;
   photosData: string[];
   utilsData: utilsTypes;
+  editMode?: boolean;
 }
-function LocationForm({ detailsData, photosData, utilsData }: Props) {
+function LocationForm({ detailsData, photosData, utilsData, editMode }: Props) {
   const [utils, setUtils] = useState<utilsTypes>(utilsData);
   const [photos, setPhotos] = useState<string[]>(photosData);
   const [details, setDetails] = useState<detailsTypes>(detailsData);
@@ -228,14 +220,23 @@ function LocationForm({ detailsData, photosData, utilsData }: Props) {
         </div>
       </Content>
 
-      {/* submit button */}
       <div className='flex flex-col sm:flex-row sm:gap-4 justify-between mt-4'>
-        <button
-          onClick={handleSubmit}
-          className='bg-custom-red mt-4 text-white rounded-md capitalize py-2 flex-1 border-transparent outline-none '
-        >
-          submit
-        </button>
+        {editMode ? (
+          <button
+            onClick={handleSubmit}
+            className='bg-custom-red mt-4 text-white rounded-md capitalize py-2 flex-1 border-transparent outline-none '
+          >
+            save
+          </button>
+        ) : (
+          <button
+            onClick={handleSubmit}
+            className='bg-custom-red mt-4 text-white rounded-md capitalize py-2 flex-1 border-transparent outline-none '
+          >
+            submit
+          </button>
+        )}
+
         <button
           onClick={(e) => {
             e.preventDefault();

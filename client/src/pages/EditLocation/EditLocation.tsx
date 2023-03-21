@@ -32,6 +32,7 @@ const EditLocation = () => {
           detailsData={details}
           photosData={photos}
           utilsData={utils}
+          editMode={true}
         />
       )}
     </Container>
