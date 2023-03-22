@@ -4,7 +4,10 @@ import CheckBox from '../../components/CheckBoxes/CheckBoxes';
 import InputFields from '../../components/InputFields/InputFields';
 import UploadPhotos from '../../components/UploadPhotos/UploadPhotos';
 import { useAppDispatch } from '../../hooks/userTypeSelector';
-import { addNewLocation } from '../../state/locations/locationsSlicer';
+import {
+  addNewLocation,
+  updateLocation,
+} from '../../state/locations/locationsSlicer';
 import { detailsTypes, utilsTypes } from '../../helpers/types';
 import { useNavigate } from 'react-router-dom';
 
@@ -33,8 +36,15 @@ interface Props {
   photosData: string[];
   utilsData: utilsTypes;
   editMode?: boolean;
+  id?: number;
 }
-function LocationForm({ detailsData, photosData, utilsData, editMode }: Props) {
+function LocationForm({
+  detailsData,
+  photosData,
+  utilsData,
+  editMode,
+  id,
+}: Props) {
   const [utils, setUtils] = useState<utilsTypes>(utilsData);
   const [photos, setPhotos] = useState<string[]>(photosData);
   const [details, setDetails] = useState<detailsTypes>(detailsData);
@@ -68,6 +78,22 @@ function LocationForm({ detailsData, photosData, utilsData, editMode }: Props) {
       utils,
     };
     dispatch(addNewLocation(newLocation) as any);
+  }
+
+  async function handleSave(e: React.FormEvent<HTMLButtonElement>) {
+    e.preventDefault();
+    // id: number;
+    // details: detailsTypes;
+    // utils: utilsTypes;
+    // photos: string[];
+    let update = {
+      id,
+      details,
+      photos: photosData,
+      utils,
+    };
+
+    dispatch(updateLocation(update) as any);
   }
 
   return (
@@ -223,7 +249,7 @@ function LocationForm({ detailsData, photosData, utilsData, editMode }: Props) {
       <div className='flex flex-col sm:flex-row sm:gap-4 justify-between mt-4'>
         {editMode ? (
           <button
-            onClick={handleSubmit}
+            onClick={handleSave}
             className='bg-custom-red mt-4 text-white rounded-md capitalize py-2 flex-1 border-transparent outline-none '
           >
             save

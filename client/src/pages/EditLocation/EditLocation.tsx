@@ -33,6 +33,7 @@ const EditLocation = () => {
           photosData={photos}
           utilsData={utils}
           editMode={true}
+          id={locationId}
         />
       )}
     </Container>

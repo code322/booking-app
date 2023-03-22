@@ -79,17 +79,16 @@ export const deleteLocation = async (req, res) => {
 
 export const updateLocation = async (req, res) => {
   let location = req.body;
-  let id = location.id;
-  let details = JSON.stringify(location.details);
-  let photos = JSON.stringify(location.photos);
-  let utils = JSON.stringify(location.utils);
+  let id = req.params.id;
+  let details = JSON.stringify(location?.details);
+  let photos = JSON.stringify(location?.photos);
+  let utils = JSON.stringify(location?.utils);
 
-  const update =
-    'UPDATE Locations SET details=?, photos=?, utils=?, WHERE id=?';
-  let values = [details, photos, utils];
-  console.log(id);
+  console.log(photos);
 
   try {
+    let values = [details, photos, utils, id];
+    let update = 'UPDATE Locations SET details=? ,photos=? ,utils=? WHERE id=?';
     const [data] = await db.query(update, values);
 
     let result = await getLocation(id);
@@ -99,13 +98,15 @@ export const updateLocation = async (req, res) => {
       photos: JSON.parse(result?.photos),
       utils: JSON.parse(result?.utils),
     };
-    res.status(200).json(response);
+    return res.status(200).json(response);
   } catch (error) {
-    res.status(400).json(error.message);
+    console.log(error.message);
+    return res.status(400).json(error.message);
   }
 };
 
 const getLocation = async (id) => {
-  const [result] = await db.query('SELECT * FROM Locations WHERE id=?', [id]);
+  let query = 'SELECT * FROM Locations WHERE id=?';
+  const [result] = await db.query(query, [id]);
   return result[0];
 };

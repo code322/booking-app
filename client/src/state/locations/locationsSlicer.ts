@@ -34,10 +34,25 @@ export const addNewLocation = createAsyncThunk(
     }
   }
 );
+export const updateLocation = createAsyncThunk(
+  'locations/updateLocation',
+  async (location: locationType, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.patch(
+        `${API_URL}/api/location/update-location/${location.id}`,
+        location
+      );
+      console.log(data);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
 
 export const deleteLocation = createAsyncThunk(
   'locations/deleteLocation',
-  async (id: number, { rejectWithValue }) => {
+  async (id: number | undefined, { rejectWithValue }) => {
     try {
       await axios.delete(`${API_URL}/api/location/delete-location/${id}`);
       return id;
@@ -48,7 +63,7 @@ export const deleteLocation = createAsyncThunk(
 );
 
 export type locationType = {
-  id: number;
+  id: number | undefined;
   details: detailsTypes;
   utils: utilsTypes;
   photos: string[];
@@ -84,6 +99,7 @@ const locationSlice = createSlice({
         state.locations = [];
         state.error = action.payload;
       })
+      //add new location
       .addCase(addNewLocation.pending, (state) => {
         state.status = 'idle';
       })
@@ -95,6 +111,22 @@ const locationSlice = createSlice({
         state.status = 'failed';
         state.error = action.payload;
       })
+
+      //update location
+      .addCase(updateLocation.pending, (state) => {
+        state.status = 'idle';
+      })
+      .addCase(updateLocation.fulfilled, (state, action) => {
+        let location;
+        state.status = 'succeeded';
+        location = state.locations.find((i) => i.id === action.payload.id);
+        location = action.payload;
+      })
+      .addCase(updateLocation.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.payload;
+      })
+      //delete location
       .addCase(deleteLocation.pending, (state) => {
         state.status = 'idle';
       })

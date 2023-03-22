@@ -89,7 +89,7 @@ function Locations() {
                       />
                     </button>
                     <button
-                      onClick={() => dispatch(deleteLocation(items.id) as any)}
+                      onClick={() => dispatch(deleteLocation(items?.id) as any)}
                       className='bg-gray-200 w-fit h-fit p-2 rounded-md outline-none'
                     >
                       <Icon
