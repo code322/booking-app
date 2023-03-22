@@ -14,6 +14,6 @@ router.get('/get-all-locations', getAllLocations);
 router.get('/get-location-by-id/:id', getLocationById);
 router.post('/new-location', authMiddleware, addNewLocation);
 router.delete('/delete-location/:id', authMiddleware, deleteLocation);
-router.patch('/update-location/:id', updateLocation);
+router.patch('/update-location/:id', authMiddleware, updateLocation);
 
 export default router;
