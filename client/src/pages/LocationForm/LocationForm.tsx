@@ -50,6 +50,13 @@ function LocationForm({
   const [details, setDetails] = useState<detailsTypes>(detailsData);
   const navigate = useNavigate();
 
+  let locationData = {
+    id,
+    details,
+    photos,
+    utils,
+  };
+
   function handleCheckBoxes(e: React.ChangeEvent<HTMLInputElement>) {
     const { id, checked } = e.target;
 
@@ -74,7 +81,7 @@ function LocationForm({
     e.preventDefault();
     let newLocation: newLocationType = {
       details,
-      photos: photosData,
+      photos,
       utils,
     };
     dispatch(addNewLocation(newLocation) as any);
@@ -89,7 +96,7 @@ function LocationForm({
     let update = {
       id,
       details,
-      photos: photosData,
+      photos,
       utils,
     };
 
@@ -118,7 +125,11 @@ function LocationForm({
       </Content>
 
       {/* upload photo */}
-      <UploadPhotos addedPhotos={photosData} />
+      <UploadPhotos
+        photos={photos}
+        setPhotos={setPhotos}
+        locationData={locationData}
+      />
 
       {/* Description */}
       <Content label='description' info='add description of the place'>

@@ -128,7 +128,7 @@ const Location = () => {
                 index === 0 || index > 2 ? (
                   ''
                 ) : (
-                  <div className={``}>
+                  <div key={index}>
                     <img
                       onClick={() => {
                         setIsExpanded(true);

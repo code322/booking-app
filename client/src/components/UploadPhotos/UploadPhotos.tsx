@@ -9,12 +9,17 @@ import {
   uploadSelectedPhoto,
 } from '../../state/locations/upLoadPhotosSlicer';
 import axios from 'axios';
+import {
+  locationType,
+  updateLocation,
+} from '../../state/locations/locationsSlicer';
 interface Props {
-  addedPhotos: string[];
+  photos: string[];
+  setPhotos: React.Dispatch<React.SetStateAction<string[]>>;
+  locationData: locationType;
 }
-function UploadPhotos({ addedPhotos }: Props) {
+function UploadPhotos({ photos, setPhotos, locationData }: Props) {
   const [photoLink, setPhotoLink] = useState<string>('');
-  const [locationPhotos, setLocationPhotos] = useState<string[]>(addedPhotos);
   const dispatch = useAppDispatch();
 
   async function handleUploadPhoto(e: React.SyntheticEvent) {
@@ -40,25 +45,27 @@ function UploadPhotos({ addedPhotos }: Props) {
         }
       );
 
-      setLocationPhotos((preVal) => [...preVal, ...data]);
+      setPhotos((preVal) => [...preVal, ...data]);
     } catch (error) {
       console.log(error);
     }
   }
-
   async function removePhoto(link: string, index: number) {
-    // console.log(index);
     try {
       await axios.delete(`${API_URL}/api/upload/remove-photo/${index}`, {
         data: {
           link,
         },
       });
-      setLocationPhotos(() => locationPhotos.filter((_, i) => i !== index));
+      setPhotos(() => photos.filter((_, i) => i !== index));
+      let updatedPhoto = locationData.photos.filter((_, i) => i !== index);
+      let updateData = { ...locationData, photos: updatedPhoto };
+      dispatch(updateLocation(updateData) as any);
     } catch (error) {
       console.log(error);
     }
   }
+
   return (
     <>
       <div className='flex gap-2'>
@@ -99,9 +106,9 @@ function UploadPhotos({ addedPhotos }: Props) {
         </label>
 
         <>
-          {locationPhotos &&
-            locationPhotos.length > 0 &&
-            locationPhotos.map((links: any, index: number) => (
+          {photos &&
+            photos.length > 0 &&
+            photos.map((links: any, index: number) => (
               <div className='relative ' key={index}>
                 <img
                   className='h-28 w-28 object-cover rounded-md'
