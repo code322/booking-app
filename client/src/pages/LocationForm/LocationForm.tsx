@@ -101,6 +101,7 @@ function LocationForm({
     };
 
     dispatch(updateLocation(update) as any);
+    navigate(-1);
   }
 
   return (
