@@ -1,5 +1,5 @@
 import Container from '../../components/Container/Container';
-import { useEffect } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/userTypeSelector';
 import {
   getAllLocations,
@@ -9,32 +9,99 @@ import { API_URL } from '../../helpers/api';
 import { Link } from 'react-router-dom';
 import { Icon } from '@iconify/react';
 import InputFields from '../../components/InputFields/InputFields';
+import { Slider } from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material';
+import { filterLocations } from '../../helpers/filterLocations';
 
 function Home() {
+  const [search, setSearch] = useState('');
   const dispatch = useAppDispatch();
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: '#444',
+      },
+    },
+  });
   useEffect(() => {
     dispatch(getAllLocations() as any);
   }, [dispatch]);
 
   const allLocations = useAppSelector(selectLocations);
-  // console.log(allLocations);
 
+  const [princeRange, setPriceRange] = useState<number[]>([0, 100]);
+
+  // get the price range
+  const minDistance = 10;
+  function handlePriceRange(
+    event: Event,
+    newValue: number | number[],
+    activeThumb: number
+  ) {
+    if (!Array.isArray(newValue)) {
+      return;
+    }
+
+    if (activeThumb === 0) {
+      setPriceRange([
+        Math.min(newValue[0], princeRange[1] - minDistance),
+        princeRange[1],
+      ]);
+    } else {
+      setPriceRange([
+        princeRange[0],
+        Math.max(newValue[1], princeRange[0] + minDistance),
+      ]);
+    }
+  }
+
+  function handleSearch(e: React.ChangeEvent<HTMLInputElement>) {
+    setSearch(e.target.value);
+  }
+  function handleMaxBed(e: React.ChangeEvent<HTMLSelectElement>) {
+    setMaxBed(e.target.value);
+  }
+
+  const [maxBed, setMaxBed] = useState<string>('Any');
+
+  const filteredLocation = useMemo(() => {
+    let result = filterLocations(search, maxBed, princeRange, allLocations);
+    return result;
+  }, [search, maxBed, princeRange, allLocations]);
+  console.log(filteredLocation);
   return (
     <Container>
       <div className='flex flex-col sm:flex-row gap-4'>
         <div className='flex flex-col gap-4 shadow-customShadow px-2 py-4 rounded-md h-fit'>
           <input
+            value={search}
+            onChange={handleSearch}
             className='border outline-none p-1'
             type='text'
             placeholder='Search...'
           />
           <div className='flex flex-col'>
             <label htmlFor=''>Price Range</label>
-            <input type='range' />
+            <div className='px-2'>
+              <ThemeProvider theme={theme}>
+                <Slider
+                  getAriaLabel={() => 'Minimum distance'}
+                  value={princeRange}
+                  onChange={handlePriceRange}
+                  valueLabelDisplay='auto'
+                  disableSwap
+                />
+              </ThemeProvider>
+            </div>
           </div>
           <div>
             <label>Number of Beds</label>
-            <select className='p-2 bg-white border w-full' name='' id=''>
+            <select
+              onChange={handleMaxBed}
+              className='p-2 bg-white border w-full'
+              name=''
+              id=''
+            >
               <option className='border ' value='Any'>
                 Any
               </option>
