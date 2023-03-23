@@ -14,7 +14,6 @@ const CheckBox = ({
   value,
   checked,
   handleBoxes,
-  defaultChecked,
 }: checkBoxType) => (
   <>
     <label
@@ -28,7 +27,6 @@ const CheckBox = ({
         value={value}
         onChange={handleBoxes}
         checked={checked}
-        defaultChecked={defaultChecked}
       />
       <Icon className='text-gray-400' icon={icon} />
       {label}

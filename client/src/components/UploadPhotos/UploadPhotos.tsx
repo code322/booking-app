@@ -59,7 +59,6 @@ function UploadPhotos({ addedPhotos }: Props) {
       console.log(error);
     }
   }
-
   return (
     <>
       <div className='flex gap-2'>

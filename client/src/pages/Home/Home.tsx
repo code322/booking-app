@@ -34,7 +34,7 @@ function Home() {
             );
 
             return (
-              <div>
+              <div key={locations?.id}>
                 <div className='relative'>
                   <Link to={`/location/${locations?.id}`}>
                     <img
