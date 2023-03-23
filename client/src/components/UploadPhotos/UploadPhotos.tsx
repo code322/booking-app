@@ -40,7 +40,7 @@ function UploadPhotos({ addedPhotos }: Props) {
         }
       );
 
-      setLocationPhotos((preVal) => [...preVal, data]);
+      setLocationPhotos((preVal) => [...preVal, ...data]);
     } catch (error) {
       console.log(error);
     }
@@ -59,7 +59,7 @@ function UploadPhotos({ addedPhotos }: Props) {
       console.log(error);
     }
   }
-  console.log(locationPhotos);
+
   return (
     <>
       <div className='flex gap-2'>

@@ -27,7 +27,7 @@ export const uploadFromLocal = async (req, res) => {
 };
 
 export const removePhoto = (req, res) => {
-  const [link] = req.body.link;
+  const link = req.body.link;
   console.log(link);
   let photoPath = path.resolve('uploads/' + link);
   unlink(photoPath, (err) => {

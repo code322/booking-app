@@ -123,7 +123,6 @@ async function getUser(email) {
 export const refreshToken = (req, res) => {
   const cookies = req.cookies;
   const refreshToken = cookies.refreshToken?.split(' ')[1];
-  console.log(cookies, 'refresh page');
 
   if (!refreshToken)
     return res

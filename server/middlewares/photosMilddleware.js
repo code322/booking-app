@@ -3,7 +3,8 @@ import multer from 'multer';
 let storage = {
   storage: multer.diskStorage({
     destination: function (req, file, callback) {
-      callback(null, 'uploads/');
+      callback(null, 'uploads');
+      console.log(file);
     },
     filename: function (req, file, callback) {
       let fileName = file.originalname.split('.');
