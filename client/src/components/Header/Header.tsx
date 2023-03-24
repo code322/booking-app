@@ -14,12 +14,8 @@ function Header() {
       <Container>
         <div className='px-3  flex  justify-between h-full items-center w-full'>
           {/* logo */}
-          <Link to={'/'} className='h-8 w-8'>
-            <Icon
-              className='h-10 w-10'
-              icon='material-symbols:location-on'
-              color='#ff385c'
-            />
+          <Link to={'/'} className='h-8 w-8 text-custom-red'>
+            <Icon className='h-10 w-10' icon='logos:airbnb-icon' />
           </Link>
           {/* nav */}
           <div className='flex items-center gap-3'>

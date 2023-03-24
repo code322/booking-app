@@ -19,7 +19,7 @@ function Home() {
   const theme = createTheme({
     palette: {
       primary: {
-        main: '#444',
+        main: '#ff385c',
       },
     },
   });
