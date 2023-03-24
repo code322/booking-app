@@ -29,7 +29,7 @@ function Home() {
 
   const allLocations = useAppSelector(selectLocations);
 
-  const [princeRange, setPriceRange] = useState<number[]>([0, 100]);
+  const [princeRange, setPriceRange] = useState<number[]>([0, 200]);
 
   // get the price range
   const minDistance = 10;
@@ -135,7 +135,7 @@ function Home() {
                   <div className='relative'>
                     <Link to={`/location/${locations?.id}`}>
                       <img
-                        className='bg-blue-200 aspect-square object-cover rounded-lg'
+                        className='bg-blue-200 aspect-square object-cover rounded-lg w-full h-full'
                         src={`${API_URL}/uploads/${locations?.photos?.[0]}`}
                         alt='no_image'
                       />
