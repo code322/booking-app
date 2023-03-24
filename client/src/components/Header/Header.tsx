@@ -46,7 +46,6 @@ function Header() {
                 />
               )}
             </Link>
-            {<p className='capitalize'>{user?.name}</p>}
           </div>
         </div>
       </Container>

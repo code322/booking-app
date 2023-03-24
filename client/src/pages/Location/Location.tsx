@@ -108,7 +108,7 @@ const Location = () => {
           <div className='flex flex-col'>
             <h2 className='capitalize text-xl'>{location?.details?.title}</h2>
             <small className='font-bold underline underline-offset-2 decoration  capitalize text-xs'>
-              {location?.details.address}
+              {location?.details?.address}
             </small>
           </div>
           <div className='grid gap-2 sm:grid-cols-[2fr_1fr] mt-6 rounded-2xl overflow-hidden'>
@@ -201,7 +201,7 @@ const Location = () => {
 
               <div>
                 <h2 className='font-bold text-xl text-black'>Description</h2>
-                <p>{location.details.description}</p>
+                <p>{location?.details?.description}</p>
               </div>
               {/* ---BOOKING--- */}
               <div className='shadow-customShadow p-6 rounded-md'>
