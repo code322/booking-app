@@ -4,10 +4,7 @@ import InputFields from '../InputFields/InputFields';
 import { Icon } from '@iconify/react';
 import { API_URL } from '../../helpers/api';
 import { useAppDispatch } from '../../hooks/userTypeSelector';
-import {
-  uploadByLinkPhoto,
-  uploadSelectedPhoto,
-} from '../../state/locations/upLoadPhotosSlicer';
+
 import axios from 'axios';
 import {
   locationType,
@@ -24,7 +21,22 @@ function UploadPhotos({ photos, setPhotos, locationData }: Props) {
 
   async function handleUploadPhoto(e: React.SyntheticEvent) {
     e.preventDefault();
-    dispatch(uploadByLinkPhoto(photoLink) as any);
+    try {
+      let { data } = await axios.post(
+        `${API_URL}/api/upload/upload-by-link`,
+        {
+          link: photoLink,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      setPhotos((preVal) => [...preVal, data]);
+    } catch (error) {
+      console.log(error);
+    }
     setPhotoLink('');
   }
 

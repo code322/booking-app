@@ -4,13 +4,11 @@ import storage from 'redux-persist/lib/storage';
 import { persistReducer, persistStore } from 'redux-persist';
 import thunk from 'redux-thunk';
 import { combineReducers } from 'redux';
-import uploadPhotosSlice from './locations/upLoadPhotosSlicer';
 import locationsSlicer from './locations/locationsSlicer';
 import locationByIdSlicer from './locations/locationByIdSlicer';
 
 const reducers = combineReducers({
   authReducer,
-  uploadPhotosSlice,
   locationsSlicer,
   locationByIdSlicer,
 });
