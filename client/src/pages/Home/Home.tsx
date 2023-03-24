@@ -72,7 +72,7 @@ function Home() {
   return (
     <Container>
       <div className='flex flex-col sm:flex-row gap-4'>
-        <div className='flex flex-col gap-4 shadow-customShadow px-2 py-4 rounded-md h-fit'>
+        <div className='flex flex-col gap-4 shadow-customShadow px-2 py-4 rounded-md h-fit border'>
           <input
             value={search}
             onChange={handleSearch}
@@ -80,7 +80,7 @@ function Home() {
             type='text'
             placeholder='Search...'
           />
-          <div className='flex flex-col'>
+          <div className='flex flex-col '>
             <label htmlFor=''>Price Range</label>
             <div className='px-2'>
               <ThemeProvider theme={theme}>
@@ -118,8 +118,8 @@ function Home() {
           </div>
         </div>
         <div className='grid sm:grid-cols-2 lg:grid-cols-3 gap-8'>
-          {allLocations &&
-            allLocations.map((locations) => {
+          {filteredLocation &&
+            filteredLocation.map((locations) => {
               let price = Number(locations?.details?.price).toLocaleString(
                 'en-US',
                 {
