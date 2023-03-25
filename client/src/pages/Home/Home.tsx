@@ -77,7 +77,7 @@ function Home() {
             onChange={handleSearch}
             className='border outline-none p-1'
             type='text'
-            placeholder='Search...'
+            placeholder='Search by location...'
           />
           <div className='flex flex-col '>
             <label htmlFor=''>Price Range</label>
