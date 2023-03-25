@@ -42,14 +42,6 @@ const Footer = () => {
             </li>
           </ul>
         </div>
-        {/* <div className=''>
-            <h2 className='font-semibold  text-white '>CONTACT US</h2>
-            <ul className='flex flex-col gap-2 mt-1'>
-              <li className='text-white text-xs'>CONTACT US</li>
-              <li className='text-white text-xs'>TERMS AND CONDITIONS</li>
-              <li className='text-white text-xs'>FEEDBACK</li>
-            </ul>
-          </div> */}
       </div>
     </footer>
   );

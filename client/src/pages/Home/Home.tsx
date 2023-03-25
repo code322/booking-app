@@ -68,7 +68,6 @@ function Home() {
     let result = filterLocations(search, maxBed, princeRange, allLocations);
     return result;
   }, [search, maxBed, princeRange, allLocations]);
-  console.log(filteredLocation);
   return (
     <Container>
       <div className='flex flex-col sm:flex-row gap-8'>

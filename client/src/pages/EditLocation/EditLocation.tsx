@@ -9,6 +9,7 @@ import {
 } from '../../state/locations/locationByIdSlicer';
 import { useParams } from 'react-router-dom';
 import Container from '../../components/Container/Container';
+import Spinner from '../../components/Spinner';
 
 const EditLocation = () => {
   const { id } = useParams();
@@ -26,7 +27,7 @@ const EditLocation = () => {
   return (
     <Container>
       {status !== 'succeeded' ? (
-        <div>loading...</div>
+        <Spinner />
       ) : (
         <LocationForm
           detailsData={details}
