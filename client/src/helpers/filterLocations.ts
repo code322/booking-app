@@ -19,7 +19,7 @@ export const filterLocations = (
         let guests = location?.details?.guests;
         let price = location?.details?.price;
         return (
-          location?.details?.title
+          location?.details?.address
             .toLocaleLowerCase()
             .includes(search.toLocaleLowerCase()) &&
           Number(price) >= priceRange[0] &&
@@ -37,7 +37,7 @@ export const filterLocations = (
         let price = location?.details?.price;
 
         return (
-          location?.details?.title
+          location?.details?.address
             .toLocaleLowerCase()
             .includes(search.toLocaleLowerCase()) &&
           Number(price) >= priceRange[0] &&
@@ -53,7 +53,7 @@ export const filterLocations = (
         let price = location?.details?.price;
 
         return (
-          location?.details?.title
+          location?.details?.address
             .toLocaleLowerCase()
             .includes(search.toLocaleLowerCase()) &&
           Number(price) >= priceRange[0] &&

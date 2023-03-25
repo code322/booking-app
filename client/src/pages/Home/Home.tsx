@@ -156,7 +156,7 @@ function Home() {
                         className='text-gray-600 mr-1 text-sm'
                         icon='material-symbols:location-on-outline'
                       />
-                      <h2 className='text-gray-600 capitalize text-sm'>
+                      <h2 className='text-gray-600 capitalize text-xs'>
                         {locations?.details?.address}
                       </h2>
                     </div>
@@ -165,7 +165,7 @@ function Home() {
                         className='text-gray-600 mr-1 text-lg'
                         icon='mdi:bed-double-outline'
                       />
-                      <h2 className='text-gray-600 text-sm'>
+                      <h2 className='text-gray-600 text-xs'>
                         {locations?.details?.guests}
                       </h2>
                     </div>
