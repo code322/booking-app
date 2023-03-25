@@ -71,7 +71,7 @@ function Home() {
   console.log(filteredLocation);
   return (
     <Container>
-      <div className='flex flex-col sm:flex-row gap-4'>
+      <div className='flex flex-col sm:flex-row gap-8'>
         <div className='flex flex-col gap-4 shadow-customShadow px-2 py-4 rounded-md h-fit border'>
           <input
             value={search}

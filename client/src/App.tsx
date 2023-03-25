@@ -10,6 +10,7 @@ import Locations from './pages/Locations/Locations';
 import AddNewLocation from './pages/AddNewLocation/AddNewLocation';
 import MyBooking from './pages/MyBooking/MyBooking';
 import EditLocation from './pages/EditLocation/EditLocation';
+import Footer from './components/Footer/Footer';
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
           />
         </Route>
       </Routes>
+      <Footer />
     </>
   );
 }
