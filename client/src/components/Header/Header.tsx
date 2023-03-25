@@ -13,16 +13,16 @@ function Header() {
     <header className='py-8 h-[3.5rem] border-b flex justify-center m-auto '>
       <div className='px-3  flex  justify-between h-full items-center w-full  max-w-6xl'>
         {/* logo */}
-        <Link to={'/'} className='h-8 w-8 text-custom-red'>
-          <Icon className='h-10 w-10' icon='logos:airbnb-icon' />
+        <Link to={'/'} className='h-8 w-8 text-custom-red overflow-hidden'>
+          <Icon className='h-8 w-8' icon='logos:airbnb-icon' />
         </Link>
         {/* nav */}
         <div className='flex items-center gap-3'>
           <Link
             to={'/account'}
-            className='p-3 bg-custom-red text-white rounded-md outline-none flex items-center gap-2'
+            className='py-2 px-3 bg-custom-red text-white rounded-md outline-none flex items-center gap-2'
           >
-            <span>My Listing</span>
+            <span>My Account</span>
           </Link>
           <Link to={user.name ? '/' : '/login'}>
             {user.name ? (
