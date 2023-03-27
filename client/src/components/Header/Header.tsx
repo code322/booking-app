@@ -4,11 +4,16 @@ import { useAppDispatch, useAppSelector } from '../../hooks/userTypeSelector';
 import { logout, userSelector } from '../../state/authSlicer/authSlicer';
 import { IsLoggedLocalStorage } from '../../utils/auth';
 import { Container } from '@mui/material';
+import { useState } from 'react';
 
 function Header() {
   const user = useAppSelector(userSelector);
   const dispatch = useAppDispatch();
-  console.log(user.name);
+  const isLoggedIn: boolean | null = IsLoggedLocalStorage.getIsLoggedIn();
+  const [isAuth, setIsAuth] = useState<boolean | null>(
+    IsLoggedLocalStorage.getIsLoggedIn()
+  );
+  console.log(isAuth, 'header');
   return (
     <header className='py-8 h-[3.5rem] border-b flex justify-center m-auto '>
       <div className='px-3  flex  justify-between h-full items-center w-full  max-w-6xl'>
@@ -24,8 +29,8 @@ function Header() {
           >
             <span>My Account</span>
           </Link>
-          <Link to={user.name ? '/' : '/login'}>
-            {user.name ? (
+          <Link to={isLoggedIn ? '/' : '/login'}>
+            {isLoggedIn ? (
               <>
                 <Icon
                   onClick={() => {

@@ -52,7 +52,6 @@ export const register = async (req, res) => {
       },
     });
   } catch (error) {
-    console.log(error);
     res.status(409).json(error);
   }
 };
