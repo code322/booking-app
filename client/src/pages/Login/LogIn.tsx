@@ -10,6 +10,7 @@ export type loginTypes = {
 };
 function LogIn() {
   const dispatch = useAppDispatch();
+  // const [isAuth, setIsAuth]= useState
 
   const [input, setInput] = useState<loginTypes>({
     email: '',

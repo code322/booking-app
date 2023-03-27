@@ -5,24 +5,24 @@ import axios from 'axios';
 import { API_URL } from '../helpers/api';
 
 const PrivateRoutes = () => {
-  const [state, setState] = useState<boolean | null>(false);
-  useLayoutEffect(() => {
+  const [isAuth, setIsAuth] = useState<boolean | null>(
+    IsLoggedLocalStorage.getIsLoggedIn()
+  );
+  useEffect(() => {
     const isAuth = async () => {
       try {
         await axios.get(`${API_URL}/api/auth/refresh`);
-        setState(true);
         IsLoggedLocalStorage.setIsLoggedInTrue();
+        setIsAuth(true);
       } catch (error) {
-        setState(false);
         IsLoggedLocalStorage.setIsLoggedInFalse();
+        setIsAuth(false);
       }
     };
     isAuth();
   }, []);
-  const isLoggedIn = IsLoggedLocalStorage.getIsLoggedIn();
-  console.log(state);
 
-  return isLoggedIn ? <Outlet /> : <Navigate to='/login' />;
+  return isAuth ? <Outlet /> : <Navigate to='/login' />;
 };
 
 export default PrivateRoutes;
