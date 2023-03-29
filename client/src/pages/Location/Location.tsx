@@ -5,7 +5,7 @@ import {
   selectLocationById,
   selectLocationByIdStatus,
 } from '../../state/locations/locationByIdSlicer';
-import { useAppDispatch, useAppSelector } from '../../hooks/userTypeSelector';
+import { useAppDispatch, useAppSelector } from '../../hooks/useTypeSelector';
 import Container from '../../components/Container/Container';
 import { API_URL } from '../../helpers/api';
 import { Icon } from '@iconify/react';

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import LocationForm from '../LocationForm/LocationForm';
-import { useAppDispatch, useAppSelector } from '../../hooks/userTypeSelector';
+import { useAppDispatch, useAppSelector } from '../../hooks/useTypeSelector';
 
 import {
   getLocationById,

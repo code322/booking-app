@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import CheckBox from '../../components/CheckBoxes/CheckBoxes';
 import InputFields from '../../components/InputFields/InputFields';
 import UploadPhotos from '../../components/UploadPhotos/UploadPhotos';
-import { useAppDispatch } from '../../hooks/userTypeSelector';
+import { useAppDispatch } from '../../hooks/useTypeSelector';
 import {
   addNewLocation,
   updateLocation,

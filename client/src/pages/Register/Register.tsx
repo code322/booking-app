@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import AuthForm from '../../components/AuthForm/AuthForm';
 import InputFields from '../../components/InputFields/InputFields';
-import { useAppDispatch, useAppSelector } from '../../hooks/userTypeSelector';
+import { useAppDispatch, useAppSelector } from '../../hooks/useTypeSelector';
 import {
   authStatusSelector,
   register,

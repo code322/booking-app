@@ -3,7 +3,7 @@ import { Content } from '../../pages/LocationForm/LocationForm';
 import InputFields from '../InputFields/InputFields';
 import { Icon } from '@iconify/react';
 import { API_URL } from '../../helpers/api';
-import { useAppDispatch } from '../../hooks/userTypeSelector';
+import { useAppDispatch } from '../../hooks/useTypeSelector';
 
 import axios from 'axios';
 import {

@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react';
 import { Link } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../hooks/userTypeSelector';
+import { useAppDispatch, useAppSelector } from '../../hooks/useTypeSelector';
 import { logout, userSelector } from '../../state/authSlicer/authSlicer';
 import { IsLoggedLocalStorage } from '../../utils/auth';
 import { Container } from '@mui/material';

@@ -3,7 +3,7 @@ import { Navigate, Outlet } from 'react-router-dom';
 import { IsLoggedLocalStorage } from './auth';
 import axios from 'axios';
 import { API_URL } from '../helpers/api';
-import { useAppDispatch } from '../hooks/userTypeSelector';
+import { useAppDispatch } from '../hooks/useTypeSelector';
 import { logout } from '../state/authSlicer/authSlicer';
 
 const PrivateRoutes = () => {

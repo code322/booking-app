@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Container from '../../components/Container/Container';
 import dummyData from '../../dummyData';
-import { useAppDispatch, useAppSelector } from '../../hooks/userTypeSelector';
+import { useAppDispatch, useAppSelector } from '../../hooks/useTypeSelector';
 import {
   deleteLocation,
   getAllLocations,

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import AuthForm from '../../components/AuthForm/AuthForm';
 import { authStatusSelector, login } from '../../state/authSlicer/authSlicer';
-import { useAppDispatch, useAppSelector } from '../../hooks/userTypeSelector';
+import { useAppDispatch, useAppSelector } from '../../hooks/useTypeSelector';
 import { Navigate } from 'react-router-dom';
 import { IsLoggedLocalStorage } from '../../utils/auth';
 export type loginTypes = {

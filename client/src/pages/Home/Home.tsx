@@ -1,6 +1,6 @@
 import Container from '../../components/Container/Container';
 import { useEffect, useState, useMemo } from 'react';
-import { useAppDispatch, useAppSelector } from '../../hooks/userTypeSelector';
+import { useAppDispatch, useAppSelector } from '../../hooks/useTypeSelector';
 import {
   getAllLocations,
   selectLocations,

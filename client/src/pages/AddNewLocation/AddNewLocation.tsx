@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useAppSelector } from '../../hooks/userTypeSelector';
+import { useAppSelector } from '../../hooks/useTypeSelector';
 import LocationForm from '../LocationForm/LocationForm';
 import {
   detailsTypes,
