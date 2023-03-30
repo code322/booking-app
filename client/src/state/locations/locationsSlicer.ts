@@ -1,6 +1,6 @@
 import { detailsTypes, utilsTypes } from './../../helpers/types';
 import { RootState } from './../store';
-import { API_URL } from './../../helpers/api';
+import { API_URL, axiosPrivate } from './../../helpers/api';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { newLocationType } from '../../pages/LocationForm/LocationForm';
@@ -38,8 +38,8 @@ export const updateLocation = createAsyncThunk(
   'locations/updateLocation',
   async (location: locationType, { rejectWithValue }) => {
     try {
-      const { data } = await axios.patch(
-        `${API_URL}/api/location/update-location/${location.id}`,
+      const { data } = await axiosPrivate.patch(
+        `/api/location/update-location/${location.id}`,
         location
       );
       console.log(data);

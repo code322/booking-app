@@ -2,6 +2,7 @@ import db from '../config/db.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { generateTokens } from '../utils/generateTokens.js';
+import { REFRESH_TOKEN_LIFE_TIME } from '../config/jwt.js';
 export const register = async (req, res) => {
   const { name, email, password } = req.body;
 
@@ -72,19 +73,20 @@ export const login = async (req, res) => {
     if (!accessToken) return res.status(409).json('No access token');
     if (!refreshToken) return res.status(409).json('No refresh token');
 
-    res.cookie('accessToken', accessToken, {
-      httpOnly: false,
-      maxAge: 1000 * 60 * 30,
-      secure: true,
-    });
+    // res.cookie('accessToken', accessToken, {
+    //   httpOnly: false,
+    //   maxAge: 1000 * 60 * 30,
+    //   secure: false,
+    // });
     res.cookie('refreshToken', refreshToken, {
       httpOnly: false,
-      maxAge: 1000 * 60 * 60 * 24 * 30,
-      secure: true,
+      maxAge: 1000 * REFRESH_TOKEN_LIFE_TIME,
+      secure: false,
       sameSite: 'none',
     });
 
     res.status(201).json({
+      accessToken,
       user: {
         name: user.name,
         email: user.email,
