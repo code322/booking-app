@@ -19,10 +19,11 @@ type decodeType = { exp: number; id: string; iat: number };
 axiosPrivate.interceptors.response.use(
   async (config) => {
     if (!accessToken) {
-      accessToken =
-        localStorage.getItem('accessToken')! ||
-        JSON.parse(localStorage.getItem('accessToken')!);
-      config.headers.Authorization = `Bearer ${accessToken}`;
+      // accessToken =
+      //   localStorage.getItem('accessToken')! ||
+      //   JSON.parse(localStorage.getItem('accessToken')!);
+      // config.headers.Authorization = `Bearer ${accessToken}`;
+      return config;
     }
 
     const decodedToken: decodeType = decode(accessToken);
@@ -37,6 +38,6 @@ axiosPrivate.interceptors.response.use(
     return config;
   },
   (error) => {
-    Promise.reject(error);
+    Promise.reject(error.message);
   }
 );

@@ -121,30 +121,51 @@ async function getUser(email) {
     return error;
   }
 }
+async function getUserById(id) {
+  try {
+    const [user] = await db.query('SELECT * From Users WHERE id=?', [id]);
+    return user[0];
+  } catch (error) {
+    return error;
+  }
+}
 export const refreshToken = (req, res) => {
   const cookies = req.cookies;
-  const refreshToken = cookies.refreshToken?.split(' ')[1];
+  if (!cookies?.refreshToken)
+    return res.status(401).json({ message: 'Unauthorized' });
+  console.log('refresh is running');
+
+  const refreshToken = cookies?.refreshToken?.split(' ')[1];
 
   if (!refreshToken)
     return res
       .status(401)
       .json({ message: 'no refresh token. please login again' });
 
-  const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN);
+  jwt.verify(refreshToken, process.env.REFRESH_TOKEN, async (err, decoded) => {
+    if (err) return res.status(401).json({ message: 'Forbidden' });
+    try {
+      const user = await getUserById(decoded.id);
+      if (!user) return res.status(401).json({ message: 'Unauthorized' });
+      const accessToken = generateTokens.accessToken(decoded.id);
+      res.status(200).json({ accessToken });
+    } catch (error) {
+      res.status(401).json({ message: error.message });
+    }
+  });
+};
 
-  if (decoded.exp * 1000 > new Date().getTime()) {
-    req.user = decoded;
-    const id = req.user.id;
-    const accessToken = generateTokens.accessToken(id);
-    res.cookie('accessToken', accessToken, {
-      httpOnly: true,
-      sameSite: 'none',
-      secure: true,
-      maxAge: 1000 * 60 * 30, // Units are in milliseconds. Sets to expire in 30 mins
-    });
+export const privateRoutes = async (req, res) => {
+  let authHeader = req.headers?.authorization || req.headers?.Authorization;
+  if (!authHeader) {
+    return res.status(401).json({ message: 'Unauthorized' });
+  }
+  let accessToken = authHeader.split(' ')[1];
+  try {
+    jwt.verify(accessToken, process.env.ACCESS_TOKEN);
 
-    res.status(200).json({ message: 'access token created' });
-  } else {
-    res.status(400).json({ message: 'token can not be verified' });
+    res.status(200).json({ message: 'succeeded' });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
   }
 };

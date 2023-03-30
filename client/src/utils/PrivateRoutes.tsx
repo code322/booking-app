@@ -2,7 +2,7 @@ import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 import { IsLoggedLocalStorage } from './auth';
 import axios from 'axios';
-import { API_URL } from '../helpers/api';
+import { API_URL, axiosPrivate } from '../helpers/api';
 import { useAppDispatch } from '../hooks/useTypeSelector';
 import { logout } from '../state/authSlicer/authSlicer';
 
@@ -15,8 +15,8 @@ const PrivateRoutes = () => {
   useEffect(() => {
     const isAuth = async () => {
       try {
-        await axios.get(`${API_URL}/api/auth/refresh`);
-        IsLoggedLocalStorage.setIsLoggedInTrue();
+        await axiosPrivate.get(`/api/auth/private-routes`);
+        // IsLoggedLocalStorage.setIsLoggedInTrue();
         setIsAuth(true);
       } catch (error) {
         IsLoggedLocalStorage.setIsLoggedInFalse();
