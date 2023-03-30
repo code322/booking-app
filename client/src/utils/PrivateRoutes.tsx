@@ -16,7 +16,7 @@ const PrivateRoutes = () => {
     const isAuth = async () => {
       try {
         await axiosPrivate.get(`/api/auth/private-routes`);
-        // IsLoggedLocalStorage.setIsLoggedInTrue();
+        IsLoggedLocalStorage.setIsLoggedInTrue();
         setIsAuth(true);
       } catch (error) {
         IsLoggedLocalStorage.setIsLoggedInFalse();

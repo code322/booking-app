@@ -133,7 +133,6 @@ export const refreshToken = (req, res) => {
   const cookies = req.cookies;
   if (!cookies?.refreshToken)
     return res.status(401).json({ message: 'Unauthorized' });
-  console.log('refresh is running');
 
   const refreshToken = cookies?.refreshToken?.split(' ')[1];
 
@@ -145,10 +144,11 @@ export const refreshToken = (req, res) => {
   jwt.verify(refreshToken, process.env.REFRESH_TOKEN, async (err, decoded) => {
     if (err) return res.status(401).json({ message: 'Forbidden' });
     try {
-      const user = await getUserById(decoded.id);
+      const user = await getUserById(decoded?.id);
       if (!user) return res.status(401).json({ message: 'Unauthorized' });
-      const accessToken = generateTokens.accessToken(decoded.id);
-      res.status(200).json({ accessToken });
+      const accessToken = generateTokens.accessToken(decoded?.id);
+
+      res.status(201).json({ accessToken });
     } catch (error) {
       res.status(401).json({ message: error.message });
     }
@@ -166,6 +166,6 @@ export const privateRoutes = async (req, res) => {
 
     res.status(200).json({ message: 'succeeded' });
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(401).json({ message: error.message });
   }
 };
