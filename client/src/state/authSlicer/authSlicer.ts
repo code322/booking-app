@@ -49,6 +49,7 @@ export const logout = createAsyncThunk(
 
 interface authInterface {
   status: 'idle' | 'succeeded' | 'failed' | 'loggedOut';
+  accessToken: string;
   user: {
     email: string;
     name: string;
@@ -58,6 +59,7 @@ interface authInterface {
 
 const initialState: authInterface = {
   status: 'idle',
+  accessToken: '',
   user: {
     email: '',
     name: '',
@@ -72,6 +74,7 @@ const authSlice = createSlice({
     builder
       .addCase(logout.fulfilled, (state) => {
         state.status = 'loggedOut';
+        state.accessToken = '';
         state.user = {
           email: '',
           name: '',
@@ -88,6 +91,7 @@ const authSlice = createSlice({
         isAnyOf(register.fulfilled, login.fulfilled),
         (state, action) => {
           state.status = 'succeeded';
+          state.accessToken = action.payload.accessToken;
           state.user = action.payload.user;
           state.error = null;
         }
