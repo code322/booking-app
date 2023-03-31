@@ -24,7 +24,6 @@ export const login = createAsyncThunk(
   async (body: loginTypes, { rejectWithValue }) => {
     try {
       const { data } = await axios.post(`${API_URL}/api/auth/login`, body);
-      console.log(data.accessToken);
       localStorage.setItem('accessToken', data?.accessToken);
 
       IsLoggedLocalStorage.setIsLoggedInTrue();

@@ -13,7 +13,8 @@ function Header() {
   const [isAuth, setIsAuth] = useState<boolean | null>(
     IsLoggedLocalStorage.getIsLoggedIn()
   );
-  console.log(isAuth, 'header');
+
+  console.log(user.name);
   return (
     <header className='py-8 h-[3.5rem] border-b flex justify-center m-auto '>
       <div className='px-3  flex  justify-between h-full items-center w-full  max-w-6xl'>
