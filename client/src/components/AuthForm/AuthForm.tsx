@@ -2,6 +2,8 @@ import Container from '../Container/Container';
 import InputFields from '../InputFields/InputFields';
 import { Link } from 'react-router-dom';
 import Button from '../Button/Button';
+import { validateEmail, validPassword } from '../../helpers/validateForm';
+import { useEffect, useState } from 'react';
 
 type Props = {
   page: string;
@@ -13,27 +15,55 @@ type Props = {
 };
 const AuthForm = (props: Props) => {
   const { page, children, email, password, handleChange, handleSubmit } = props;
+  const [isValidEmail, setIsValidEmail] = useState<boolean>();
+  const [isValidPassword, setIsValidPassword] = useState<boolean>();
+
+  useEffect(() => {
+    setIsValidEmail(() => validateEmail(email));
+    setIsValidPassword(() => validPassword(password));
+  }, [email, password]);
+
+  const isDisabled = isValidEmail && isValidPassword;
   return (
     <Container>
       <div className='flex flex-col justify-center w-full items-center h-[calc(100vh-5rem)]'>
         <h1 className='text-2xl mb-5 font-bold capitalize'>{page}</h1>
         <form className='flex flex-wrap w-full flex-col gap-3 max-w-xs'>
           {children}
-          <InputFields
-            name={'email'}
-            value={email}
-            placeholder='E-mail'
-            type='text'
-            handleChange={handleChange}
+          <div className='flex flex-col relative mb-4'>
+            <InputFields
+              name={'email'}
+              value={email}
+              placeholder='E-mail'
+              type='text'
+              handleChange={handleChange}
+            />
+            {isValidEmail === false && (
+              <small className='absolute -bottom-4'>
+                Please enter a valid email
+              </small>
+            )}
+          </div>
+          <div className='flex flex-col relative mb-4'>
+            <InputFields
+              name={'password'}
+              value={password}
+              placeholder='Password'
+              type='password'
+              handleChange={handleChange}
+            />
+            {isValidPassword === false && (
+              <small className='absolute -bottom-4'>
+                Please enter valid password
+              </small>
+            )}
+          </div>
+
+          <Button
+            isDisabled={!isDisabled}
+            handleSubmit={handleSubmit}
+            title={page}
           />
-          <InputFields
-            name={'password'}
-            value={password}
-            placeholder='Password'
-            type='password'
-            handleChange={handleChange}
-          />
-          <Button handleSubmit={handleSubmit} title={page} />
         </form>
         {page === 'login' ? (
           <Message page='login' message="Don't have an account yet?" />
