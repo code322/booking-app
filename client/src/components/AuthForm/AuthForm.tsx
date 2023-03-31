@@ -48,7 +48,7 @@ const AuthForm = (props: Props) => {
             <InputFields
               name={'email'}
               value={email}
-              placeholder='E-mail'
+              placeholder='E-mail *'
               type='text'
               handleChange={handleChange}
             />
@@ -62,7 +62,7 @@ const AuthForm = (props: Props) => {
             <InputFields
               name={'password'}
               value={password}
-              placeholder='Password'
+              placeholder='Password *'
               type='password'
               handleChange={handleChange}
             />
