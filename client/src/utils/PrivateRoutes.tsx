@@ -1,16 +1,18 @@
 import { useState, useEffect } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
-import { IsLoggedLocalStorage } from './auth';
 
 import { useAppDispatch, useAppSelector } from '../hooks/useTypeSelector';
-import { accessTokenSelector, logout } from '../state/authSlicer/authSlicer';
+import {
+  accessTokenSelector,
+  isLoggedInSelector,
+  logout,
+} from '../state/authSlicer/authSlicer';
 
 import { axiosPrivate } from '../helpers/api';
 const PrivateRoutes = () => {
+  const isLoggedIn = useAppSelector(isLoggedInSelector);
   const accessToken = useAppSelector(accessTokenSelector);
-  const [isAuth, setIsAuth] = useState<boolean | null>(
-    IsLoggedLocalStorage.getIsLoggedIn()
-  );
+  const [isAuth, setIsAuth] = useState<boolean | null>(isLoggedIn);
 
   const dispatch = useAppDispatch();
   useEffect(() => {
@@ -20,10 +22,8 @@ const PrivateRoutes = () => {
       }
       try {
         await axiosPrivate.get(`/api/auth/private-routes`);
-        IsLoggedLocalStorage.setIsLoggedInTrue();
         setIsAuth(true);
       } catch (error) {
-        IsLoggedLocalStorage.setIsLoggedInFalse();
         dispatch(logout() as any);
         setIsAuth(false);
       }

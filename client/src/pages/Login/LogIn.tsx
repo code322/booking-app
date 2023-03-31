@@ -1,9 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import AuthForm from '../../components/AuthForm/AuthForm';
-import { authStatusSelector, login } from '../../state/authSlicer/authSlicer';
+import {
+  authStatusSelector,
+  isLoggedInSelector,
+  login,
+} from '../../state/authSlicer/authSlicer';
 import { useAppDispatch, useAppSelector } from '../../hooks/useTypeSelector';
 import { Navigate } from 'react-router-dom';
-import { IsLoggedLocalStorage } from '../../utils/auth';
 export type loginTypes = {
   email: string;
   password: string;
@@ -29,7 +32,7 @@ function LogIn() {
   }
 
   const authStatus = useAppSelector(authStatusSelector);
-  const isLoggedIn = IsLoggedLocalStorage.getIsLoggedIn();
+  const isLoggedIn = useAppSelector(isLoggedInSelector);
 
   if (authStatus === 'succeeded' && isLoggedIn) {
     return <Navigate to={'/'} />;

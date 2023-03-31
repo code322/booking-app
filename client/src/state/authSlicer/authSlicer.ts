@@ -1,5 +1,4 @@
 // import { axiosPrivate } from './../../helpers/api';
-import { IsLoggedLocalStorage } from './../../utils/auth';
 import { RootState } from './../store';
 import { inputTypes } from './../../pages/Register/Register';
 import { createSlice, createAsyncThunk, isAnyOf } from '@reduxjs/toolkit';
@@ -12,7 +11,6 @@ export const register = createAsyncThunk(
   async (body: inputTypes, { rejectWithValue }) => {
     try {
       const { data } = await axios.post(`${API_URL}/api/auth/register`, body);
-      localStorage.setItem('accessToken', data.accessToken);
       return data.user;
     } catch (error: any) {
       return rejectWithValue(error.response.data);
@@ -24,12 +22,9 @@ export const login = createAsyncThunk(
   async (body: loginTypes, { rejectWithValue }) => {
     try {
       const { data } = await axios.post(`${API_URL}/api/auth/login`, body);
-      localStorage.setItem('accessToken', data?.accessToken);
 
-      IsLoggedLocalStorage.setIsLoggedInTrue();
       return data;
     } catch (error: any) {
-      IsLoggedLocalStorage.setIsLoggedInFalse();
       return rejectWithValue(error.response.data);
     }
   }
@@ -40,7 +35,6 @@ export const logout = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       await axios.post(`${API_URL}/api/auth/logout`);
-      localStorage.removeItem('accessToken');
     } catch (error: any) {
       return rejectWithValue(error.response.data);
     }
@@ -49,6 +43,7 @@ export const logout = createAsyncThunk(
 
 interface authInterface {
   status: 'idle' | 'succeeded' | 'failed' | 'loggedOut';
+  isLoggedIn: boolean;
   accessToken: string;
   user: {
     email: string;
@@ -59,6 +54,7 @@ interface authInterface {
 
 const initialState: authInterface = {
   status: 'idle',
+  isLoggedIn: false,
   accessToken: '',
   user: {
     email: '',
@@ -69,12 +65,16 @@ const initialState: authInterface = {
 const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {},
+  reducers: {
+    setAccessToken: (state, action) => {
+      state.accessToken = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(logout.fulfilled, (state) => {
-        localStorage.setItem('isLoggedIn', JSON.stringify(false));
         state.status = 'loggedOut';
+        state.isLoggedIn = false;
         state.accessToken = '';
         state.user = {
           email: '',
@@ -92,6 +92,7 @@ const authSlice = createSlice({
         isAnyOf(register.fulfilled, login.fulfilled),
         (state, action) => {
           state.status = 'succeeded';
+          state.isLoggedIn = true;
           state.accessToken = action.payload.accessToken;
           state.user = action.payload.user;
           state.error = null;
@@ -101,6 +102,8 @@ const authSlice = createSlice({
         isAnyOf(register.rejected, login.rejected),
         (state, action) => {
           state.status = 'failed';
+          state.isLoggedIn = false;
+          state.accessToken = '';
           state.user = {
             email: '',
             name: '',
@@ -111,9 +114,18 @@ const authSlice = createSlice({
   },
 });
 
+//selectors
 export const userSelector = (state: RootState) => state.authReducer.user;
+export const isLoggedInSelector = (state: RootState) =>
+  state.authReducer.isLoggedIn;
+
 export const accessTokenSelector = (state: RootState) =>
   state?.authReducer?.accessToken;
 export const authStatusSelector = (state: RootState) =>
   state.authReducer.status;
+
+//reducer
 export default authSlice.reducer;
+
+//actions
+export const { setAccessToken } = authSlice.actions;

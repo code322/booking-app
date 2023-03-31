@@ -9,7 +9,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { Provider } from 'react-redux';
 import { API_URL, axiosPrivate } from './helpers/api';
 import axios from 'axios';
-import { logout } from './state/authSlicer/authSlicer';
+import { logout, setAccessToken } from './state/authSlicer/authSlicer';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -26,13 +26,13 @@ root.render(
   </React.StrictMode>
 );
 const { getState, dispatch } = store;
-let accessToken: string = getState().authReducer.accessToken;
+
 axiosPrivate.interceptors.request.use(
   async (config) => {
     // console.log(config);
     let { data } = await axios.get(`${API_URL}/api/auth/refresh`);
     let token = data?.accessToken;
-    localStorage.setItem('accessToken', token);
+    dispatch(setAccessToken(token) as any);
     config.headers['Authorization'] = `Bearer ${token}`;
     return config;
   },

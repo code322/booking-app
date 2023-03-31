@@ -1,20 +1,12 @@
 import { Icon } from '@iconify/react';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/useTypeSelector';
-import { logout, userSelector } from '../../state/authSlicer/authSlicer';
-import { IsLoggedLocalStorage } from '../../utils/auth';
-import { Container } from '@mui/material';
-import { useState } from 'react';
+import { isLoggedInSelector, logout } from '../../state/authSlicer/authSlicer';
 
 function Header() {
-  const user = useAppSelector(userSelector);
   const dispatch = useAppDispatch();
-  const isLoggedIn: boolean | null = IsLoggedLocalStorage.getIsLoggedIn();
-  const [isAuth, setIsAuth] = useState<boolean | null>(
-    IsLoggedLocalStorage.getIsLoggedIn()
-  );
+  const isLoggedIn = useAppSelector(isLoggedInSelector);
 
-  console.log(user.name);
   return (
     <header className='py-8 h-[3.5rem] border-b flex justify-center m-auto '>
       <div className='px-3  flex  justify-between h-full items-center w-full  max-w-6xl'>
@@ -35,7 +27,6 @@ function Header() {
               <>
                 <Icon
                   onClick={() => {
-                    IsLoggedLocalStorage.setIsLoggedInFalse();
                     dispatch(logout() as any);
                   }}
                   className='text-gray-700'

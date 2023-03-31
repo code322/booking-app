@@ -4,11 +4,11 @@ import InputFields from '../../components/InputFields/InputFields';
 import { useAppDispatch, useAppSelector } from '../../hooks/useTypeSelector';
 import {
   authStatusSelector,
+  isLoggedInSelector,
   register,
   userSelector,
 } from '../../state/authSlicer/authSlicer';
 import { Navigate } from 'react-router-dom';
-import { IsLoggedLocalStorage } from '../../utils/auth';
 
 export type inputTypes = {
   name: string;
@@ -39,7 +39,7 @@ const Register = () => {
   }
 
   const authStatus = useAppSelector(authStatusSelector);
-  const isLoggedIn = IsLoggedLocalStorage.getIsLoggedIn();
+  const isLoggedIn = useAppSelector(isLoggedInSelector);
 
   if (authStatus === 'succeeded' && isLoggedIn) {
     return <Navigate to={'/'} />;

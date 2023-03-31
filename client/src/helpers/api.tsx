@@ -14,15 +14,3 @@ export default axios.create({
 export const axiosPrivate = axios.create({
   baseURL: API_URL,
 });
-
-// axiosPrivate.interceptors.request.use(
-//   async (config) => {
-//     console.log(config);
-//     let { data } = await axios.get(`${API_URL}/api/auth/refresh`);
-//     let token = data?.accessToken;
-//     localStorage.setItem('accessToken', token);
-//     config.headers['Authorization'] = `Bearer ${token}`;
-//     return config;
-//   },
-//   (err) => Promise.reject(err)
-// );
