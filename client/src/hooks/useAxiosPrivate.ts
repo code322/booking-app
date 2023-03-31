@@ -1,10 +1,12 @@
+import { accessTokenSelector } from './../state/authSlicer/authSlicer';
+import { useAppSelector } from './useTypeSelector';
 import { axiosPrivate } from '../helpers/api';
 import { useEffect } from 'react';
 import useRefreshToken from './useRefreshToken';
 
 const useAxiosPrivate = () => {
   const refresh = useRefreshToken();
-  let accessToken = '';
+  let accessToken = useAppSelector(accessTokenSelector);
 
   useEffect(() => {
     const requestIntercept = axiosPrivate.interceptors.request.use(
@@ -34,7 +36,9 @@ const useAxiosPrivate = () => {
       axiosPrivate.interceptors.request.eject(requestIntercept);
       axiosPrivate.interceptors.response.eject(responseIntercept);
     };
-  }, [refresh]);
+  }, [refresh, accessToken]);
 
   return axiosPrivate;
 };
+
+export default useAxiosPrivate;

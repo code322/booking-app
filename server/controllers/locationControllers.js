@@ -83,9 +83,6 @@ export const updateLocation = async (req, res) => {
   let details = JSON.stringify(location?.details);
   let photos = JSON.stringify(location?.photos);
   let utils = JSON.stringify(location?.utils);
-
-  console.log(photos);
-
   try {
     let values = [details, photos, utils, id];
     let update = 'UPDATE Locations SET details=? ,photos=? ,utils=? WHERE id=?';
@@ -98,10 +95,9 @@ export const updateLocation = async (req, res) => {
       photos: JSON.parse(result?.photos),
       utils: JSON.parse(result?.utils),
     };
-    return res.status(200).json(response);
+    res.status(200).json(response);
   } catch (error) {
-    console.log(error.message);
-    return res.status(400).json(error.message);
+    res.status(400).json({ message: error.message });
   }
 };
 

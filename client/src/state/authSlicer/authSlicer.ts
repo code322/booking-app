@@ -1,3 +1,4 @@
+// import { axiosPrivate } from './../../helpers/api';
 import { IsLoggedLocalStorage } from './../../utils/auth';
 import { RootState } from './../store';
 import { inputTypes } from './../../pages/Register/Register';
@@ -111,6 +112,8 @@ const authSlice = createSlice({
 });
 
 export const userSelector = (state: RootState) => state.authReducer.user;
+export const accessTokenSelector = (state: RootState) =>
+  state?.authReducer?.accessToken;
 export const authStatusSelector = (state: RootState) =>
   state.authReducer.status;
 export default authSlice.reducer;

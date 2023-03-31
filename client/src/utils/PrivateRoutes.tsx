@@ -2,11 +2,13 @@ import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 import { IsLoggedLocalStorage } from './auth';
 import axios from 'axios';
-import { API_URL, axiosPrivate } from '../helpers/api';
-import { useAppDispatch } from '../hooks/useTypeSelector';
-import { logout } from '../state/authSlicer/authSlicer';
+import { API_URL } from '../helpers/api';
+import { useAppDispatch, useAppSelector } from '../hooks/useTypeSelector';
+import { accessTokenSelector, logout } from '../state/authSlicer/authSlicer';
 
+import { axiosPrivate } from '../helpers/api';
 const PrivateRoutes = () => {
+  const accessToken = useAppSelector(accessTokenSelector);
   const [isAuth, setIsAuth] = useState<boolean | null>(
     IsLoggedLocalStorage.getIsLoggedIn()
   );
@@ -14,6 +16,10 @@ const PrivateRoutes = () => {
   const dispatch = useAppDispatch();
   useEffect(() => {
     const isAuth = async () => {
+      if (!accessToken) {
+        // setIsAuth(false);
+        return;
+      }
       try {
         await axiosPrivate.get(`/api/auth/private-routes`);
         IsLoggedLocalStorage.setIsLoggedInTrue();
@@ -22,11 +28,10 @@ const PrivateRoutes = () => {
         IsLoggedLocalStorage.setIsLoggedInFalse();
         dispatch(logout() as any);
         setIsAuth(false);
-        console.log(error);
       }
     };
     isAuth();
-  }, []);
+  }, [accessToken, dispatch]);
 
   return isAuth ? <Outlet /> : <Navigate to='/login' />;
 };

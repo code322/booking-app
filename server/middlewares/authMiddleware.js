@@ -3,23 +3,26 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-export const authMiddleware = async (req, res, next) => {
+export const authMiddleware = (req, res, next) => {
   let authHeader = req.headers?.authorization || req?.headers?.Authorization;
-  console.log(authHeader);
+  // console.log(authHeader);
+  console.log('auth running');
 
-  try {
-    if (!authHeader) {
-      return res.status(401).json({ message: 'Unauthorized' });
-    }
-    let accessToken = authHeader.split(' ')[1];
-    const decoded = jwt.verify(accessToken, process.env.ACCESS_TOKEN);
-
-    if (!decoded) return res.status(403).json({ message: 'Forbidden' });
-
-    req.id = decoded.id;
-
-    next();
-  } catch (error) {
-    res.status(401).json({ message: error.message });
+  if (!authHeader) {
+    return res.status(401).json({ message: 'Unauthorized' });
   }
+  let accessToken = authHeader?.split(' ')[1];
+
+  if (accessToken) {
+    console.log(accessToken);
+    jwt.verify(accessToken, process.env.ACCESS_TOKEN, (err, decoded) => {
+      if (err) {
+        return res.status(401).json({ message: err.message, accessToken });
+      }
+      // req.user = decoded;
+      console.log('verified');
+      next();
+    });
+  }
+  // res.status(401).json({ message: 'authorizaed', accessToken });
 };

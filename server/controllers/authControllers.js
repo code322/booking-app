@@ -131,27 +131,27 @@ async function getUserById(id) {
 }
 export const refreshToken = (req, res) => {
   const cookies = req.cookies;
-  if (!cookies?.refreshToken)
+  if (!cookies?.refreshToken) {
     return res.status(401).json({ message: 'Unauthorized' });
+  }
 
   const refreshToken = cookies?.refreshToken?.split(' ')[1];
 
-  if (!refreshToken)
+  if (!refreshToken) {
     return res
       .status(401)
       .json({ message: 'no refresh token. please login again' });
+  }
 
   jwt.verify(refreshToken, process.env.REFRESH_TOKEN, async (err, decoded) => {
-    if (err) return res.status(401).json({ message: 'Forbidden' });
-    try {
-      const user = await getUserById(decoded?.id);
-      if (!user) return res.status(401).json({ message: 'Unauthorized' });
-      const accessToken = generateTokens.accessToken(decoded?.id);
-
-      res.status(201).json({ accessToken });
-    } catch (error) {
-      res.status(401).json({ message: error.message });
+    if (err) {
+      return res.status(403).json({ message: 'forbidden' });
     }
+    const user = await getUserById(decoded?.id);
+    console.log(decoded?.id);
+    if (!user) return res.status(401).json({ message: 'user not found' });
+    const accessToken = generateTokens.accessToken(decoded?.id);
+    res.json({ accessToken });
   });
 };
 
