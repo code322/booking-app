@@ -1,9 +1,15 @@
 import Container from '../Container/Container';
 import InputFields from '../InputFields/InputFields';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Button from '../Button/Button';
 import { validateEmail, validPassword } from '../../helpers/validateForm';
 import { useEffect, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../hooks/useTypeSelector';
+import {
+  authStatusSelector,
+  clearError,
+  errorSelector,
+} from '../../state/authSlicer/authSlicer';
 
 type Props = {
   page: string;
@@ -18,12 +24,20 @@ const AuthForm = (props: Props) => {
   const [isValidEmail, setIsValidEmail] = useState<boolean>();
   const [isValidPassword, setIsValidPassword] = useState<boolean>();
 
+  const dispatch = useAppDispatch();
+  const selectError = useAppSelector(errorSelector);
+  const { pathname } = useLocation();
+
   useEffect(() => {
     setIsValidEmail(() => validateEmail(email));
     setIsValidPassword(() => validPassword(password));
-  }, [email, password]);
+    if (selectError !== null) {
+      dispatch(clearError() as any);
+    }
+  }, [email, password, pathname]);
 
   const isDisabled = isValidEmail && isValidPassword;
+
   return (
     <Container>
       <div className='flex flex-col justify-center w-full items-center h-[calc(100vh-5rem)]'>
@@ -64,6 +78,16 @@ const AuthForm = (props: Props) => {
             handleSubmit={handleSubmit}
             title={page}
           />
+          {selectError &&
+            (page === 'login' ? (
+              <small className='relative -mt-3 text-center'>
+                Invalid email or password.
+              </small>
+            ) : (
+              <small className='relative -mt-3 text-center'>
+                {selectError}
+              </small>
+            ))}
         </form>
         {page === 'login' ? (
           <Message page='login' message="Don't have an account yet?" />
