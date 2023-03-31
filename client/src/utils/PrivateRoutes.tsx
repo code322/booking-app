@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useLayoutEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 import { IsLoggedLocalStorage } from './auth';
-import axios from 'axios';
-import { API_URL } from '../helpers/api';
+
 import { useAppDispatch, useAppSelector } from '../hooks/useTypeSelector';
 import { accessTokenSelector, logout } from '../state/authSlicer/authSlicer';
 
@@ -17,7 +16,6 @@ const PrivateRoutes = () => {
   useEffect(() => {
     const isAuth = async () => {
       if (!accessToken) {
-        // setIsAuth(false);
         return;
       }
       try {

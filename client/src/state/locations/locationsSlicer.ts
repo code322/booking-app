@@ -43,7 +43,6 @@ export const updateLocation = createAsyncThunk(
         `/api/location/update-location/${location.id}`,
         location
       );
-      console.log(data);
       return data;
     } catch (error) {
       return rejectWithValue(error);

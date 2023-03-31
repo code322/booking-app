@@ -74,6 +74,7 @@ const authSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(logout.fulfilled, (state) => {
+        localStorage.setItem('isLoggedIn', JSON.stringify(false));
         state.status = 'loggedOut';
         state.accessToken = '';
         state.user = {
