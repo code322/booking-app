@@ -5,8 +5,6 @@ dotenv.config();
 
 export const authMiddleware = (req, res, next) => {
   let authHeader = req.headers?.authorization || req?.headers?.Authorization;
-  // console.log(authHeader);
-  console.log('auth running');
 
   if (!authHeader) {
     return res.status(401).json({ message: 'Unauthorized' });
@@ -14,7 +12,6 @@ export const authMiddleware = (req, res, next) => {
   let accessToken = authHeader?.split(' ')[1];
 
   if (accessToken) {
-    console.log(accessToken);
     jwt.verify(accessToken, process.env.ACCESS_TOKEN, (err, decoded) => {
       if (err) {
         return res.status(401).json({ message: err.message, accessToken });

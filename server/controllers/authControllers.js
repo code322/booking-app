@@ -33,23 +33,18 @@ export const register = async (req, res) => {
     if (!accessToken) return res.status(409).json('No access token');
     if (!refreshToken) return res.status(409).json('No refresh token');
 
-    res.cookie('accessToken', `Bearer ${accessToken}`, {
+    res.cookie('refreshToken', refreshToken, {
       httpOnly: true,
-      maxAge: 1000 * 60 * 30,
-      secure: true,
-      sameSite: 'none',
-    });
-    res.cookie('refreshToken', `Bearer ${refreshToken}`, {
-      httpOnly: true,
-      maxAge: 1000 * 60 * 60 * 24 * 30,
+      maxAge: 1000 * REFRESH_TOKEN_LIFE_TIME,
       secure: true,
       sameSite: 'none',
     });
 
     res.status(201).json({
+      accessToken,
       user: {
-        name,
-        email,
+        name: user.name,
+        email: user.email,
       },
     });
   } catch (error) {
@@ -73,15 +68,10 @@ export const login = async (req, res) => {
     if (!accessToken) return res.status(409).json('No access token');
     if (!refreshToken) return res.status(409).json('No refresh token');
 
-    // res.cookie('accessToken', accessToken, {
-    //   httpOnly: false,
-    //   maxAge: 1000 * 60 * 30,
-    //   secure: false,
-    // });
     res.cookie('refreshToken', refreshToken, {
-      httpOnly: false,
+      httpOnly: true,
       maxAge: 1000 * REFRESH_TOKEN_LIFE_TIME,
-      secure: false,
+      secure: true,
       sameSite: 'none',
     });
 
@@ -131,6 +121,7 @@ async function getUserById(id) {
 }
 export const refreshToken = (req, res) => {
   const cookies = req.cookies;
+
   if (!cookies?.refreshToken) {
     return res.status(401).json({ message: 'Unauthorized' });
   }
