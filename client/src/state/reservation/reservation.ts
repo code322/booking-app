@@ -1,3 +1,4 @@
+import { RootState } from './../store';
 import {
   detailsTypes,
   initialDetails,
@@ -12,7 +13,7 @@ export const getAllReservations = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const { data } = await axiosPrivate.get(
-        '/api/reservations/get-all-reservations'
+        '/api/reservation/get-all-reserves'
       );
       return data;
     } catch (error) {
@@ -21,30 +22,25 @@ export const getAllReservations = createAsyncThunk(
   }
 );
 
-interface reservationTypes {
+type reservationType = {
+  id?: number;
+  details: detailsTypes;
+  photos: string[];
+  utils: utilsTypes;
+  checkIn: string;
+  checkOut: string;
+  locationId?: number;
+  totalCost: number;
+};
+
+interface reservationInterface {
   status: 'idle' | 'succeeded' | 'failed';
-  reservations: {
-    id?: number;
-    details: detailsTypes;
-    photos: string[];
-    utils: utilsTypes;
-    checkIn: string;
-    checkOut: string;
-    locationId?: number;
-    totalCost: number;
-  };
+  reservations: reservationType[];
   error: any;
 }
-const initialState: reservationTypes = {
+const initialState: reservationInterface = {
   status: 'idle',
-  reservations: {
-    details: initialDetails,
-    photos: [],
-    utils: initialUtils,
-    checkIn: '',
-    checkOut: '',
-    totalCost: 0,
-  },
+  reservations: [],
   error: null,
 };
 const reservationsSlice = createSlice({
@@ -61,11 +57,13 @@ const reservationsSlice = createSlice({
         state.reservations = action.payload;
         state.error = null;
       })
-      .addCase(getAllReservations.fulfilled, (state, action) => {
+      .addCase(getAllReservations.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.payload;
       });
   },
 });
 
+export const selectAllReservations = (state: RootState) =>
+  state.reservationReducer;
 export default reservationsSlice.reducer;

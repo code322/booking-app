@@ -6,11 +6,13 @@ import thunk from 'redux-thunk';
 import { combineReducers } from 'redux';
 import locationsSlicer from './locations/locationsSlicer';
 import locationByIdSlicer from './locations/locationByIdSlicer';
+import reservationReducer from './reservation/reservation';
 
 const reducers = combineReducers({
   authReducer,
   locationsSlicer,
   locationByIdSlicer,
+  reservationReducer,
 });
 
 const persistConfig = {
