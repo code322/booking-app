@@ -34,6 +34,10 @@ const Location = () => {
     dispatch(getLocationById(Number(id)) as any);
   }, [id, dispatch]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const location = useAppSelector(selectLocationById);
   const status = useAppSelector(selectLocationByIdStatus);
   const [current, setCurrent] = useState(0);
