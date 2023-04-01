@@ -15,31 +15,34 @@ function Header() {
           <Icon className='h-8 w-8' icon='logos:airbnb-icon' />
         </Link>
         {/* nav */}
-        <div className='flex items-center gap-3'>
+        <div className='flex items-center gap-1'>
+          <Link
+            to={'/'}
+            className=' text-3xl text-custom-red  hover:cursor-pointer  hover:bg-red-200 p-2 rounded-md transition-all ease-out duration-300 outline-none flex items-center justify-center '
+          >
+            <Icon icon='material-symbols:home' />
+          </Link>
           <Link
             to={'/account'}
-            className='py-2 px-3 bg-custom-red text-white rounded-md outline-none flex items-center gap-2'
+            className=' text-3xl text-custom-red hover:cursor-pointer  hover:bg-red-200 p-2 rounded-md transition-all ease-out duration-300 outline-none flex items-center justify-center '
           >
-            <span>My Account</span>
+            <Icon icon='mdi:user-circle' />
           </Link>
-          <Link to={isLoggedIn ? '/' : '/login'}>
+          <Link
+            className='text-3xl text-custom-red  hover:cursor-pointer  hover:bg-red-200 p-2 rounded-md transition-all ease-out duration-300 outline-none flex items-center justify-center '
+            to={isLoggedIn ? '/' : '/login'}
+          >
             {isLoggedIn ? (
               <>
                 <Icon
                   onClick={() => {
                     dispatch(logout() as any);
                   }}
-                  className='text-gray-700'
-                  height={30}
-                  icon='la:sign-out-alt'
+                  icon='ri:logout-circle-fill'
                 />
               </>
             ) : (
-              <Icon
-                className='text-gray-400'
-                height={30}
-                icon='mdi:user-circle'
-              />
+              <Icon icon='ri:login-circle-fill' />
             )}
           </Link>
         </div>
