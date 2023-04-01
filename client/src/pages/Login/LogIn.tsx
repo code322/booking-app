@@ -6,7 +6,7 @@ import {
   login,
 } from '../../state/authSlicer/authSlicer';
 import { useAppDispatch, useAppSelector } from '../../hooks/useTypeSelector';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 export type loginTypes = {
   email: string;
   password: string;
@@ -16,8 +16,8 @@ function LogIn() {
   // const [isAuth, setIsAuth]= useState
 
   const [input, setInput] = useState<loginTypes>({
-    email: '',
-    password: '',
+    email: 'user@mail.com',
+    password: 'password',
   });
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
@@ -30,12 +30,14 @@ function LogIn() {
     e.preventDefault();
     dispatch(login(input) as any);
   }
-
+  const location = useLocation();
   const authStatus = useAppSelector(authStatusSelector);
   const isLoggedIn = useAppSelector(isLoggedInSelector);
-
+  const navigate = useNavigate();
+  const from = location.state?.from || '/';
   if (authStatus === 'succeeded' && isLoggedIn) {
-    return <Navigate to={'/'} />;
+    // return <Navigate to={'/'} state={{ from: location.pathname }} />;
+    navigate(from, { replace: true });
   }
 
   return (

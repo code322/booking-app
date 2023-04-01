@@ -11,11 +11,6 @@ import {
 import { API_URL } from '../../helpers/api';
 import Account from '../Account/Account';
 import { Icon } from '@iconify/react';
-interface Props {
-  setShowForm: React.Dispatch<React.SetStateAction<boolean>>;
-  setEditMode: React.Dispatch<React.SetStateAction<boolean>>;
-  setListId: React.Dispatch<React.SetStateAction<number>>;
-}
 
 function Locations() {
   const dispatch = useAppDispatch();

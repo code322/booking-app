@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Navigate, Outlet } from 'react-router-dom';
+import { Navigate, Outlet, useLocation } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from '../hooks/useTypeSelector';
 import {
   accessTokenSelector,
   isLoggedInSelector,
   logout,
+  setAccessToken,
 } from '../state/authSlicer/authSlicer';
 
 import { axiosPrivate } from '../helpers/api';
@@ -13,25 +14,29 @@ const PrivateRoutes = () => {
   const isLoggedIn = useAppSelector(isLoggedInSelector);
   const accessToken = useAppSelector(accessTokenSelector);
   const [isAuth, setIsAuth] = useState<boolean | null>(isLoggedIn);
+  const location = useLocation();
 
   const dispatch = useAppDispatch();
   useEffect(() => {
     const isAuth = async () => {
-      if (!accessToken) {
+      if (!isLoggedIn) {
         return;
       }
       try {
         await axiosPrivate.get(`/api/auth/private-routes`);
         setIsAuth(true);
       } catch (error) {
-        dispatch(logout() as any);
         setIsAuth(false);
       }
     };
     isAuth();
-  }, [accessToken, dispatch]);
+  }, [isLoggedIn, dispatch]);
 
-  return isAuth ? <Outlet /> : <Navigate to='/login' />;
+  return isAuth ? (
+    <Outlet />
+  ) : (
+    <Navigate to={'/login'} state={{ from: location }} replace />
+  );
 };
 
 export default PrivateRoutes;
