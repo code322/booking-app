@@ -1,4 +1,4 @@
-export const addToReservation = async (req, res) => {
+export const addNewReservation = async (req, res) => {
   let { checkIn, checkOut, locationId, totalCost } = req.body;
 
   try {

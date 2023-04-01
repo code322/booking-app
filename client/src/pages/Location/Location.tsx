@@ -19,7 +19,7 @@ type bookingFormType = {
   guests: string;
 };
 const Location = () => {
-  const { id } = useParams();
+  const { id } = useParams<{ id?: string }>();
 
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const [bookingData, setBookingData] = useState<bookingFormType>({
@@ -102,8 +102,20 @@ const Location = () => {
     setBookingData((preVal) => ({ ...preVal, [id]: value }));
   }
 
-  console.log(bookingData.checkIn, bookingData.checkOut, id, totalCost.total);
-  const handleBooking = () => {};
+  type bookingType = {
+    checkOut: string;
+    checkIn: string;
+    locationId: number;
+    totalCost: number;
+  };
+  const handleBooking = () => {
+    let body: bookingType = {
+      checkOut: bookingData.checkOut,
+      checkIn: bookingData.checkIn,
+      locationId: Number(id),
+      totalCost: totalCost.total,
+    };
+  };
   return (
     <>
       {status !== 'succeeded' ? (
