@@ -2,7 +2,7 @@ import db from '../config/db.js';
 export const getAllReserves = async (req, res) => {
   try {
     const locations =
-      'SELECT * FROM Reservations INNER JOIN Locations ON Reservations.locationId = Locations.id';
+      'SELECT * FROM Locations INNER JOIN Reservations ON Locations.id = Reservations.locationId ';
     const [data] = await db.query(locations);
     const response = data.map((items) => {
       return {
