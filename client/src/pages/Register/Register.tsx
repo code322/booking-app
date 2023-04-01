@@ -1,14 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import AuthForm from '../../components/AuthForm/AuthForm';
 import InputFields from '../../components/InputFields/InputFields';
 import { useAppDispatch, useAppSelector } from '../../hooks/useTypeSelector';
 import {
-  authStatusSelector,
   isLoggedInSelector,
   register,
-  userSelector,
 } from '../../state/authSlicer/authSlicer';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export type inputTypes = {
   name: string;
@@ -35,13 +33,14 @@ const Register = () => {
     e.preventDefault();
     dispatch(register(input) as any);
   }
-
-  const authStatus = useAppSelector(authStatusSelector);
   const isLoggedIn = useAppSelector(isLoggedInSelector);
+  const navigate = useNavigate();
 
-  if (authStatus === 'succeeded' && isLoggedIn) {
-    return <Navigate to={'/'} />;
-  }
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate('/');
+    }
+  }, [navigate, isLoggedIn]);
 
   return (
     <>

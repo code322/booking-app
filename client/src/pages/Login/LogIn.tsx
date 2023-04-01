@@ -1,19 +1,14 @@
 import { useEffect, useState } from 'react';
 import AuthForm from '../../components/AuthForm/AuthForm';
-import {
-  authStatusSelector,
-  isLoggedInSelector,
-  login,
-} from '../../state/authSlicer/authSlicer';
+import { isLoggedInSelector, login } from '../../state/authSlicer/authSlicer';
 import { useAppDispatch, useAppSelector } from '../../hooks/useTypeSelector';
-import { Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 export type loginTypes = {
   email: string;
   password: string;
 };
 function LogIn() {
   const dispatch = useAppDispatch();
-  // const [isAuth, setIsAuth]= useState
 
   const [input, setInput] = useState<loginTypes>({
     email: 'user@mail.com',
