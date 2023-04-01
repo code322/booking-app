@@ -31,13 +31,15 @@ function LogIn() {
     dispatch(login(input) as any);
   }
   const location = useLocation();
-  const authStatus = useAppSelector(authStatusSelector);
   const isLoggedIn = useAppSelector(isLoggedInSelector);
   const navigate = useNavigate();
   const from = location.state?.from || '/';
-  if (authStatus === 'succeeded' && isLoggedIn) {
-    return <Navigate to={'/'} state={{ from: location.pathname }} />;
-  }
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate(from, { replace: true });
+    }
+  }, [navigate, isLoggedIn]);
 
   return (
     <AuthForm

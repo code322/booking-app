@@ -2,17 +2,12 @@ import { useState, useEffect } from 'react';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from '../hooks/useTypeSelector';
-import {
-  accessTokenSelector,
-  isLoggedInSelector,
-  logout,
-  setAccessToken,
-} from '../state/authSlicer/authSlicer';
+import { isLoggedInSelector } from '../state/authSlicer/authSlicer';
 
 import { axiosPrivate } from '../helpers/api';
 const PrivateRoutes = () => {
   const isLoggedIn = useAppSelector(isLoggedInSelector);
-  const accessToken = useAppSelector(accessTokenSelector);
+
   const [isAuth, setIsAuth] = useState<boolean | null>(isLoggedIn);
   const location = useLocation();
 
