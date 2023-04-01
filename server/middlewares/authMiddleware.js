@@ -17,7 +17,6 @@ export const authMiddleware = (req, res, next) => {
         return res.status(401).json({ message: err.message, accessToken });
       }
       // req.user = decoded;
-      console.log('verified');
       next();
     });
   }

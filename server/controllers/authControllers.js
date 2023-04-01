@@ -139,7 +139,6 @@ export const refreshToken = (req, res) => {
       return res.status(403).json({ message: 'forbidden' });
     }
     const user = await getUserById(decoded?.id);
-    console.log(decoded?.id);
     if (!user) return res.status(401).json({ message: 'user not found' });
     const accessToken = generateTokens.accessToken(decoded?.id);
     res.json({ accessToken });
