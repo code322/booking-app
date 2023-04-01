@@ -1,3 +1,24 @@
+import db from '../config/db.js';
+export const getAllReserves = async (req, res) => {
+  try {
+    const locations =
+      'SELECT * FROM Reservations INNER JOIN Locations ON Reservations.locationId = Locations.id';
+    const [data] = await db.query(locations);
+    const response = data.map((items) => {
+      return {
+        ...items,
+        utils: JSON.parse(items.utils),
+        photos: JSON.parse(items.photos),
+        details: JSON.parse(items.details),
+      };
+    });
+
+    res.status(201).json(response);
+  } catch (error) {
+    res.status(409).json(error.message);
+  }
+};
+
 export const addNewReservation = async (req, res) => {
   let { checkIn, checkOut, locationId, totalCost } = req.body;
 

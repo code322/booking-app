@@ -7,6 +7,7 @@ import locationRoutes from './routes/locationRoutes.js';
 import cookieParser from 'cookie-parser';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import reservationRoutes from './routes/reservationRoutes.js';
 dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
@@ -28,5 +29,6 @@ const PORT = process.env.PORT || 5000;
 app.use('/api/auth', authRoutes);
 app.use('/api/upload', uploadPhotos);
 app.use('/api/location', locationRoutes);
+app.use('/api/reservation', reservationRoutes);
 
 app.listen(PORT, () => console.log(`running in port ${PORT}`));
