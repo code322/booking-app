@@ -8,14 +8,14 @@ function Header() {
   const isLoggedIn = useAppSelector(isLoggedInSelector);
 
   return (
-    <header className='py-8 h-[3.5rem] border-b flex justify-center m-auto '>
+    <header className='py-8 h-[5rem] border-b flex justify-center m-auto '>
       <div className='px-3  flex  justify-between h-full items-center w-full  max-w-6xl'>
         {/* logo */}
         <Link to={'/'} className='h-8 w-8 text-custom-red overflow-hidden'>
           <Icon className='h-8 w-8' icon='logos:airbnb-icon' />
         </Link>
         {/* nav */}
-        <div className='flex items-center gap-1'>
+        <div className='flex items-center gap-4'>
           <Link
             to={'/'}
             className=' text-3xl text-custom-red  hover:cursor-pointer  hover:bg-red-200 p-2 rounded-md transition-all ease-out duration-300 outline-none flex items-center justify-center '

@@ -78,6 +78,7 @@ function Home() {
             alt=''
           />
         </div>
+        <div className='bg-black opacity-20 w-full h-full -z-[1] absolute top-0 left-0'></div>
         <div className='flex gap-2 items-center w-full  max-w-6xl h-24 px-9 bg-white rounded-full outline-none py-12 shadow-customShadow'>
           {/* search */}
           <SearchContent
