@@ -28,7 +28,6 @@ export const addNewLocation = createAsyncThunk(
         `${API_URL}/api/location/new-location`,
         newLocation
       );
-      console.log(data);
       return data;
     } catch (error) {
       return rejectWithValue(error);

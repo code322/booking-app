@@ -30,8 +30,6 @@ const Register = () => {
     });
   }
   const dispatch = useAppDispatch();
-  const state = useAppSelector(userSelector);
-  console.log(state);
 
   function handleSubmit(e: React.SyntheticEvent) {
     e.preventDefault();

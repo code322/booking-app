@@ -9,12 +9,10 @@ export const filterLocations = (
   let Any: string = 'Any';
   let threeOrMoreBeds = '3+';
   const THREE = 3;
-  // console.log(maxBed, threeOrMoreBeds);
   // if there is character
   if (search) {
     //search by char, price range and num of beds
     if (maxBed === '1' || maxBed === '2') {
-      console.log('run 1', maxBed);
       let data = locations.filter((location) => {
         let guests = location?.details?.guests;
         let price = location?.details?.price;

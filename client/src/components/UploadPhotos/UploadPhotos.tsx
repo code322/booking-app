@@ -132,7 +132,6 @@ function UploadPhotos({ photos, setPhotos, locationData }: Props) {
                   onClick={(e) => {
                     e.preventDefault();
                     removePhoto(links, index);
-                    console.log(index);
                   }}
                 >
                   <Icon

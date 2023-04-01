@@ -29,7 +29,6 @@ const { getState, dispatch } = store;
 
 axiosPrivate.interceptors.request.use(
   async (config) => {
-    // console.log(config);
     let { data } = await axios.get(`${API_URL}/api/auth/refresh`);
     let token = data?.accessToken;
     dispatch(setAccessToken(token) as any);

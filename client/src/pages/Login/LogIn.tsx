@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import AuthForm from '../../components/AuthForm/AuthForm';
 import {
   authStatusSelector,
@@ -36,8 +36,7 @@ function LogIn() {
   const navigate = useNavigate();
   const from = location.state?.from || '/';
   if (authStatus === 'succeeded' && isLoggedIn) {
-    // return <Navigate to={'/'} state={{ from: location.pathname }} />;
-    navigate(from, { replace: true });
+    return <Navigate to={'/'} state={{ from: location.pathname }} />;
   }
 
   return (
