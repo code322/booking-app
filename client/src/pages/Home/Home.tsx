@@ -79,7 +79,7 @@ function Home() {
           />
         </div>
         <div className='bg-black opacity-20 w-full h-full -z-[1] absolute top-0 left-0'></div>
-        <div className='flex gap-2 items-center w-full  max-w-6xl h-24 px-9 bg-white rounded-full outline-none py-12 shadow-customShadow'>
+        <div className='flex flex-col mx-4 gap-6 items-center justify-between w-full  max-w-6xl  px-9 bg-white rounded-lg outline-none py-12 shadow-customShadow md:flex-row md:h-24 md:rounded-full md:gap-2'>
           {/* search */}
           <SearchContent
             icon={<Icon icon='ic:baseline-search' />}
@@ -87,7 +87,7 @@ function Home() {
               <input
                 value={search}
                 onChange={handleSearch}
-                className='outline-none py-1 flex-1'
+                className='outline-none py-2 px-1 mr-2 border border-gray-300 md:border-none'
                 type='text'
                 placeholder='Location...'
               />
@@ -121,7 +121,7 @@ function Home() {
             content={
               <select
                 onChange={handleMaxBed}
-                className=' bg-white w-full border px-2 py-2'
+                className='bg-white w-full border px-2 py-2'
                 name=''
                 id=''
               >
@@ -262,8 +262,8 @@ interface searchContentProps {
   label: string;
 }
 const SearchContent = ({ icon, content, label }: searchContentProps) => (
-  <div className='flex items-center gap-4  flex-1 last:ml-2 border-r last:border-r-0'>
-    <div className='text-red-400 text-2xl'>{icon}</div>
+  <div className='flex items-end md:items-center gap-4 flex-1 last:ml-2 md:border-r last:border-r-0 w-full '>
+    <div className='text-red-400 text-2xl  h-full '>{icon}</div>
     <div className='flex gap-2 flex-col w-full'>
       {content}
       <label className='text-gray-600' htmlFor=''>
