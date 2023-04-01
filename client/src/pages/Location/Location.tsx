@@ -101,6 +101,9 @@ const Location = () => {
     const { id, value } = e.target;
     setBookingData((preVal) => ({ ...preVal, [id]: value }));
   }
+
+  console.log(bookingData.checkIn, bookingData.checkOut, id, totalCost.total);
+  const handleBooking = () => {};
   return (
     <>
       {status !== 'succeeded' ? (
@@ -156,7 +159,7 @@ const Location = () => {
               </button>
             </div>
 
-            {/* ---SLIDE SHOWS--- */}
+            {/* ---SLIDES--- */}
             <div
               className={`fixed bottom-0 w-full bg-white left-0 transition-all duration-200 ease-in-out  pb-4 ${
                 isExpanded ? 'h-full' : 'h-0'
@@ -264,6 +267,7 @@ const Location = () => {
                       type='number'
                       id='guests'
                       value={bookingData.guests}
+                      max={location?.details?.guests}
                     />
                   </div>
                 </div>
