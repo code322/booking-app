@@ -47,6 +47,17 @@ export const addNewReservation = async (req, res) => {
   }
 };
 
+export const deleteReservation = async (req, res) => {
+  const { id } = req.params;
+  let deleteReservation = 'DELETE FROM Reservations WHERE id=?';
+  try {
+    await db.query(deleteReservation, [id]);
+    return res.status(200).json('Deleted Successfully');
+  } catch (error) {
+    return res.status(400).json(error.message);
+  }
+};
+
 const getLocation = async (id) => {
   let query = 'SELECT * FROM Locations WHERE id=?';
   const [result] = await db.query(query, [id]);
