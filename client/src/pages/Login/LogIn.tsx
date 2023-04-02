@@ -11,7 +11,7 @@ function LogIn() {
   const dispatch = useAppDispatch();
 
   const [input, setInput] = useState<loginTypes>({
-    email: 'user@mail.com',
+    email: 'admin@mail.com',
     password: 'password',
   });
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -31,10 +31,12 @@ function LogIn() {
   const from = location.state?.from || '/';
 
   useEffect(() => {
-    if (isLoggedIn) {
+    if (isLoggedIn && from === '/') {
+      navigate(-1);
+    } else if (isLoggedIn) {
       navigate(from, { replace: true });
     }
-  }, [navigate, isLoggedIn, from, location]);
+  }, [navigate, from, isLoggedIn]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
