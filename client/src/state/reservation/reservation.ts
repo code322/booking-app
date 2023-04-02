@@ -39,6 +39,20 @@ export const addNewReservation = createAsyncThunk(
   }
 );
 
+export const deleteReservation = createAsyncThunk(
+  'reservations/deleteReservation',
+  async (id: number, { rejectWithValue }) => {
+    try {
+      await axiosPrivate('/api/reservations/delete-reservation', {
+        params: id,
+      });
+      return id;
+    } catch (error) {
+      rejectWithValue(error);
+    }
+  }
+);
+
 type reservationType = {
   id?: number;
   details: detailsTypes;
@@ -88,6 +102,16 @@ const reservationsSlice = createSlice({
       .addCase(addNewReservation.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.payload;
+      })
+      .addCase(deleteReservation.pending, (state) => {
+        state.status = 'idle';
+      })
+      .addCase(deleteReservation.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+
+        state.reservations = state.reservations.filter(
+          (i) => i.id !== action.payload
+        );
       });
   },
 });
