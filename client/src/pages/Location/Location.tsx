@@ -12,7 +12,14 @@ import { Icon } from '@iconify/react';
 import Spinner from '../../components/Spinner';
 import { differenceInCalendarDays } from 'date-fns';
 import { convertToDollars } from '../../utils';
+import { addNewReservation } from '../../state/reservation/reservation';
 
+export type reserveType = {
+  checkOut: string;
+  checkIn: string;
+  locationId: number;
+  totalCost: number;
+};
 type bookingFormType = {
   checkIn: string;
   checkOut: string;
@@ -102,19 +109,20 @@ const Location = () => {
     setBookingData((preVal) => ({ ...preVal, [id]: value }));
   }
 
-  type bookingType = {
-    checkOut: string;
-    checkIn: string;
-    locationId: number;
-    totalCost: number;
-  };
-  const handleBooking = () => {
-    let body: bookingType = {
+  const isDisabled =
+    bookingData.checkIn.length && bookingData.checkOut.length ? true : false;
+  console.log(isDisabled);
+
+  const handleBooking = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    let body: reserveType = {
       checkOut: bookingData.checkOut,
       checkIn: bookingData.checkIn,
       locationId: Number(id),
       totalCost: totalCost.total,
     };
+    console.log(body);
+    dispatch(addNewReservation(body) as any);
   };
   return (
     <>
@@ -283,7 +291,11 @@ const Location = () => {
                     />
                   </div>
                 </div>
-                <button className='text-white bg-custom-red text-center w-full rounded-md outline-none py-2 mt-2 capitalize'>
+                <button
+                  disabled={!isDisabled}
+                  onClick={handleBooking}
+                  className='text-white bg-custom-red text-center w-full rounded-md outline-none py-2 mt-2 capitalize'
+                >
                   reserve
                 </button>
                 <>

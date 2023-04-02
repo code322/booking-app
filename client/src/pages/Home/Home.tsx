@@ -70,16 +70,16 @@ function Home() {
   }, [search, maxBed, princeRange, allLocations]);
   return (
     <>
-      <div className='min-h-[70vh] flex items-cover justify-center items-center overflow-hidden relative'>
-        <div className='absolute top-0 left-0 w-full h-full overflow-hidden -z-10'>
+      <div className='md:min-h-[70vh] mt-10 mb-6 md:mt-0 md:mb-0 flex items-cover justify-center items-center overflow-hidden relative '>
+        <div className='hidden md:block absolute top-0 left-0 w-full h-full overflow-hidden -z-10'>
           <img
             className='object-cover w-full h-full'
-            src='https://media.architecturaldigest.com/photos/569992ccc6772b76145675a2/16:9/w_2580,c_limit/retreat-the-modern-house-in-nature-01.jpg'
+            src='assets/modern-house.webp'
             alt=''
           />
         </div>
-        <div className='bg-black opacity-20 w-full h-full -z-[1] absolute top-0 left-0'></div>
-        <div className='flex flex-col mx-4 gap-6 items-center justify-between w-full  max-w-6xl  px-9 bg-white rounded-lg outline-none py-12 shadow-customShadow md:flex-row md:h-24 md:rounded-full md:gap-2'>
+        <div className='hidden md:block bg-black opacity-20 w-full h-full -z-[1] absolute top-0 left-0'></div>
+        <div className='md:mt-0 border md:border-none flex flex-col mx-4 gap-6 items-center justify-between w-full  max-w-6xl  px-9 bg-white rounded-lg outline-none py-12 shadow-customShadow md:flex-row md:h-24 md:rounded-full md:gap-2'>
           {/* search */}
           <SearchContent
             icon={<Icon icon='ic:baseline-search' />}

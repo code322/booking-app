@@ -22,7 +22,7 @@ const MyBooking = () => {
     <Container>
       <div className='flex gap-6 flex-col sm:flex-row min-h-[calc(100vh_-_4rem)]'>
         <Account />
-        <div className='grid sm:grid-cols-2 lg:grid-cols-3 gap-2'>
+        <div className='grid sm:grid-cols-2 lg:grid-cols-3 gap-8'>
           {reservedList &&
             reservedList.map((locations) => {
               let price = Number(locations?.details?.price).toLocaleString(

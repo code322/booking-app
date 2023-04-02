@@ -7,6 +7,7 @@ import {
 } from './../../helpers/types';
 import { axiosPrivate } from './../../helpers/api';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { reserveType } from '../../pages/Location/Location';
 
 export const getAllReservations = createAsyncThunk(
   'reservations/getAllReservations',
@@ -15,6 +16,22 @@ export const getAllReservations = createAsyncThunk(
       const { data } = await axiosPrivate.get(
         '/api/reservation/get-all-reserves'
       );
+      return data;
+    } catch (error) {
+      rejectWithValue(error);
+    }
+  }
+);
+
+export const addNewReservation = createAsyncThunk(
+  'reservations/addNewReservation',
+  async (body: reserveType, { rejectWithValue }) => {
+    try {
+      const { data } = await axiosPrivate.post(
+        '/api/reservation/add-new-reservation',
+        body
+      );
+
       return data;
     } catch (error) {
       rejectWithValue(error);
@@ -58,6 +75,17 @@ const reservationsSlice = createSlice({
         state.error = null;
       })
       .addCase(getAllReservations.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.payload;
+      })
+      .addCase(addNewReservation.pending, (state) => {
+        state.status = 'idle';
+      })
+      .addCase(addNewReservation.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.reservations.push(action.payload);
+      })
+      .addCase(addNewReservation.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.payload;
       });
