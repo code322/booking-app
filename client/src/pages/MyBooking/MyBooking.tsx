@@ -19,17 +19,22 @@ type modalType = {
 const MyBooking = () => {
   const dispatch = useAppDispatch();
   const reservedList = useAppSelector(selectAllReservations);
-
-  useEffect(() => {
-    dispatch(getAllReservations() as any);
-  }, [dispatch]);
-
+  const [showModal, setShowModal] = useState<boolean>(false);
   const [modalInfo, setModalInfo] = useState<modalType>({
     title: '',
     location: '',
     message: '',
   });
-  const [showModal, setShowModal] = useState<boolean>(false);
+  useEffect(() => {
+    dispatch(getAllReservations() as any);
+  }, [dispatch]);
+
+  useEffect(() => {
+    document.body.style.overflow = 'unset';
+    if (showModal) {
+      document.body.style.overflow = 'hidden';
+    }
+  }, [showModal]);
 
   function handleCancelReservation(
     title: string,
