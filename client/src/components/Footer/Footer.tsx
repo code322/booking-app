@@ -5,9 +5,9 @@ import React from 'react';
 const Footer = () => {
   return (
     <footer className='py-4 px-3 mt-14 bg-custom-red min-h-[35vh] flex items-center'>
-      <div className='grid sm:grid-cols-2 md:grid-cols-4 max-w-6xl m-auto gap-2 sm:gap-6 justify-between'>
+      <div className='grid sm:grid-cols-2 md:grid-cols-4 max-w-6xl m-auto gap-6  justify-between'>
         <FooterContent
-          header='About Us'
+          header='ABOUT US'
           children={
             <>
               <Content
@@ -48,7 +48,7 @@ const Footer = () => {
             <>
               <Content
                 info={
-                  <div className='flex gap-3'>
+                  <div className='flex gap-4'>
                     <Icon
                       className='text-2xl hover:text-black cursor-pointer transition-all ease-out duration-200'
                       icon='ic:twotone-facebook'

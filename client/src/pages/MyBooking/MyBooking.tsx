@@ -24,7 +24,7 @@ const MyBooking = () => {
         <Account />
         <div className='grid sm:grid-cols-2 lg:grid-cols-3 gap-8'>
           {reservedList &&
-            reservedList.map((locations) => {
+            reservedList?.map((locations) => {
               let price = Number(locations?.details?.price).toLocaleString(
                 'en-US',
                 {
@@ -34,7 +34,7 @@ const MyBooking = () => {
                   minimumFractionDigits: 0,
                 }
               );
-              let totalCost = Number(locations.totalCost).toLocaleString(
+              let totalCost = Number(locations?.totalCost).toLocaleString(
                 'en-US',
                 {
                   style: 'currency',
@@ -47,7 +47,7 @@ const MyBooking = () => {
               return (
                 <div key={locations?.id}>
                   <div className='relative'>
-                    <Link to={`/location/${locations.locationId}`}>
+                    <Link to={`/location/${locations?.locationId}`}>
                       <img
                         className='bg-blue-200 aspect-square object-cover rounded-lg w-full h-full'
                         src={`${API_URL}/uploads/${locations?.photos?.[0]}`}
@@ -91,7 +91,7 @@ const MyBooking = () => {
                             Check-In:
                           </p>
                           <p className='text-gray-600 text-xs'>
-                            {locations.checkIn}
+                            {locations?.checkIn}
                           </p>
                         </div>
                         <div>
@@ -99,7 +99,7 @@ const MyBooking = () => {
                             checkout:
                           </p>
                           <p className='text-gray-600 text-xs'>
-                            {locations.checkOut}
+                            {locations?.checkOut}
                           </p>
                         </div>
                       </div>
