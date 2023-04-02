@@ -65,5 +65,5 @@ const reservationsSlice = createSlice({
 });
 
 export const selectAllReservations = (state: RootState) =>
-  state.reservationReducer;
+  state.reservationReducer.reservations;
 export default reservationsSlice.reducer;
