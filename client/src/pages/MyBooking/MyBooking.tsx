@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Container from '../../components/Container/Container';
 import Account from '../Account/Account';
 import { useAppDispatch, useAppSelector } from '../../hooks/useTypeSelector';
@@ -9,7 +9,13 @@ import {
 import { Icon } from '@iconify/react';
 import { API_URL } from '../../helpers/api';
 import { Link } from 'react-router-dom';
+import Modal from '../../components/Modal/Modal';
 
+type modalType = {
+  message: string;
+  title: string;
+  location: string;
+};
 const MyBooking = () => {
   const dispatch = useAppDispatch();
   const reservedList = useAppSelector(selectAllReservations);
@@ -18,10 +24,40 @@ const MyBooking = () => {
     dispatch(getAllReservations() as any);
   }, [dispatch]);
 
+  const [modalInfo, setModalInfo] = useState<modalType>({
+    title: '',
+    location: '',
+    message: '',
+  });
+  const [showModal, setShowModal] = useState<boolean>(false);
+
+  function handleCancelReservation(
+    title: string,
+    location: string,
+    message: string
+  ) {
+    setModalInfo({
+      title,
+      location,
+      message,
+    });
+    setShowModal(true);
+  }
+
   return (
     <Container>
-      <div className='flex gap-6 flex-col sm:flex-row min-h-[calc(100vh_-_4rem)]'>
+      <div className='flex gap-6 flex-col sm:flex-row min-h-[calc(100vh_-_4rem)] relative'>
         <Account />
+        {showModal && (
+          <Modal
+            message={modalInfo.message}
+            title={modalInfo.title}
+            location={modalInfo.location}
+            handleNo={() => setShowModal(false)}
+            handleYes={() => console.log('yes')}
+          />
+        )}
+
         <div className='grid sm:grid-cols-2 lg:grid-cols-3 gap-8'>
           {reservedList &&
             reservedList?.map((locations) => {
@@ -114,6 +150,13 @@ const MyBooking = () => {
                       </div>
                     </div>
                     <button
+                      onClick={() =>
+                        handleCancelReservation(
+                          locations?.details?.title,
+                          locations?.details?.address,
+                          'Are you sure you want to cancel the reservation?'
+                        )
+                      }
                       className='bg-custom-red text-white
                      w-full py-2 rounded-md mt-2'
                     >
