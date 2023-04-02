@@ -3,6 +3,7 @@ import Container from '../../components/Container/Container';
 import Account from '../Account/Account';
 import { useAppDispatch, useAppSelector } from '../../hooks/useTypeSelector';
 import {
+  deleteReservation,
   getAllReservations,
   selectAllReservations,
 } from '../../state/reservation/reservation';
@@ -15,6 +16,7 @@ type modalType = {
   message: string;
   title: string;
   location: string;
+  id: number;
 };
 const MyBooking = () => {
   const dispatch = useAppDispatch();
@@ -24,6 +26,7 @@ const MyBooking = () => {
     title: '',
     location: '',
     message: '',
+    id: 0,
   });
   useEffect(() => {
     dispatch(getAllReservations() as any);
@@ -39,12 +42,14 @@ const MyBooking = () => {
   function handleCancelReservation(
     title: string,
     location: string,
-    message: string
+    message: string,
+    id: number
   ) {
     setModalInfo({
       title,
       location,
       message,
+      id,
     });
     setShowModal(true);
   }
@@ -59,7 +64,10 @@ const MyBooking = () => {
             title={modalInfo.title}
             location={modalInfo.location}
             handleNo={() => setShowModal(false)}
-            handleYes={() => console.log('yes')}
+            handleYes={() => {
+              dispatch(deleteReservation(modalInfo.id) as any);
+              setShowModal(false);
+            }}
           />
         )}
 
@@ -159,7 +167,8 @@ const MyBooking = () => {
                         handleCancelReservation(
                           locations?.details?.title,
                           locations?.details?.address,
-                          'Are you sure you want to cancel the reservation?'
+                          'Are you sure you want to cancel the reservation?',
+                          locations?.id
                         )
                       }
                       className='bg-custom-red text-white

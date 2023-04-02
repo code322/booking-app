@@ -34,8 +34,12 @@ function LogIn() {
     if (isLoggedIn) {
       navigate(from, { replace: true });
     }
-  }, [navigate, isLoggedIn]);
+  }, [navigate, isLoggedIn, from, location]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+  console.log(from, location.state);
   return (
     <AuthForm
       handleSubmit={handleSubmit}

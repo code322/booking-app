@@ -1,5 +1,5 @@
 import React, { useEffect, useLayoutEffect, useMemo, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import {
   getLocationById,
   selectLocationById,
@@ -13,6 +13,7 @@ import Spinner from '../../components/Spinner';
 import { differenceInCalendarDays } from 'date-fns';
 import { convertToDollars } from '../../utils';
 import { addNewReservation } from '../../state/reservation/reservation';
+import { isLoggedInSelector } from '../../state/authSlicer/authSlicer';
 
 export type reserveType = {
   checkOut: string;
@@ -111,18 +112,29 @@ const Location = () => {
 
   const isDisabled =
     bookingData.checkIn.length && bookingData.checkOut.length ? true : false;
-  console.log(isDisabled);
+
+  const isLoggedIn = useAppSelector(isLoggedInSelector);
+
+  const navigate = useNavigate();
 
   const handleBooking = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    if (!isLoggedIn) {
+      navigate('/login');
+      return;
+    }
     let body: reserveType = {
       checkOut: bookingData.checkOut,
       checkIn: bookingData.checkIn,
       locationId: Number(id),
       totalCost: totalCost.total,
     };
-    console.log(body);
     dispatch(addNewReservation(body) as any);
+    setBookingData({
+      checkIn: '',
+      checkOut: '',
+      guests: '1',
+    });
   };
   return (
     <>
@@ -323,7 +335,7 @@ const Location = () => {
                         label={<span>Taxes</span>}
                         data={convertToDollars(totalCost.taxes)}
                       />
-                      <hr />
+                      <tr className='w-full border'></tr>
                       <TableRow
                         label={
                           <span

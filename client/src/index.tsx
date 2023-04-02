@@ -10,7 +10,7 @@ import { Provider } from 'react-redux';
 import { API_URL, axiosPrivate } from './helpers/api';
 import axios from 'axios';
 import { logout, setAccessToken } from './state/authSlicer/authSlicer';
-
+import { Navigate, redirect } from 'react-router-dom';
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );

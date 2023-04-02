@@ -20,7 +20,6 @@ export const getAllReserves = async (req, res) => {
 };
 
 export const addNewReservation = async (req, res) => {
-  console.log(req.body);
   let { checkIn, checkOut, locationId, totalCost } = req.body;
 
   try {

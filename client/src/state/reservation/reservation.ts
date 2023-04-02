@@ -43,9 +43,7 @@ export const deleteReservation = createAsyncThunk(
   'reservations/deleteReservation',
   async (id: number, { rejectWithValue }) => {
     try {
-      await axiosPrivate('/api/reservations/delete-reservation', {
-        params: id,
-      });
+      await axiosPrivate.delete(`/api/reservation/delete-reservation/${id}`);
       return id;
     } catch (error) {
       rejectWithValue(error);
@@ -54,7 +52,7 @@ export const deleteReservation = createAsyncThunk(
 );
 
 type reservationType = {
-  id?: number;
+  id: number;
   details: detailsTypes;
   photos: string[];
   utils: utilsTypes;
