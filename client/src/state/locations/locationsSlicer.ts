@@ -24,7 +24,7 @@ export const addNewLocation = createAsyncThunk(
   'locations/addNewLocation',
   async (newLocation: newLocationType, { rejectWithValue }) => {
     try {
-      const { data } = await axios.post(
+      const { data } = await axiosPrivate.post(
         `${API_URL}/api/location/new-location`,
         newLocation
       );
@@ -53,7 +53,9 @@ export const deleteLocation = createAsyncThunk(
   'locations/deleteLocation',
   async (id: number, { rejectWithValue }) => {
     try {
-      await axios.delete(`${API_URL}/api/location/delete-location/${id}`);
+      await axiosPrivate.delete(
+        `${API_URL}/api/location/delete-location/${id}`
+      );
       return id;
     } catch (error) {
       return rejectWithValue(error);

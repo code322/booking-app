@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Container from '../../components/Container/Container';
-import dummyData from '../../dummyData';
 import { useAppDispatch, useAppSelector } from '../../hooks/useTypeSelector';
 import {
   deleteLocation,
@@ -52,6 +51,7 @@ function Locations() {
             }}
             handleYes={() => {
               dispatch(deleteLocation(modalInfo.id) as any);
+              setShowModal(false);
             }}
           />
         )}
@@ -120,7 +120,7 @@ function Locations() {
                           title: items?.details?.title,
                           location: items?.details?.address,
                           id: items.id,
-                          message: 'Are you sure you want to delete the list?',
+                          message: 'Are you sure you want to delete this list?',
                         });
                       }}
                       className='bg-gray-200 w-fit h-fit p-2 rounded-md outline-none'

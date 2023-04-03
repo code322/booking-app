@@ -8,7 +8,12 @@ import {
   addNewLocation,
   updateLocation,
 } from '../../state/locations/locationsSlicer';
-import { detailsTypes, utilsTypes } from '../../helpers/types';
+import {
+  detailsTypes,
+  initialDetails,
+  initialUtils,
+  utilsTypes,
+} from '../../helpers/types';
 import { useNavigate } from 'react-router-dom';
 
 export type newLocationType = {
@@ -85,20 +90,15 @@ function LocationForm({
       utils,
     };
     dispatch(addNewLocation(newLocation) as any);
+    setPhotos([]);
+    setUtils(initialUtils);
+    setDetails(initialDetails);
   }
 
   async function handleSave(e: React.FormEvent<HTMLButtonElement>) {
     e.preventDefault();
-    // id: number;
-    // details: detailsTypes;
-    // utils: utilsTypes;
-    // photos: string[];
-    let update: {
-      id: number;
-      details: detailsTypes;
-      photos: string[];
-      utils: utilsTypes;
-    } = {
+
+    let update = {
       id,
       details,
       photos,

@@ -1,5 +1,4 @@
 import { Icon } from '@iconify/react';
-import { Container } from '@mui/material';
 
 const Footer = () => {
   return (
