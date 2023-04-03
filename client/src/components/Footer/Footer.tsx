@@ -3,7 +3,7 @@ import { Container } from '@mui/material';
 
 const Footer = () => {
   return (
-    <footer className='py-4 px-3 mt-14 bg-custom-red min-h-[35vh] flex items-center'>
+    <footer className='py-6 px-3 mt-14 bg-custom-red min-h-[35vh] flex items-center'>
       <div className='grid sm:grid-cols-2 md:grid-cols-4 max-w-6xl m-auto gap-6  justify-between'>
         <FooterContent
           header='ABOUT US'

@@ -73,7 +73,7 @@ const MyBooking = () => {
 
         <div className='grid sm:grid-cols-2 lg:grid-cols-3 gap-8'>
           {reservedList &&
-            reservedList?.map((locations) => {
+            reservedList?.map((locations, index) => {
               let price = Number(locations?.details?.price).toLocaleString(
                 'en-US',
                 {
@@ -94,7 +94,7 @@ const MyBooking = () => {
               );
 
               return (
-                <div key={locations?.id}>
+                <div key={index}>
                   <div className='relative'>
                     <Link to={`/location/${locations?.locationId}`}>
                       <img
