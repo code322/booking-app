@@ -51,7 +51,7 @@ export const updateLocation = createAsyncThunk(
 
 export const deleteLocation = createAsyncThunk(
   'locations/deleteLocation',
-  async (id: number | undefined, { rejectWithValue }) => {
+  async (id: number, { rejectWithValue }) => {
     try {
       await axios.delete(`${API_URL}/api/location/delete-location/${id}`);
       return id;
@@ -62,7 +62,7 @@ export const deleteLocation = createAsyncThunk(
 );
 
 export type locationType = {
-  id: number | undefined;
+  id: number;
   details: detailsTypes;
   utils: utilsTypes;
   photos: string[];

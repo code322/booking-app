@@ -12,7 +12,7 @@ import { API_URL } from '../../helpers/api';
 import { Link } from 'react-router-dom';
 import Modal from '../../components/Modal/Modal';
 
-type modalType = {
+export type modalType = {
   message: string;
   title: string;
   location: string;

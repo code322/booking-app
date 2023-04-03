@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Container from '../../components/Container/Container';
 import dummyData from '../../dummyData';
@@ -11,8 +11,25 @@ import {
 import { API_URL } from '../../helpers/api';
 import Account from '../Account/Account';
 import { Icon } from '@iconify/react';
+import Modal from '../../components/Modal/Modal';
+import { modalType } from '../MyBooking/MyBooking';
 
 function Locations() {
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [modalInfo, setModalInfo] = useState<modalType>({
+    title: '',
+    location: '',
+    message: '',
+    id: 0,
+  });
+
+  useEffect(() => {
+    document.body.style.overflow = 'unset';
+    if (showModal) {
+      document.body.style.overflow = 'hidden';
+    }
+  }, [showModal]);
+
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(getAllLocations() as any);
@@ -25,6 +42,19 @@ function Locations() {
     <Container>
       <div className='flex flex-col sm:flex-row gap-6'>
         <Account />
+        {showModal && (
+          <Modal
+            title={modalInfo.title}
+            location={modalInfo.location}
+            message={modalInfo.message}
+            handleNo={() => {
+              setShowModal(false);
+            }}
+            handleYes={() => {
+              dispatch(deleteLocation(modalInfo.id) as any);
+            }}
+          />
+        )}
         <ul className='flex flex-col gap-4 flex-1'>
           {locationsList &&
             locationsList.map((items, index) => {
@@ -84,7 +114,15 @@ function Locations() {
                       />
                     </button>
                     <button
-                      onClick={() => dispatch(deleteLocation(items?.id) as any)}
+                      onClick={() => {
+                        setShowModal(true);
+                        setModalInfo({
+                          title: items?.details?.title,
+                          location: items?.details?.address,
+                          id: items.id,
+                          message: 'Are you sure you want to delete the list?',
+                        });
+                      }}
                       className='bg-gray-200 w-fit h-fit p-2 rounded-md outline-none'
                     >
                       <Icon

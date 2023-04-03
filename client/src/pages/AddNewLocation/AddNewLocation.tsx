@@ -19,6 +19,7 @@ const AddNewLocation = () => {
       <div className='flex gap-6 flex-col sm:flex-row'>
         <Account />
         <LocationForm
+          id={0}
           photosData={photos}
           detailsData={details}
           utilsData={utils}

@@ -36,7 +36,7 @@ interface Props {
   photosData: string[];
   utilsData: utilsTypes;
   editMode?: boolean;
-  id?: number;
+  id: number;
 }
 function LocationForm({
   detailsData,
@@ -93,7 +93,12 @@ function LocationForm({
     // details: detailsTypes;
     // utils: utilsTypes;
     // photos: string[];
-    let update = {
+    let update: {
+      id: number;
+      details: detailsTypes;
+      photos: string[];
+      utils: utilsTypes;
+    } = {
       id,
       details,
       photos,
