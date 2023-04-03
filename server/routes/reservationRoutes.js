@@ -8,7 +8,7 @@ import { authMiddleware } from '../middlewares/authMiddleware.js';
 
 let route = express.Router();
 
-route.post('/add-new-reservation', addNewReservation);
+route.post('/add-new-reservation', authMiddleware, addNewReservation);
 route.get('/get-all-reserves', authMiddleware, getAllReserves);
 route.delete('/delete-reservation/:id', authMiddleware, deleteReservation);
 
