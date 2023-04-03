@@ -41,7 +41,7 @@ function LogIn() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-  console.log(from, location.state);
+
   return (
     <AuthForm
       handleSubmit={handleSubmit}

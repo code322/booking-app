@@ -68,6 +68,13 @@ const Location = () => {
     return setCurrent(photosLength);
   }
 
+  useEffect(() => {
+    document.body.style.overflow = 'unset';
+    if (isExpanded) {
+      document.body.style.overflow = 'hidden';
+    }
+  }, [isExpanded]);
+
   let totalCost = useMemo(() => {
     let cleaningFee = 10;
     let serviceFee = 20;
@@ -184,10 +191,13 @@ const Location = () => {
               )}
               <button
                 onClick={() => setIsExpanded(true)}
-                className='absolute right-2 bottom-2 bg-gray-200 text-black p-2 rounded text-center text-xs flex items-center gap-2 hover:bg-gray-300 transition-all duration-100 ease-in-out'
+                className='absolute right-2 bottom-2 bg-custom-red text-black p-2 rounded text-center text-xs flex items-center gap-2 hover:bg-opacity-95 transition-all duration-300 ease-in-out'
               >
-                <Icon icon='material-symbols:grid-on-sharp' />
-                <span>Show more photos</span>
+                <Icon
+                  className='text-white'
+                  icon='material-symbols:grid-on-sharp'
+                />
+                <span className='text-white'>Show more photos</span>
               </button>
             </div>
 
@@ -201,23 +211,23 @@ const Location = () => {
                 <div className='max-w-5xl m-auto px-3 py-4   w-full'>
                   <button
                     onClick={() => setIsExpanded(false)}
-                    className='text-gray-900 relative left-0 p-1 rounded-full border-2 font-bold border-gray-900 h-10 w-10 flex justify-center items-center'
+                    className='text-white text-2xl p-2 bg-custom-red rounded-full relative left-2 top-14 z-30 '
                   >
-                    <Icon icon='ic:outline-close' className='text-2xl' />
+                    <Icon icon='mdi:close-thick' />
                   </button>
                   <div className='flex flex-col gap-2 mt-2 relative'>
                     <div className='absolute flex justify-between items-center  px-2 w-full h-full'>
                       <button
                         onClick={handleLeft}
-                        className='text-gray-900 text-5xl'
+                        className='text-white text-3xl p-1 bg-custom-red rounded-full'
                       >
-                        <Icon icon='material-symbols:arrow-circle-left' />{' '}
+                        <Icon icon='ph:arrow-left-bold' />
                       </button>
                       <button
                         onClick={handleRight}
-                        className='text-gray-900 text-5xl'
+                        className='text-white text-3xl p-1 bg-custom-red rounded-full'
                       >
-                        <Icon icon='material-symbols:arrow-circle-right' />{' '}
+                        <Icon icon='ph:arrow-right-bold' />
                       </button>
                     </div>
 
