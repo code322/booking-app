@@ -27,3 +27,6 @@ uploads/
 dummyData.ts
 .vscode
 
+allowedOrigins.js
+build.zip
+

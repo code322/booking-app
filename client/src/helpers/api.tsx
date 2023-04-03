@@ -1,10 +1,13 @@
 import axios from 'axios';
-import decode from 'jwt-decode';
-import { refresh } from './getRefresh';
+
 axios.defaults.withCredentials = true;
+axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+axios.defaults.headers.patch['Access-Control-Allow-Origin'] = '*';
+axios.defaults.headers.delete['Access-Control-Allow-Origin'] = '*';
+axios.defaults.headers.get['Access-Control-Allow-Origin'] = '*';
 export const API_URL: string =
   process.env.NODE_ENV === 'production'
-    ? process.env.React_App_SERVER_URL!
+    ? process.env.REACT_APP_SERVER_URL!
     : 'http://localhost:5000';
 
 export default axios.create({

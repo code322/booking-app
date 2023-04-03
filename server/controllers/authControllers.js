@@ -38,6 +38,7 @@ export const register = async (req, res) => {
       maxAge: 1000 * REFRESH_TOKEN_LIFE_TIME,
       secure: true,
       sameSite: 'none',
+      domain: process.env.COOKIES_DOMAIN,
     });
 
     res.status(201).json({
@@ -73,6 +74,7 @@ export const login = async (req, res) => {
       maxAge: 1000 * REFRESH_TOKEN_LIFE_TIME,
       secure: true,
       sameSite: 'none',
+      domain: process.env.COOKIES_DOMAIN,
     });
 
     res.status(201).json({
