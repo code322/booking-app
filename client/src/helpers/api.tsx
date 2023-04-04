@@ -12,8 +12,18 @@ export const API_URL: string =
 
 export default axios.create({
   baseURL: API_URL,
+  withCredentials: true,
+  headers: {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+  },
 });
 
 export const axiosPrivate = axios.create({
   baseURL: API_URL,
+  withCredentials: true,
+  headers: {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+  },
 });

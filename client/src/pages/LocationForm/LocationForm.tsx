@@ -256,6 +256,7 @@ function LocationForm({
               type='number'
               placeholder='Price'
               min={1}
+              max={100}
               onChange={handleInput}
               value={details?.price}
             />

@@ -68,6 +68,8 @@ function Home() {
     let result = filterLocations(search, maxBed, princeRange, allLocations);
     return result;
   }, [search, maxBed, princeRange, allLocations]);
+
+  console.log(allLocations);
   return (
     <>
       <div className='md:min-h-[70vh] mt-10 mb-6 md:mt-0 md:mb-0 flex items-cover justify-center items-center overflow-hidden relative '>
