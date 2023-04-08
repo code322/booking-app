@@ -6,91 +6,37 @@ export const filterLocations = (
   priceRange: number[],
   locations: locationType[]
 ) => {
-  let Any: string = 'Any';
-  let threeOrMoreBeds = '3+';
-  const THREE = 3;
-  // if there is character
-  if (search) {
-    //search by char, price range and num of beds
-    if (maxBed === '1' || maxBed === '2') {
-      let data = locations.filter((location) => {
-        let guests = location?.details?.guests;
-        let price = location?.details?.price;
-        return (
-          location?.details?.address
-            .toLocaleLowerCase()
-            .includes(search.toLocaleLowerCase()) &&
-          Number(price) >= priceRange[0] &&
-          Number(price) <= priceRange[1] &&
-          Number(guests) === Number(maxBed)
-        );
-      });
-      return data;
-    }
-    // search by char, price range, and num of beds greater than 3
-    else if (maxBed === threeOrMoreBeds) {
-      console.log('max and bed');
-      let data = locations.filter((location) => {
-        let guests = location?.details?.guests;
-        let price = location?.details?.price;
+  const filteredLocations = locations.filter((location) => {
+    const address = location?.details?.address;
+    const guests = location?.details?.guests;
+    const price = location?.details?.price;
 
-        return (
-          location?.details?.address
-            .toLocaleLowerCase()
-            .includes(search.toLocaleLowerCase()) &&
-          Number(price) >= priceRange[0] &&
-          Number(price) <= priceRange[1] &&
-          Number(guests) >= THREE
-        );
-      });
-      return data;
+    // Filter by search query
+    if (
+      search &&
+      !address?.toLocaleLowerCase().includes(search.toLocaleLowerCase())
+    ) {
+      return false;
     }
-    // filter only by prince range
-    else {
-      let data = locations.filter((location) => {
-        let price = location?.details?.price;
 
-        return (
-          location?.details?.address
-            .toLocaleLowerCase()
-            .includes(search.toLocaleLowerCase()) &&
-          Number(price) >= priceRange[0] &&
-          Number(price) <= priceRange[1]
-        );
-      });
-      return data;
+    // Filter by maxBed
+    if (maxBed !== 'Any') {
+      if (maxBed === '3+') {
+        if (Number(guests) < 3) {
+          return false;
+        }
+      } else if (Number(guests) !== Number(maxBed)) {
+        return false;
+      }
     }
-  } else if (!search) {
-    if (maxBed === '1' || maxBed === '2') {
-      let data = locations.filter((location) => {
-        let guests = location?.details?.guests;
-        let price = location?.details?.price;
-        return (
-          Number(price) >= priceRange[0] &&
-          Number(price) <= priceRange[1] &&
-          Number(guests) === Number(maxBed)
-        );
-      });
-      return data;
-    } else if (maxBed === threeOrMoreBeds) {
-      let data = locations.filter((location) => {
-        let guests = location?.details?.guests;
-        let price = location?.details?.price;
-        return (
-          Number(price) >= priceRange[0] &&
-          Number(price) <= priceRange[1] &&
-          Number(guests) >= THREE
-        );
-      });
-      return data;
-    } else if (maxBed === Any) {
-      let data = locations.filter((location) => {
-        let price = location?.details?.price;
-        return Number(price) >= priceRange[0] && Number(price) <= priceRange[1];
-      });
-      return data;
-    } else {
-      return locations;
+
+    // Filter by price range
+    if (Number(price) < priceRange[0] || Number(price) > priceRange[1]) {
+      return false;
     }
-  }
+
+    return true;
+  });
+
+  return filteredLocations;
 };
