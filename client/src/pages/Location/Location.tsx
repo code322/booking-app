@@ -79,12 +79,11 @@ const Location = () => {
     let cleaningFee = 10;
     let serviceFee = 20;
     let numberOfNights = 0;
-    if (bookingData.checkIn && bookingData.checkOut) {
-      numberOfNights = differenceInCalendarDays(
-        new Date(bookingData.checkOut),
-        new Date(bookingData.checkIn)
-      );
-
+    numberOfNights = differenceInCalendarDays(
+      new Date(bookingData.checkOut),
+      new Date(bookingData.checkIn)
+    );
+    if (bookingData.checkIn && bookingData.checkOut && numberOfNights > 0) {
       let costPerNight =
         Number(location?.details?.price) *
         Number(bookingData.guests) *
@@ -103,7 +102,7 @@ const Location = () => {
       };
     }
     return {
-      numberOfNights,
+      numberOfNights: 0,
       costPerNight: 0,
       cleaningFee: 0,
       serviceFee: 0,
@@ -117,8 +116,7 @@ const Location = () => {
     setBookingData((preVal) => ({ ...preVal, [id]: value }));
   }
 
-  const isDisabled =
-    bookingData.checkIn.length && bookingData.checkOut.length ? true : false;
+  const isDisabled = totalCost.numberOfNights ? true : false;
 
   const isLoggedIn = useAppSelector(isLoggedInSelector);
 
