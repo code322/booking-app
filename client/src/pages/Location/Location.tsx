@@ -304,17 +304,26 @@ const Location = () => {
                       onChange={handleChange}
                       min={1}
                       className='border mx-2 text-base p-1 outline-none'
-                      type='number'
+                      type='text'
                       id='guests'
-                      value={bookingData.guests}
+                      value={
+                        bookingData.guests > location?.details?.guests
+                          ? location?.details?.guests
+                          : bookingData.guests
+                      }
                       max={location?.details?.guests}
+                      maxLength={location?.details?.guests?.length}
+                      pattern='[0-9]*'
+                      // maxLength={1}
                     />
                   </div>
                 </div>
                 <button
                   disabled={!isDisabled}
                   onClick={handleBooking}
-                  className='text-white bg-custom-red text-center w-full rounded-md outline-none py-2 mt-2 capitalize'
+                  className={`text-white bg-custom-red text-center w-full rounded-md outline-none py-2 mt-2 capitalize ${
+                    isDisabled ? 'bg-opacity-100' : 'bg-opacity-40'
+                  }`}
                 >
                   reserve
                 </button>
