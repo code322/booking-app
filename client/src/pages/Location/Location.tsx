@@ -141,6 +141,25 @@ const Location = () => {
       guests: '1',
     });
   };
+
+  function handleSlideKeydown(e: KeyboardEvent) {
+    if (e.key === 'ArrowRight') {
+      handleRight();
+    }
+    if (e.key === 'ArrowLeft') {
+      handleLeft();
+    }
+    if (e.key === 'Escape') {
+      setIsExpanded(false);
+    }
+  }
+  useEffect(() => {
+    window.addEventListener('keydown', handleSlideKeydown);
+
+    return () => {
+      window.removeEventListener('keydown', handleSlideKeydown);
+    };
+  }, [current, photosLength]);
   return (
     <>
       {status !== 'succeeded' ? (
@@ -201,11 +220,15 @@ const Location = () => {
 
             {/* ---SLIDES--- */}
             <div
+              // onKeyDown={handleSlideKeydown}
               className={`fixed bottom-0 w-full bg-white left-0 transition-all duration-200 ease-in-out  pb-4 ${
                 isExpanded ? 'h-full' : 'h-0'
               }`}
             >
-              <div className='bg-white h-full flex justify-center items-center '>
+              <div
+                className='bg-white h-full flex justify-center items-center '
+                onClick={() => setIsExpanded(false)}
+              >
                 <div className='max-w-5xl m-auto px-3 py-4   w-full'>
                   <button
                     onClick={() => setIsExpanded(false)}
