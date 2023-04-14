@@ -1,4 +1,12 @@
-import React, { useEffect, useLayoutEffect, useMemo, useState } from 'react';
+import React, {
+  LegacyRef,
+  MutableRefObject,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import {
   getLocationById,
@@ -142,24 +150,53 @@ const Location = () => {
     });
   };
 
-  function handleSlideKeydown(e: KeyboardEvent) {
-    if (e.key === 'ArrowRight') {
-      handleRight();
-    }
-    if (e.key === 'ArrowLeft') {
-      handleLeft();
-    }
-    if (e.key === 'Escape') {
-      setIsExpanded(false);
-    }
-  }
+  //navigate slides with left and right arrows keys and
+  // close the slide when escape key is pressed
   useEffect(() => {
     window.addEventListener('keydown', handleSlideKeydown);
+    function handleSlideKeydown(e: KeyboardEvent) {
+      if (e.key === 'ArrowRight') {
+        handleRight();
+      }
+      if (e.key === 'ArrowLeft') {
+        handleLeft();
+      }
+      if (e.key === 'Escape') {
+        setIsExpanded(false);
+      }
+    }
 
     return () => {
       window.removeEventListener('keydown', handleSlideKeydown);
     };
   }, [current, photosLength]);
+
+  let imageRef = useRef<HTMLImageElement>(null);
+  const leftButtonRef = useRef<HTMLButtonElement>(null);
+  const rightButtonRef = useRef<HTMLButtonElement>(null);
+  function handleClickOutside(e: any) {
+    let clickedOutside = !imageRef?.current?.contains(e.target);
+
+    if (
+      clickedOutside &&
+      !leftButtonRef.current?.contains(e.target) &&
+      !rightButtonRef.current?.contains(e.target)
+    ) {
+      setIsExpanded(false);
+    } else {
+      console.log('clicked inside');
+    }
+  }
+
+  useEffect(() => {
+    //Assign click handler to listen the click to close the dropdown when clicked outside
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      //Remove the listener
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [imageRef, isExpanded]);
   return (
     <>
       {status !== 'succeeded' ? (
@@ -220,16 +257,12 @@ const Location = () => {
 
             {/* ---SLIDES--- */}
             <div
-              // onKeyDown={handleSlideKeydown}
               className={`fixed bottom-0 w-full bg-white left-0 transition-all duration-200 ease-in-out  pb-4 ${
                 isExpanded ? 'h-full' : 'h-0'
               }`}
             >
-              <div
-                className='bg-white h-full flex justify-center items-center '
-                onClick={() => setIsExpanded(false)}
-              >
-                <div className='max-w-5xl m-auto px-3 py-4   w-full'>
+              <div className='bg-black h-full flex justify-center items-center '>
+                <div className='max-w-5xl m-auto px-3 py-4 w-full border-red-500'>
                   <button
                     onClick={() => setIsExpanded(false)}
                     className='text-white text-2xl p-2 bg-custom-red rounded-full relative left-2 top-14 z-30 '
@@ -240,13 +273,15 @@ const Location = () => {
                     <div className='absolute flex justify-between items-center  px-2 w-full h-full'>
                       <button
                         onClick={handleLeft}
-                        className='text-white text-3xl p-1 bg-custom-red rounded-full'
+                        className='text-white text-3xl p-1 bg-custom-red rounded-full z-30'
+                        ref={rightButtonRef}
                       >
                         <Icon icon='ph:arrow-left-bold' />
                       </button>
                       <button
                         onClick={handleRight}
-                        className='text-white text-3xl p-1 bg-custom-red rounded-full'
+                        className='text-white text-3xl p-1 bg-custom-red rounded-full z-30'
+                        ref={leftButtonRef}
                       >
                         <Icon icon='ph:arrow-right-bold' />
                       </button>
@@ -254,7 +289,8 @@ const Location = () => {
 
                     {location?.photos && (
                       <img
-                        className='rounded-md'
+                        ref={imageRef}
+                        className='rounded-md z-10'
                         src={`${API_URL}/uploads/${location?.photos[current]}`}
                         alt=''
                       />
