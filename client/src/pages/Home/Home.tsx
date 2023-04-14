@@ -81,7 +81,7 @@ function Home() {
           />
         </div>
         <div className='hidden md:block bg-black opacity-20 w-full h-full -z-[1] absolute top-0 left-0'></div>
-        <div className='md:mt-0 border md:border-none flex flex-col mx-4  gap-10 items-center justify-between w-full  max-w-6xl  px-9 bg-white rounded-lg outline-none py-12 shadow-customShadow md:flex-row md:h-24 md:rounded-full md:gap-2'>
+        <div className='md:mt-0 border md:border-none flex flex-col mx-4  gap-6 items-center justify-between w-full  max-w-6xl  px-9 bg-white rounded-lg outline-none py-12 shadow-customShadow md:flex-row md:h-24 md:rounded-full md:gap-2'>
           {/* search */}
           <SearchContent
             icon={<Icon icon='ic:baseline-search' />}
@@ -89,7 +89,7 @@ function Home() {
               <input
                 value={search}
                 onChange={handleSearch}
-                className='outline-none py-2 px-1 md:mr-2 border border-gray-300 md:border-none '
+                className='outline-none p-2 md:mr-2 border border-gray-300 md:border-none '
                 type='text'
                 placeholder='Location...'
               />
