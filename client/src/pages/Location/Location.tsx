@@ -1,13 +1,5 @@
-import React, {
-  LegacyRef,
-  MutableRefObject,
-  useEffect,
-  useLayoutEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import React, { useEffect, useLayoutEffect, useMemo, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   getLocationById,
   selectLocationById,
@@ -22,6 +14,7 @@ import { differenceInCalendarDays } from 'date-fns';
 import { convertToDollars } from '../../utils';
 import { addNewReservation } from '../../state/reservation/reservation';
 import { isLoggedInSelector } from '../../state/authSlicer/authSlicer';
+import Slides from '../../components/Slides/Slides';
 
 export type reserveType = {
   checkOut: string;
@@ -38,6 +31,8 @@ const Location = () => {
   const { id } = useParams<{ id?: string }>();
 
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
+  const [current, setCurrent] = useState(0);
+
   const [bookingData, setBookingData] = useState<bookingFormType>({
     checkIn: '',
     checkOut: '',
@@ -56,26 +51,8 @@ const Location = () => {
 
   const location = useAppSelector(selectLocationById);
   const status = useAppSelector(selectLocationByIdStatus);
-  const [current, setCurrent] = useState(0);
 
-  let photosLength = location?.photos?.length - 1;
-
-  //right button
-  function handleRight() {
-    if (current < photosLength) {
-      return setCurrent((preVal) => preVal + 1);
-    }
-    return setCurrent(0);
-  }
-
-  //left button
-  function handleLeft() {
-    if (current > 0) {
-      return setCurrent((preVal) => preVal - 1);
-    }
-    return setCurrent(photosLength);
-  }
-
+  //disable scrolling during slide
   useEffect(() => {
     document.body.style.overflow = 'unset';
     if (isExpanded) {
@@ -83,6 +60,7 @@ const Location = () => {
     }
   }, [isExpanded]);
 
+  // calculate reservation cost
   let totalCost = useMemo(() => {
     let cleaningFee = 10;
     let serviceFee = 20;
@@ -150,53 +128,6 @@ const Location = () => {
     });
   };
 
-  //navigate slides with left and right arrows keys and
-  // close the slide when escape key is pressed
-  useEffect(() => {
-    window.addEventListener('keydown', handleSlideKeydown);
-    function handleSlideKeydown(e: KeyboardEvent) {
-      if (e.key === 'ArrowRight') {
-        handleRight();
-      }
-      if (e.key === 'ArrowLeft') {
-        handleLeft();
-      }
-      if (e.key === 'Escape') {
-        setIsExpanded(false);
-      }
-    }
-
-    return () => {
-      window.removeEventListener('keydown', handleSlideKeydown);
-    };
-  }, [current, photosLength]);
-
-  let imageRef = useRef<HTMLImageElement>(null);
-  const leftButtonRef = useRef<HTMLButtonElement>(null);
-  const rightButtonRef = useRef<HTMLButtonElement>(null);
-  function handleClickOutside(e: any) {
-    let clickedOutside = !imageRef?.current?.contains(e.target);
-
-    if (
-      clickedOutside &&
-      !leftButtonRef.current?.contains(e.target) &&
-      !rightButtonRef.current?.contains(e.target)
-    ) {
-      setIsExpanded(false);
-    } else {
-      console.log('clicked inside');
-    }
-  }
-
-  useEffect(() => {
-    //Assign click handler to listen the click to close the dropdown when clicked outside
-    document.addEventListener('mousedown', handleClickOutside);
-
-    return () => {
-      //Remove the listener
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [imageRef, isExpanded]);
   return (
     <>
       {status !== 'succeeded' ? (
@@ -256,49 +187,13 @@ const Location = () => {
             </div>
 
             {/* ---SLIDES--- */}
-            <div
-              className={`fixed bottom-0 w-full bg-white left-0 transition-all duration-200 ease-in-out  pb-4 ${
-                isExpanded ? 'h-full' : 'h-0'
-              }`}
-            >
-              <div className='bg-black h-full flex justify-center items-center '>
-                <div className='max-w-5xl m-auto px-3 py-4 w-full border-red-500'>
-                  <button
-                    onClick={() => setIsExpanded(false)}
-                    className='text-white text-2xl p-2 bg-custom-red rounded-full relative left-2 top-14 z-30 '
-                  >
-                    <Icon icon='mdi:close-thick' />
-                  </button>
-                  <div className='flex flex-col gap-2 mt-2 relative'>
-                    <div className='absolute flex justify-between items-center  px-2 w-full h-full'>
-                      <button
-                        onClick={handleLeft}
-                        className='text-white text-3xl p-1 bg-custom-red rounded-full z-30'
-                        ref={rightButtonRef}
-                      >
-                        <Icon icon='ph:arrow-left-bold' />
-                      </button>
-                      <button
-                        onClick={handleRight}
-                        className='text-white text-3xl p-1 bg-custom-red rounded-full z-30'
-                        ref={leftButtonRef}
-                      >
-                        <Icon icon='ph:arrow-right-bold' />
-                      </button>
-                    </div>
-
-                    {location?.photos && (
-                      <img
-                        ref={imageRef}
-                        className='rounded-md z-10'
-                        src={`${API_URL}/uploads/${location?.photos[current]}`}
-                        alt=''
-                      />
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
+            <Slides
+              location={location}
+              isExpanded={isExpanded}
+              setIsExpanded={setIsExpanded}
+              current={current}
+              setCurrent={setCurrent}
+            />
           </div>
           {/* ---DESCRIPTION AND BOOKING--- */}
           <div className='flex flex-col'>
