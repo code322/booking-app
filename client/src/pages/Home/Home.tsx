@@ -69,80 +69,95 @@ function Home() {
     return result;
   }, [search, maxBed, princeRange, allLocations]);
 
-  console.log(allLocations);
   return (
     <>
-      <div className='md:min-h-[70vh] mt-10 mb-6 md:mt-0 md:mb-0 flex items-cover justify-center items-center overflow-hidden relative '>
-        <div className='hidden md:block absolute top-0 left-0 w-full h-full overflow-hidden -z-10'>
-          <img
-            className='object-cover w-full h-full'
-            src='assets/modern-house.webp'
-            alt=''
-          />
-        </div>
-        <div className='hidden md:block bg-black opacity-20 w-full h-full -z-[1] absolute top-0 left-0'></div>
-        <div className='md:mt-0 border md:border-none flex flex-col mx-4  gap-6 items-center justify-between w-full  max-w-6xl  px-9 bg-white rounded-lg outline-none py-12 shadow-customShadow md:flex-row md:h-24 md:rounded-full md:gap-2'>
-          {/* search */}
-          <SearchContent
-            icon={<Icon icon='ic:baseline-search' />}
-            content={
-              <input
-                value={search}
-                onChange={handleSearch}
-                className='outline-none p-2 md:mr-2 border border-gray-300 md:border-none '
-                type='text'
-                placeholder='Location...'
-              />
-            }
-            label='Search by Location'
-          />
-
-          {/* price range */}
-
-          <SearchContent
-            icon={<Icon icon='material-symbols:attach-money' />}
-            content={
-              <div className='pl-2 pr-2 md:pl-0 md:pr-6'>
-                <ThemeProvider theme={theme}>
-                  <Slider
-                    getAriaLabel={() => 'Minimum distance'}
-                    value={princeRange}
-                    onChange={handlePriceRange}
-                    valueLabelDisplay='auto'
-                    disableSwap
-                  />
-                </ThemeProvider>
-              </div>
-            }
-            label='Price range'
-          />
-
-          {/* search */}
-          <SearchContent
-            icon={<Icon icon='material-symbols:bed-outline' />}
-            content={
-              <select
-                onChange={handleMaxBed}
-                className='bg-white w-full border px-2 py-2'
-                name=''
-                id=''
+      <div className='md:min-h-[70vh] mt-10 mb-6 md:mt-0 md:mb-0 '>
+        <div className=' max-w-6xl px-4 m-auto'>
+          <div className='flex flex-col sm:flex-row  gap-4 sm:py-8 sm:items-center'>
+            <div className='flex-1'>
+              <h2 className='font-semibold text-5xl mb-6 leading-[46px] md:text-6xl'>
+                Travel, book & experiences!
+              </h2>
+              <p className='text-gray-600 mb-2 md:text-lg'>
+                Accompanied by us, you will have a trip full of experiences.
+                Book your dream resorts, villas, hotels and more...
+              </p>
+              <a
+                className='bg-custom-red px-8 py-3 text-white rounded-3xl block w-fit shadow-md mb-3 mt-6'
+                href='##'
               >
-                <option className=' ' value='Any'>
-                  Any
-                </option>
-                <option className=' ' value='1'>
-                  1
-                </option>
-                <option className=' ' value='2'>
-                  2
-                </option>
-                <option className=' ' value='3+'>
-                  3+
-                </option>
-              </select>
-            }
-            label='Number of beds'
-          />
+                Contact Us
+              </a>
+            </div>
+            <div className='py-4 flex-1'>
+              <img src='/assets/hero-right.webp' alt='' />
+            </div>
+          </div>
+
+          {/* Filter  */}
+          <div className='md:mt-0 border md:border-none flex flex-col gap-6 items-center justify-between w-full max-w-6xl  px-9 bg-white rounded-lg outline-none py-12 shadow-customShadow md:flex-row md:h-24 md:rounded-full md:gap-2 md:relative md:-top-16'>
+            {/* search */}
+            <SearchContent
+              icon={<Icon icon='ic:baseline-search' />}
+              content={
+                <input
+                  value={search}
+                  onChange={handleSearch}
+                  className='outline-none p-2 md:mr-2 border border-gray-300 md:border-none '
+                  type='text'
+                  placeholder='Location...'
+                />
+              }
+              label='Search by Location'
+            />
+
+            {/* price range */}
+
+            <SearchContent
+              icon={<Icon icon='material-symbols:attach-money' />}
+              content={
+                <div className='pl-2 pr-2 md:pl-0 md:pr-6'>
+                  <ThemeProvider theme={theme}>
+                    <Slider
+                      getAriaLabel={() => 'Minimum distance'}
+                      value={princeRange}
+                      onChange={handlePriceRange}
+                      valueLabelDisplay='auto'
+                      disableSwap
+                    />
+                  </ThemeProvider>
+                </div>
+              }
+              label='Price range'
+            />
+
+            {/* search */}
+            <SearchContent
+              icon={<Icon icon='material-symbols:bed-outline' />}
+              content={
+                <select
+                  onChange={handleMaxBed}
+                  className='bg-white w-full border px-2 py-2'
+                  name=''
+                  id=''
+                >
+                  <option className=' ' value='Any'>
+                    Any
+                  </option>
+                  <option className=' ' value='1'>
+                    1
+                  </option>
+                  <option className=' ' value='2'>
+                    2
+                  </option>
+                  <option className=' ' value='3+'>
+                    3+
+                  </option>
+                </select>
+              }
+              label='Number of beds'
+            />
+          </div>
         </div>
       </div>
       <Container>
