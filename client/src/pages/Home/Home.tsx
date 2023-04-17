@@ -72,7 +72,7 @@ function Home() {
   return (
     <>
       <div className='md:min-h-[70vh] mt-10 mb-6 md:mt-0 md:mb-0 '>
-        <div className=' max-w-6xl px-4 m-auto'>
+        <div className=' max-w-6xl px-4 m-auto relative'>
           <div className='flex flex-col sm:flex-row  gap-4 sm:py-8 sm:items-center'>
             <div className='flex-1'>
               <h2 className='font-semibold text-5xl mb-6 leading-[46px] md:text-6xl'>
@@ -95,7 +95,7 @@ function Home() {
           </div>
 
           {/* Filter  */}
-          <div className='md:mt-0 border md:border-none flex flex-col gap-6 items-center justify-between w-full max-w-6xl  px-9 bg-white rounded-lg outline-none py-12 shadow-customShadow md:flex-row md:h-24 md:rounded-full md:gap-2 md:relative md:-top-16'>
+          <div className='md:mt-0 border md:border-none flex flex-col gap-6 items-center justify-between w-full max-w-6xl pl-4 pr-8 md:px-9 bg-white rounded-lg outline-none py-12 shadow-customShadow md:flex-row md:h-24 md:rounded-full md:gap-2 md:relative md:-top-16 '>
             {/* search */}
             <SearchContent
               icon={<Icon icon='ic:baseline-search' />}
