@@ -9,6 +9,7 @@ import AddNewLocation from './pages/AddNewLocation/AddNewLocation';
 import MyBooking from './pages/MyBooking/MyBooking';
 import EditLocation from './pages/EditLocation/EditLocation';
 import Layout from './components/Layout';
+import FilterResult from './pages/FilterResult/FilterResult';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path='/login' element={<LogIn />} />
           <Route path='/register' element={<Register />} />
           <Route path='/location/:id' element={<Location />} />
+          <Route path='/filtered-result' element={<FilterResult />} />
           <Route element={<PrivateRoutes />}>
             <Route path='/account' element={<Locations />} />
             <Route path='/account/new-listing' element={<AddNewLocation />} />

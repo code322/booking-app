@@ -6,7 +6,7 @@ import {
   selectLocations,
 } from '../../state/locations/locationsSlicer';
 import { API_URL } from '../../helpers/api';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Icon } from '@iconify/react';
 import InputFields from '../../components/InputFields/InputFields';
 import { Slider } from '@mui/material';
@@ -26,6 +26,8 @@ function Home() {
   useEffect(() => {
     dispatch(getAllLocations() as any);
   }, [dispatch]);
+
+  const navigate = useNavigate();
 
   const allLocations = useAppSelector(selectLocations);
 
@@ -68,6 +70,11 @@ function Home() {
     let result = filterLocations(search, maxBed, princeRange, allLocations);
     return result;
   }, [search, maxBed, princeRange, allLocations]);
+
+  function handleFilter(e: React.MouseEvent<HTMLButtonElement>) {
+    e.preventDefault();
+    navigate('/filtered-result');
+  }
 
   return (
     <>
@@ -157,7 +164,10 @@ function Home() {
               }
               label='Number of beds'
             />
-            <button className='rounded-full bg-custom-red w-full h-10 md:h-14 md:w-14 text-white flex justify-center items-center gap-2'>
+            <button
+              onClick={handleFilter}
+              className='rounded-full bg-custom-red w-full h-10 md:h-14 md:w-14 text-white flex justify-center items-center gap-2'
+            >
               <Icon className='text-2xl' icon='ic:baseline-search' />
               <span className='md:hidden'>Search</span>
             </button>
