@@ -11,9 +11,9 @@ export const getFilteredResult = createAsyncThunk(
     const request = {
       params: {
         query: params.query,
-        min: params.minPrice,
-        max: params.maxPrice,
-        beds: params.maxBeds,
+        minPrice: params.minPrice,
+        maxPrice: params.maxPrice,
+        maxBeds: params.maxBeds,
       },
     };
     try {

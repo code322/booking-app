@@ -1,4 +1,5 @@
 import db from '../config/db.js';
+import { filterLocations } from '../utils/filterLocation.js';
 
 export const getAllLocations = async (req, res) => {
   try {
@@ -101,18 +102,32 @@ export const updateLocation = async (req, res) => {
   }
 };
 
+export const getFilteredLocations = async (req, res) => {
+  const { query, minPrice, maxPrice, maxBeds } = req.query;
+
+  try {
+    let [data] = await db.query('SELECT * FROM Locations');
+    const response = data.map((items) => {
+      return {
+        ...items,
+        utils: JSON.parse(items.utils),
+        photos: JSON.parse(items.photos),
+        details: JSON.parse(items.details),
+      };
+    });
+    let result = filterLocations(
+      query,
+      maxBeds,
+      { minPrice, maxPrice },
+      response
+    );
+    res.status(200).json(result);
+  } catch (error) {
+    res.status(400).json(error);
+  }
+};
 const getLocation = async (id) => {
   let query = 'SELECT * FROM Locations WHERE id=?';
   const [result] = await db.query(query, [id]);
   return result[0];
-};
-
-export const getFilteredLocations = async (req, res) => {
-  try {
-    const body = await req.query;
-    console.log(body);
-    res.status(200).json(body);
-  } catch (error) {
-    res.status(400).json(error);
-  }
 };
