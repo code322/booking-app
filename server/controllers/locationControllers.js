@@ -106,3 +106,13 @@ const getLocation = async (id) => {
   const [result] = await db.query(query, [id]);
   return result[0];
 };
+
+export const getFilteredLocations = async (req, res) => {
+  try {
+    const body = await req.query;
+    console.log(body);
+    res.status(200).json(body);
+  } catch (error) {
+    res.status(400).json(error);
+  }
+};

@@ -3,14 +3,23 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { API_URL } from '../../helpers/api';
 import { filterType } from '../../pages/Home/Home';
 import { locationType } from '../locations/locationsSlicer';
+axios.defaults.withCredentials = true;
 
 export const getFilteredResult = createAsyncThunk(
   'filtered/getFilteredResult',
-  async (body: filterType, { rejectWithValue }) => {
+  async (params: filterType, { rejectWithValue }) => {
+    const request = {
+      params: {
+        query: params.query,
+        min: params.minPrice,
+        max: params.maxPrice,
+        beds: params.maxBeds,
+      },
+    };
     try {
-      const { data } = await axios.post(
-        `${API_URL}/api/locations/filtered-result`,
-        body
+      const { data } = await axios.get(
+        `${API_URL}/api/location/filtered-result`,
+        request
       );
       return data;
     } catch (error) {

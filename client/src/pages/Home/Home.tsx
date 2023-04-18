@@ -80,13 +80,13 @@ function Home() {
 
   function handleFilter(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
-    let body: filterType = {
+    let params: filterType = {
       query: search,
       minPrice: princeRange[0],
       maxPrice: princeRange[1],
       maxBeds: maxBed,
     };
-    dispatch(getFilteredResult(body) as any);
+    dispatch(getFilteredResult(params) as any);
     navigate('/filtered-result');
   }
 
