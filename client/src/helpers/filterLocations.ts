@@ -6,7 +6,7 @@ export const filterLocations = (
   priceRange: number[],
   locations: locationType[]
 ) => {
-  const filteredLocations = locations.filter((location) => {
+  const filteredLocations = locations?.filter((location) => {
     const address = location?.details?.address;
     const guests = location?.details?.guests;
     const price = location?.details?.price;

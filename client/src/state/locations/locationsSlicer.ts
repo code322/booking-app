@@ -5,6 +5,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { newLocationType } from '../../pages/LocationForm/LocationForm';
 import { axiosPrivate } from './../../helpers/api';
+import { filterType } from '../../pages/Home/Home';
 
 export const getAllLocations = createAsyncThunk(
   'locations/getAllLocations',
@@ -59,6 +60,29 @@ export const deleteLocation = createAsyncThunk(
       return id;
     } catch (error) {
       return rejectWithValue(error);
+    }
+  }
+);
+
+export const getFilteredResult = createAsyncThunk(
+  'filtered/getFilteredResult',
+  async (params: filterType, { rejectWithValue }) => {
+    const request = {
+      params: {
+        query: params.query,
+        minPrice: params.minPrice,
+        maxPrice: params.maxPrice,
+        maxBeds: params.maxBeds,
+      },
+    };
+    try {
+      const { data } = await axios.get(
+        `${API_URL}/api/location/filtered-result`,
+        request
+      );
+      return data;
+    } catch (error) {
+      rejectWithValue(error);
     }
   }
 );
@@ -142,6 +166,12 @@ const locationSlice = createSlice({
       })
       .addCase(deleteLocation.rejected, (state, action) => {
         state.status = 'failed';
+        state.error = action.payload;
+      })
+      .addCase(getFilteredResult.fulfilled, (state, action) => {
+        state.locations = action.payload;
+      })
+      .addCase(getFilteredResult.rejected, (state, action) => {
         state.error = action.payload;
       });
   },

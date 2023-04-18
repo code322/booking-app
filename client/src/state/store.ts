@@ -7,14 +7,12 @@ import { combineReducers } from 'redux';
 import locationsSlicer from './locations/locationsSlicer';
 import locationByIdSlicer from './locations/locationByIdSlicer';
 import reservationReducer from './reservation/reservation';
-import filteredResult from './filter/filter';
 
 const reducers = combineReducers({
   authReducer,
   locationsSlicer,
   locationByIdSlicer,
   reservationReducer,
-  filteredResult,
 });
 
 const persistConfig = {

@@ -1,4 +1,10 @@
-export const filterLocations = (search, maxBed, priceRange, locations) => {
+export const filterLocations = (
+  search,
+  maxBed,
+  minPrice,
+  maxPrice,
+  locations
+) => {
   const filteredLocations = locations.filter((location) => {
     const address = location?.details?.address;
     const guests = location?.details?.guests;
@@ -24,7 +30,7 @@ export const filterLocations = (search, maxBed, priceRange, locations) => {
     }
 
     // Filter by price range
-    if (Number(price) < priceRange[0] || Number(price) > priceRange[1]) {
+    if (Number(price) < minPrice || Number(price) > maxPrice) {
       return false;
     }
 

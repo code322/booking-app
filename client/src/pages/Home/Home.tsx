@@ -12,7 +12,7 @@ import InputFields from '../../components/InputFields/InputFields';
 import { Slider } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material';
 import { filterLocations } from '../../helpers/filterLocations';
-import { getFilteredResult } from '../../state/filter/filter';
+import { getFilteredResult } from '../../state/locations/locationsSlicer';
 export type filterType = {
   query?: string;
   minPrice: number;
