@@ -84,22 +84,22 @@ function Home() {
 
   return (
     <>
-      <div className='md:min-h-[70vh] mt-10 mb-6 md:mt-0 md:mb-0 '>
+      <div className='md:min-h-[calc(95vh_-_5rem)] mt-10 mb-6 md:mt-0 md:mb-0 flex items-center'>
         <div className=' max-w-6xl px-4 m-auto relative'>
           <div className='flex flex-col sm:flex-row  gap-4 sm:py-8 sm:items-center'>
             <div className='flex-1'>
               <h2 className='font-semibold text-5xl mb-6 leading-[46px] md:text-6xl'>
                 Travel, book & experiences!
               </h2>
-              <p className='text-gray-600 mb-2 md:text-lg'>
+              <p className='text-gray-600 mb-2 md:text-lg md:max-w-[400px]'>
                 Accompanied by us, you will have a trip full of experiences.
                 Book your dream resorts, villas, hotels and more...
               </p>
               <a
-                className='bg-custom-red px-8 py-3 text-white rounded-3xl block w-fit shadow-md mb-3 mt-6'
+                className='bg-custom-red px-8 py-3 text-white rounded-3xl block w-fit shadow-md mb-3 mt-6 md:mt-12'
                 href='##'
               >
-                Contact Us
+                1-800-123-1234
               </a>
             </div>
             <div className='py-4 flex-1'>
@@ -108,7 +108,8 @@ function Home() {
           </div>
 
           {/* Filter  */}
-          <form className='md:mt-0  md:border-none flex flex-col gap-6 items-center justify-between w-full max-w-6xl pl-4 pr-8 md:px-9 bg-white rounded-lg outline-none py-8 shadow-customShadow md:flex-row md:h-24 md:rounded-full md:gap-2 md:relative md:-top-16 -top-20 '>
+
+          <form className='md:mt-0  md:border-none flex flex-col gap-6 items-center justify-between w-full max-w-6xl pl-4 pr-8 md:px-9 bg-white rounded-lg outline-none py-8 shadow-customShadow md:flex-row md:h-24 md:rounded-full md:gap-2 md:relative md:-top-16'>
             {/* search */}
             <SearchContent
               icon={<Icon icon='ic:baseline-search' />}
