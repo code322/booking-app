@@ -89,14 +89,14 @@ function Home() {
           <div className='flex flex-col sm:flex-row  gap-4 sm:py-8 sm:items-center'>
             <div className='flex-1'>
               <h2 className='font-semibold text-5xl mb-6 leading-[46px] md:text-6xl'>
-                Travel, book & experiences!
+                Travel, book & experience!
               </h2>
               <p className='text-gray-600 mb-2 md:text-lg md:max-w-[400px]'>
                 Accompanied by us, you will have a trip full of experiences.
                 Book your dream resorts, villas, hotels and more...
               </p>
               <a
-                className='bg-custom-red px-8 py-3 text-white rounded-3xl block w-fit shadow-md mb-3 mt-6 md:mt-12'
+                className='bg-custom-red opacity-90 px-8 py-3 text-white rounded-3xl block w-fit shadow-md mb-3 mt-6 md:mt-12 hover:opacity-100 transition-all duration-300 ease-in-out'
                 href='##'
               >
                 1-800-123-1234
@@ -174,7 +174,7 @@ function Home() {
             <div className='pr-4 pl-10 w-full md:pr-0 md:pl-0 md:w-fit'>
               <button
                 onClick={handleFilter}
-                className='rounded-full bg-custom-red w-full h-10 md:h-14 md:w-14 text-white flex justify-center items-center gap-2'
+                className='rounded-full bg-custom-red w-full h-10 md:h-14 md:w-14 text-white flex justify-center items-center gap-2 shadow-md'
               >
                 <Icon className='text-2xl' icon='ic:baseline-search' />
                 <span className='md:hidden'>Search</span>
