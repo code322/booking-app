@@ -84,7 +84,7 @@ function Home() {
 
   return (
     <>
-      <div className='md:min-h-[calc(95vh_-_5rem)] mt-10 mb-6 md:mt-0 md:mb-0 flex items-center'>
+      <div className='md:min-h-[calc(100vh_-_5rem)] mt-10 mb-6 md:mt-0 md:mb-0 flex items-center'>
         <div className=' max-w-6xl px-4 m-auto relative'>
           <div className='flex flex-col sm:flex-row  gap-4 sm:py-8 sm:items-center'>
             <div className='flex-1'>
@@ -92,7 +92,7 @@ function Home() {
                 Travel, book & experience!
               </h2>
               <p className='text-gray-600 mb-2 md:text-lg md:max-w-[400px]'>
-                Accompanied by us, you will have a trip full of experiences.
+                Accompanied by us, make the memories you have always wanted!
                 Book your dream resorts, villas, hotels and more...
               </p>
               <a
@@ -102,14 +102,14 @@ function Home() {
                 1-800-123-1234
               </a>
             </div>
-            <div className='py-4 flex-1'>
+            <div className='py-0 flex-1'>
               <img src='/assets/hero-right.webp' alt='' />
             </div>
           </div>
 
           {/* Filter  */}
 
-          <form className='md:mt-0  md:border-none flex flex-col gap-6 items-center justify-between w-full max-w-6xl pl-4 pr-8 md:px-9 bg-white rounded-lg outline-none py-8 shadow-customShadow md:flex-row md:h-24 md:rounded-full md:gap-2 md:relative md:-top-16'>
+          <form className='md:mt-0  md:border-none flex flex-col gap-6 items-center justify-between w-full max-w-6xl pl-4 pr-8 md:px-9 bg-white rounded-lg outline-none py-8 shadow-customShadow md:flex-row md:h-24 md:rounded-full md:gap-2 md:relative md:-top-10'>
             {/* search */}
             <SearchContent
               icon={<Icon icon='ic:baseline-search' />}
@@ -184,6 +184,14 @@ function Home() {
         </div>
       </div>
       <Container>
+        <div className='my-6'>
+          <h2 className='font-bold capitalize text-2xl md:text-4xl'>
+            Our Best Locations
+          </h2>
+          <p className='text-gray-600 text-base'>
+            Plenty of locations to assure your relaxation and conformability.
+          </p>
+        </div>
         <div className='grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8'>
           {allLocations?.map((locations) => {
             let price = Number(locations?.details?.price).toLocaleString(
