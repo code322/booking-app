@@ -95,7 +95,7 @@ function Home() {
           </div>
 
           {/* Filter  */}
-          <div className='md:mt-0 border md:border-none flex flex-col gap-6 items-center justify-between w-full max-w-6xl pl-4 pr-8 md:px-9 bg-white rounded-lg outline-none py-12 shadow-customShadow md:flex-row md:h-24 md:rounded-full md:gap-2 md:relative md:-top-16 '>
+          <div className='md:mt-0  md:border-none flex flex-col gap-6 items-center justify-between w-full max-w-6xl pl-4 pr-8 md:px-9 bg-white rounded-lg outline-none py-12 shadow-customShadow md:flex-row md:h-24 md:rounded-full md:gap-2 md:relative md:-top-16 '>
             {/* search */}
             <SearchContent
               icon={<Icon icon='ic:baseline-search' />}
@@ -103,7 +103,7 @@ function Home() {
                 <input
                   value={search}
                   onChange={handleSearch}
-                  className='outline-none p-2 md:mr-2 border border-gray-300 md:border-none '
+                  className='outline-none p-2 md:mr-2 border border-gray-300 md:border-none rounded-md'
                   type='text'
                   placeholder='Location...'
                 />
@@ -116,7 +116,7 @@ function Home() {
             <SearchContent
               icon={<Icon icon='material-symbols:attach-money' />}
               content={
-                <div className='pl-2 pr-2 md:pl-0 md:pr-6'>
+                <div className='pl-2 pr-2 md:pl-0 '>
                   <ThemeProvider theme={theme}>
                     <Slider
                       getAriaLabel={() => 'Minimum distance'}
@@ -131,13 +131,13 @@ function Home() {
               label='Price range'
             />
 
-            {/* search */}
+            {/* options */}
             <SearchContent
               icon={<Icon icon='material-symbols:bed-outline' />}
               content={
                 <select
                   onChange={handleMaxBed}
-                  className='bg-white w-full border px-2 py-2'
+                  className='bg-white w-full border px-2 py-2 rounded-md'
                   name=''
                   id=''
                 >
@@ -157,6 +157,10 @@ function Home() {
               }
               label='Number of beds'
             />
+            <button className='rounded-full bg-custom-red w-full h-10 md:h-14 md:w-14 text-white flex justify-center items-center gap-2'>
+              <Icon className='text-2xl' icon='ic:baseline-search' />
+              <span className='md:hidden'>Search</span>
+            </button>
           </div>
         </div>
       </div>
@@ -232,7 +236,7 @@ interface searchContentProps {
   label: string;
 }
 const SearchContent = ({ icon, content, label }: searchContentProps) => (
-  <div className='flex items-center md:items-center gap-4 flex-1 last:ml-2 md:border-r last:border-r-0 w-full '>
+  <div className='flex items-center md:items-center gap-4 flex-1 last:ml-2 md:border-r last:border-r-0 w-full pr-4'>
     <div className='text-red-400 text-2xl  h-full '>{icon}</div>
     <div className='flex gap-2 flex-col w-full'>
       {content}
