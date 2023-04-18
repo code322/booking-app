@@ -42,7 +42,7 @@ const getLocationByIdSlice = createSlice({
   name: 'locationById',
   initialState,
   reducers: {},
-  extraReducers(builder) {
+  extraReducers: (builder) => {
     builder
       .addCase(getLocationById.pending, (state) => {
         state.status = 'idle';

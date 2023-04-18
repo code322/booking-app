@@ -12,6 +12,13 @@ import InputFields from '../../components/InputFields/InputFields';
 import { Slider } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material';
 import { filterLocations } from '../../helpers/filterLocations';
+import { getFilteredResult } from '../../state/filter/filter';
+export type filterType = {
+  query?: string;
+  minPrice: number;
+  maxPrice: number;
+  maxBeds: string;
+};
 
 function Home() {
   const [search, setSearch] = useState('');
@@ -73,6 +80,13 @@ function Home() {
 
   function handleFilter(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
+    let body: filterType = {
+      query: search,
+      minPrice: princeRange[0],
+      maxPrice: princeRange[1],
+      maxBeds: maxBed,
+    };
+    dispatch(getFilteredResult(body) as any);
     navigate('/filtered-result');
   }
 
