@@ -108,7 +108,7 @@ function Home() {
           </div>
 
           {/* Filter  */}
-          <div className='md:mt-0  md:border-none flex flex-col gap-6 items-center justify-between w-full max-w-6xl pl-4 pr-8 md:px-9 bg-white rounded-lg outline-none py-12 shadow-customShadow md:flex-row md:h-24 md:rounded-full md:gap-2 md:relative md:-top-16 '>
+          <form className='md:mt-0  md:border-none flex flex-col gap-6 items-center justify-between w-full max-w-6xl pl-4 pr-8 md:px-9 bg-white rounded-lg outline-none py-8 shadow-customShadow md:flex-row md:h-24 md:rounded-full md:gap-2 md:relative md:-top-16 -top-20 '>
             {/* search */}
             <SearchContent
               icon={<Icon icon='ic:baseline-search' />}
@@ -170,14 +170,16 @@ function Home() {
               }
               label='Number of beds'
             />
-            <button
-              onClick={handleFilter}
-              className='rounded-full bg-custom-red w-full h-10 md:h-14 md:w-14 text-white flex justify-center items-center gap-2'
-            >
-              <Icon className='text-2xl' icon='ic:baseline-search' />
-              <span className='md:hidden'>Search</span>
-            </button>
-          </div>
+            <div className='pr-4 pl-10 w-full md:pr-0 md:pl-0 md:w-fit'>
+              <button
+                onClick={handleFilter}
+                className='rounded-full bg-custom-red w-full h-10 md:h-14 md:w-14 text-white flex justify-center items-center gap-2'
+              >
+                <Icon className='text-2xl' icon='ic:baseline-search' />
+                <span className='md:hidden'>Search</span>
+              </button>
+            </div>
+          </form>
         </div>
       </div>
       <Container>
