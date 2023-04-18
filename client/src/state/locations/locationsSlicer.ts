@@ -168,10 +168,15 @@ const locationSlice = createSlice({
         state.status = 'failed';
         state.error = action.payload;
       })
+      .addCase(getFilteredResult.pending, (state) => {
+        state.status = 'idle';
+      })
       .addCase(getFilteredResult.fulfilled, (state, action) => {
+        state.status = 'succeeded';
         state.locations = action.payload;
       })
       .addCase(getFilteredResult.rejected, (state, action) => {
+        state.status = 'failed';
         state.error = action.payload;
       });
   },

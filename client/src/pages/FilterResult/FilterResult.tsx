@@ -5,12 +5,23 @@ import { Link } from 'react-router-dom';
 import { useAppSelector } from '../../hooks/useTypeSelector';
 import { selectLocations } from '../../state/locations/locationsSlicer';
 import { Container } from '@mui/material';
+import { selectLocationByIdStatus } from '../../state/locations/locationByIdSlicer';
+import Spinner from '../../components/Spinner';
 
 const FilterResult = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
   const allLocations = useAppSelector(selectLocations);
+  const status = useAppSelector(selectLocationByIdStatus);
+
+  if (status !== 'succeeded') {
+    return (
+      <Container>
+        <Spinner />
+      </Container>
+    );
+  }
 
   return (
     <Container>
