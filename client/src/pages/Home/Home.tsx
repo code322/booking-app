@@ -96,9 +96,10 @@ function Home() {
                 Book your dream resorts, villas, hotels and more...
               </p>
               <a
-                className='bg-custom-red opacity-90 px-8 py-3 text-white rounded-3xl block w-fit shadow-md mb-3 mt-6 md:mt-12 hover:opacity-100 transition-all duration-300 ease-in-out font-bold'
+                className='bg-custom-red opacity-90 px-4 py-3 text-white rounded-3xl w-fit shadow-md mb-3 mt-6 md:mt-12 hover:opacity-100 transition-all duration-300 ease-in-out font-bold flex items-center gap-2'
                 href='##'
               >
+                <Icon icon='material-symbols:call' className='text-2xl' />
                 1-800-123-1234
               </a>
             </div>
