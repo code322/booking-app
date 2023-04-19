@@ -11,8 +11,8 @@ function Header() {
     <header className='py-8 h-[5rem] border-b flex justify-center m-auto '>
       <div className='px-3  flex  justify-between h-full items-center w-full  max-w-6xl'>
         {/* logo */}
-        <Link to={'/'} className='h-8 w-8 text-custom-red overflow-hidden'>
-          <Icon className='h-8 w-8' icon='logos:airbnb-icon' />
+        <Link to={'/'} className='h-10 w-10 overflow-hidden rounded-full'>
+          <img src='assets/logo.png' alt='' />
         </Link>
         {/* nav */}
         <div className='flex items-center gap-4'>
