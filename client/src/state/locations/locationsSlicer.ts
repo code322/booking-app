@@ -66,7 +66,7 @@ export const deleteLocation = createAsyncThunk(
 
 export const getFilteredResult = createAsyncThunk(
   'filtered/getFilteredResult',
-  async (params: filterType, { rejectWithValue }) => {
+  async (params: filterType, { rejectWithValue, fulfillWithValue }) => {
     const request = {
       params: {
         query: params.query,
@@ -80,7 +80,7 @@ export const getFilteredResult = createAsyncThunk(
         `${API_URL}/api/location/filtered-result`,
         request
       );
-      return data;
+      return fulfillWithValue(data);
     } catch (error) {
       rejectWithValue(error);
     }
@@ -168,9 +168,6 @@ const locationSlice = createSlice({
         state.status = 'failed';
         state.error = action.payload;
       })
-      .addCase(getFilteredResult.pending, (state) => {
-        state.status = 'idle';
-      })
       .addCase(getFilteredResult.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.locations = action.payload;
@@ -186,3 +183,6 @@ export default locationSlice.reducer;
 
 export const selectLocations = (state: RootState) =>
   state.locationsSlicer.locations;
+
+export const selectLocationsStatus = (state: RootState) =>
+  state.locationByIdSlicer.status;
