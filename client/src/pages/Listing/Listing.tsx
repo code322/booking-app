@@ -13,7 +13,7 @@ import { Icon } from '@iconify/react';
 import Modal from '../../components/Modal/Modal';
 import { modalType } from '../MyBooking/MyBooking';
 
-function Locations() {
+function Listing() {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [modalInfo, setModalInfo] = useState<modalType>({
     title: '',
@@ -140,4 +140,4 @@ function Locations() {
   );
 }
 
-export default Locations;
+export default Listing;
