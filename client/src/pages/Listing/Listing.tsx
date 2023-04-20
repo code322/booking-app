@@ -12,6 +12,7 @@ import Account from '../Account/Account';
 import { Icon } from '@iconify/react';
 import Modal from '../../components/Modal/Modal';
 import { modalType } from '../MyBooking/MyBooking';
+import ModalMessage from '../../components/ModalMessage/ModalMessage';
 
 function Listing() {
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -41,20 +42,18 @@ function Listing() {
     <Container>
       <div className='flex flex-col sm:flex-row gap-6'>
         <Account />
-        {showModal && (
-          <Modal
-            title={modalInfo.title}
-            location={modalInfo.location}
-            message={modalInfo.message}
-            handleNo={() => {
-              setShowModal(false);
-            }}
-            handleYes={() => {
-              dispatch(deleteLocation(modalInfo.id) as any);
-              setShowModal(false);
-            }}
-          />
-        )}
+        <Modal
+          showModal={showModal}
+          handleNo={() => {
+            setShowModal(false);
+          }}
+          handleYes={() => {
+            dispatch(deleteLocation(modalInfo.id) as any);
+            setShowModal(false);
+          }}
+        >
+          <ModalMessage modalInfo={modalInfo} />
+        </Modal>
         <ul className='flex flex-col gap-4 flex-1'>
           {locationsList &&
             locationsList.map((items, index) => {

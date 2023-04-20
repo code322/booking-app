@@ -11,6 +11,7 @@ import { Icon } from '@iconify/react';
 import { API_URL } from '../../helpers/api';
 import { Link } from 'react-router-dom';
 import Modal from '../../components/Modal/Modal';
+import ModalMessage from '../../components/ModalMessage/ModalMessage';
 
 export type modalType = {
   message: string;
@@ -58,18 +59,18 @@ const MyBooking = () => {
     <Container>
       <div className='flex gap-6 flex-col sm:flex-row min-h-[calc(100vh_-_4rem)] relative'>
         <Account />
-        {showModal && (
-          <Modal
-            message={modalInfo.message}
-            title={modalInfo.title}
-            location={modalInfo.location}
-            handleNo={() => setShowModal(false)}
-            handleYes={() => {
-              dispatch(deleteReservation(modalInfo.id) as any);
-              setShowModal(false);
-            }}
-          />
-        )}
+        <Modal
+          showModal={showModal}
+          handleNo={() => {
+            setShowModal(false);
+          }}
+          handleYes={() => {
+            dispatch(deleteReservation(modalInfo.id) as any);
+            setShowModal(false);
+          }}
+        >
+          <ModalMessage modalInfo={modalInfo} />
+        </Modal>
 
         <div className='grid sm:grid-cols-2 lg:grid-cols-3 gap-8'>
           {reservedList &&
