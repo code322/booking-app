@@ -84,9 +84,9 @@ function Home() {
 
   return (
     <>
-      <div className='md:min-h-[calc(100vh_-_5rem)] mt-10 mb-6 md:mt-0 md:mb-0 flex items-center'>
-        <div className=' max-w-6xl px-4 m-auto relative'>
-          <div className='flex flex-col sm:flex-row  gap-4 sm:py-8 sm:items-center'>
+      <div className='md:min-h-[calc(100vh_-_5rem)]  mb-10 md:mt-0  flex items-center'>
+        <div className=' max-w-6xl px-4 m-auto relative flex md:flex-col flex-col-reverse'>
+          <div className='flex flex-col sm:flex-row gap-8 md:gap-4 sm:py-8 sm:items-center'>
             <div className='flex-1'>
               <h2 className='font-semibold text-5xl mb-6 leading-[46px] md:text-6xl'>
                 Travel, book & experience!
@@ -96,7 +96,7 @@ function Home() {
                 Book your dream resorts, villas, hotels and more...
               </p>
               <a
-                className='bg-custom-red opacity-90 px-4 py-3 text-white rounded-3xl w-fit shadow-md mb-3 mt-6 md:mt-12 hover:opacity-100 transition-all duration-300 ease-in-out font-bold flex items-center gap-2'
+                className='bg-custom-red hover:shadow-md px-4 py-2 md:py-3 text-white rounded-3xl w-fit  mb-3 mt-6 md:mt-12  transition-all duration-300 ease-in-out font-bold flex items-center gap-2'
                 href='##'
               >
                 <Icon icon='material-symbols:call' className='text-2xl' />
@@ -110,7 +110,7 @@ function Home() {
 
           {/* Filter  */}
 
-          <form className='md:mt-0  md:border-none flex flex-col gap-6 items-center justify-between w-full max-w-6xl pl-4 pr-8 md:px-9 bg-white rounded-lg outline-none py-8 shadow-customShadow md:flex-row md:h-24 md:rounded-full md:gap-2 md:relative md:-top-10'>
+          <form className='md:mt-0  md:border-none flex flex-col gap-6 items-center justify-between w-full max-w-6xl  md:px-9 bg-white rounded-lg outline-none py-8 md:shadow-customShadow md:flex-row md:h-24 md:rounded-full md:gap-2 md:relative md:-top-10 mb-10 md:mb-0 '>
             {/* search */}
             <SearchContent
               icon={<Icon icon='ic:baseline-search' />}
@@ -118,7 +118,7 @@ function Home() {
                 <input
                   value={search}
                   onChange={handleSearch}
-                  className='outline-none p-2 md:mr-2 border border-gray-300 md:border-none rounded-md'
+                  className='outline-none p-2 md:mr-2  md:border-none rounded-md'
                   type='text'
                   placeholder='Location...'
                 />
@@ -152,7 +152,7 @@ function Home() {
               content={
                 <select
                   onChange={handleMaxBed}
-                  className='bg-white w-full border px-2 py-2 rounded-md'
+                  className='bg-white w-full md:border px-2 py-2 rounded-md'
                   name=''
                   id=''
                 >
@@ -175,7 +175,7 @@ function Home() {
             <div className='pr-4 pl-10 w-full md:pr-0 md:pl-0 md:w-fit'>
               <button
                 onClick={handleFilter}
-                className='rounded-full bg-custom-red w-full h-10 md:h-14 md:w-14 text-white flex justify-center items-center gap-2 shadow-md'
+                className='rounded-full bg-custom-red w-full h-auto md:h-14 md:w-14 text-white flex justify-center items-center gap-2 shadow-md py-2 md:py-0 '
               >
                 <Icon className='text-2xl' icon='ic:baseline-search' />
                 <span className='md:hidden'>Search</span>
@@ -186,7 +186,7 @@ function Home() {
       </div>
       <Container>
         <div className='my-6'>
-          <h2 className='font-bold capitalize text-2xl md:text-4xl'>
+          <h2 className='font-bold capitalize text-3xl md:text-4xl'>
             Our Best Locations
           </h2>
           <p className='text-gray-600 text-base'>
@@ -263,7 +263,7 @@ interface searchContentProps {
   label: string;
 }
 const SearchContent = ({ icon, content, label }: searchContentProps) => (
-  <div className='flex items-center md:items-center gap-4 flex-1 last:ml-2 md:border-r last:border-r-0 w-full pr-4'>
+  <div className='flex items-center md:items-center gap-4 flex-1 last:ml-2 md:border-r last:border-r-0 w-full pr-4 border-b pb-1 sm:pb-2 md:border-b-0 md:pb-0'>
     <div className='text-red-400 text-2xl  h-full '>{icon}</div>
     <div className='flex gap-2 flex-col w-full'>
       {content}
