@@ -1,10 +1,5 @@
 import { RootState } from './../store';
-import {
-  detailsTypes,
-  initialDetails,
-  utilsTypes,
-  initialUtils,
-} from './../../helpers/types';
+import { detailsTypes, utilsTypes } from './../../helpers/types';
 import { axiosPrivate } from './../../helpers/api';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { reserveType } from '../../pages/Location/Location';
@@ -51,14 +46,14 @@ export const deleteReservation = createAsyncThunk(
   }
 );
 
-type reservationType = {
+export type reservationType = {
   id: number;
   details: detailsTypes;
   photos: string[];
   utils: utilsTypes;
   checkIn: string;
   checkOut: string;
-  locationId?: number;
+  locationId: number;
   totalCost: number;
 };
 

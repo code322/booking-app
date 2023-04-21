@@ -7,11 +7,10 @@ import {
   getAllReservations,
   selectAllReservations,
 } from '../../state/reservation/reservation';
-import { Icon } from '@iconify/react';
-import { API_URL } from '../../helpers/api';
-import { Link } from 'react-router-dom';
+
 import Modal from '../../components/Modal/Modal';
 import ModalMessage from '../../components/ModalMessage/ModalMessage';
+import LocationsList from '../../components/Lists/LocationsList';
 
 export type modalType = {
   message: string;
@@ -72,18 +71,9 @@ const MyBooking = () => {
           <ModalMessage modalInfo={modalInfo} />
         </Modal>
 
-        <div className='grid sm:grid-cols-2 lg:grid-cols-3 gap-8'>
+        <ul className='grid sm:grid-cols-2 lg:grid-cols-3 gap-8'>
           {reservedList &&
-            reservedList?.map((locations, index) => {
-              let price = Number(locations?.details?.price).toLocaleString(
-                'en-US',
-                {
-                  style: 'currency',
-                  currency: 'USD',
-                  maximumFractionDigits: 0,
-                  minimumFractionDigits: 0,
-                }
-              );
+            reservedList?.map((locations) => {
               let totalCost = Number(locations?.totalCost).toLocaleString(
                 'en-US',
                 {
@@ -95,46 +85,9 @@ const MyBooking = () => {
               );
 
               return (
-                <div key={index}>
-                  <div className='relative'>
-                    <Link to={`/location/${locations?.locationId}`}>
-                      <img
-                        className='bg-blue-200 aspect-square object-cover rounded-lg w-full h-full'
-                        src={`${API_URL}/uploads/${locations?.photos?.[0]}`}
-                        alt='no_image'
-                      />
-                      <div className='absolute bg-gradient-to-b from-transparent to-gray-700 opacity-60 h-full w-full top-0 left-0 rounded-lg'></div>
-                      <div className='absolute bottom-2 text-white left-1'>
-                        <span className=' text-white text-xl font-semibold '>
-                          {price}
-                        </span>
-                        <span className='text-xs'>/night</span>
-                      </div>
-                    </Link>
-                  </div>
-                  <div className='py-3 '>
-                    <h2 className='font-semibold text-base capitalize text-gray-700'>
-                      {locations?.details?.title}
-                    </h2>
-                    <div className='flex items-center justify-start'>
-                      <Icon
-                        className='text-gray-600 mr-1 text-sm'
-                        icon='material-symbols:location-on-outline'
-                      />
-                      <h2 className='text-gray-600 capitalize text-xs'>
-                        {locations?.details?.address}
-                      </h2>
-                    </div>
-                    <div className='flex items-center justify-start'>
-                      <Icon
-                        className='text-gray-600 mr-1 text-lg'
-                        icon='mdi:bed-double-outline'
-                      />
-                      <h2 className='text-gray-600 text-xs'>
-                        {locations?.details?.guests}
-                      </h2>
-                    </div>
-                    <div className='mt-4 flex justify-between '>
+                <LocationsList locations={locations}>
+                  <>
+                    <div className='mt-2 flex justify-between '>
                       <div className='flex gap-2'>
                         <div>
                           <p className='text-gray-800 text-xs font-bold uppercase'>
@@ -177,11 +130,11 @@ const MyBooking = () => {
                     >
                       Cancel
                     </button>
-                  </div>
-                </div>
+                  </>
+                </LocationsList>
               );
             })}
-        </div>
+        </ul>
       </div>
     </Container>
   );

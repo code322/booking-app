@@ -2,11 +2,14 @@ import { locationType } from '../../state/locations/locationsSlicer';
 import { Link } from 'react-router-dom';
 import { API_URL } from '../../helpers/api';
 import { Icon } from '@iconify/react';
+import { reservationType } from '../../state/reservation/reservation';
 
+type Location = reservationType | locationType;
 interface Props {
-  locations: locationType;
+  locations: Location;
   children?: JSX.Element;
 }
+
 const LocationsList = ({ locations, children }: Props) => {
   let price = Number(locations?.details?.price).toLocaleString('en-US', {
     style: 'currency',
@@ -14,11 +17,11 @@ const LocationsList = ({ locations, children }: Props) => {
     maximumFractionDigits: 0,
     minimumFractionDigits: 0,
   });
-
+  const link = 'locationId' in locations ? locations.locationId : locations.id;
   return (
     <li key={locations?.id}>
       <div className='relative'>
-        <Link to={`/location/${locations?.id}`}>
+        <Link to={`/location/${link}`}>
           <img
             className='bg-blue-200 aspect-square object-cover rounded-lg w-full h-full'
             src={`${API_URL}/uploads/${locations?.photos?.[0]}`}
