@@ -2,7 +2,7 @@ import { RootState } from './../store';
 import { detailsTypes, utilsTypes } from './../../helpers/types';
 import { axiosPrivate } from './../../helpers/api';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { reserveType } from '../../pages/Location/Location';
+import { reserveType } from '../../components/BookingForm/BookingForm';
 
 export const getAllReservations = createAsyncThunk(
   'reservations/getAllReservations',

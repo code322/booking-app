@@ -15,29 +15,13 @@ import { convertToDollars } from '../../utils';
 import { addNewReservation } from '../../state/reservation/reservation';
 import { isLoggedInSelector } from '../../state/authSlicer/authSlicer';
 import Slides from '../../components/Slides/Slides';
+import BookingForm from '../../components/BookingForm/BookingForm';
 
-export type reserveType = {
-  checkOut: string;
-  checkIn: string;
-  locationId: number;
-  totalCost: number;
-};
-type bookingFormType = {
-  checkIn: string;
-  checkOut: string;
-  guests: string;
-};
 const Location = () => {
   const { id } = useParams<{ id?: string }>();
 
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const [current, setCurrent] = useState(0);
-
-  const [bookingData, setBookingData] = useState<bookingFormType>({
-    checkIn: '',
-    checkOut: '',
-    guests: '1',
-  });
 
   const dispatch = useAppDispatch();
   useLayoutEffect(() => {
@@ -60,79 +44,7 @@ const Location = () => {
     }
   }, [isExpanded]);
 
-  // calculate reservation cost
-  let totalCost = useMemo(() => {
-    let cleaningFee = 10;
-    let serviceFee = 20;
-    let numberOfNights = 0;
-    numberOfNights = differenceInCalendarDays(
-      new Date(bookingData.checkOut),
-      new Date(bookingData.checkIn)
-    );
-    if (bookingData.checkIn && bookingData.checkOut && numberOfNights > 0) {
-      let costPerNight =
-        Number(location?.details?.price) *
-        Number(bookingData.guests) *
-        numberOfNights;
-
-      let taxes = (costPerNight + cleaningFee + serviceFee) * 0.13;
-      let total = costPerNight + cleaningFee + serviceFee + taxes;
-
-      return {
-        numberOfNights,
-        costPerNight,
-        cleaningFee,
-        serviceFee,
-        taxes,
-        total,
-      };
-    }
-    return {
-      numberOfNights: 0,
-      costPerNight: 0,
-      cleaningFee: 0,
-      serviceFee: 0,
-      taxes: 0,
-      total: 0,
-    };
-  }, [bookingData]);
-
-  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const { id, value } = e.target;
-    setBookingData((preVal) => ({ ...preVal, [id]: value }));
-  }
-
-  const isDisabled = totalCost.numberOfNights ? true : false;
-
-  const isLoggedIn = useAppSelector(isLoggedInSelector);
-
-  const navigate = useNavigate();
-
-  const handleBooking = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    if (!isLoggedIn) {
-      navigate('/login');
-      return;
-    }
-    let body: reserveType = {
-      checkOut: bookingData.checkOut,
-      checkIn: bookingData.checkIn,
-      locationId: Number(id),
-      totalCost: totalCost.total,
-    };
-    dispatch(addNewReservation(body) as any);
-    setBookingData({
-      checkIn: '',
-      checkOut: '',
-      guests: '1',
-    });
-  };
-
-  let today = new Date(
-    new Date().getTime() - new Date().getTimezoneOffset() * 60000
-  )
-    .toISOString()
-    .split('T')[0];
+  console.log('parent');
 
   return (
     <>
@@ -210,128 +122,11 @@ const Location = () => {
                 <h2 className='font-bold text-xl text-black'>Description</h2>
                 <p>{location?.details?.description}</p>
               </div>
+
               {/* ---BOOKING--- */}
-              <div className='shadow-customShadow p-6 rounded-md'>
-                <div className='mb-2'>
-                  <p className='text-xs'>
-                    <span className='font-bold text-xl'>
-                      ${location?.details?.price}
-                    </span>
-                    <span>/night</span>
-                  </p>
-                </div>
-                <div className='rounded-md border'>
-                  <div className='flex border-b'>
-                    <div className='flex flex-col flex-1 p-2 border-r'>
-                      <label
-                        className='font-bold uppercase text-xs'
-                        htmlFor='check-in'
-                      >
-                        check-in
-                      </label>
-                      <input
-                        onChange={handleChange}
-                        className='text-xs outline-none'
-                        id='checkIn'
-                        type='date'
-                        value={bookingData.checkIn}
-                        min={today}
-                        required
-                      />
-                    </div>
-                    <div className='flex flex-col flex-1 p-2'>
-                      <label
-                        className=' font-bold uppercase text-xs'
-                        htmlFor='check-in'
-                      >
-                        checkout
-                      </label>
-                      <input
-                        onChange={handleChange}
-                        className='text-xs outline-none'
-                        id='checkOut'
-                        type='date'
-                        value={bookingData.checkOut}
-                        min={today}
-                        required
-                      />
-                    </div>
-                  </div>
-                  <div className='flex flex-col py-4'>
-                    <label
-                      className='capitalize text-xs font-bold px-2 pb-1'
-                      htmlFor=''
-                    >
-                      Number of guests
-                    </label>
-                    <input
-                      onChange={handleChange}
-                      min={1}
-                      className='border mx-2 text-base p-1 outline-none'
-                      type='text'
-                      id='guests'
-                      value={
-                        bookingData.guests > location?.details?.guests
-                          ? location?.details?.guests
-                          : bookingData.guests
-                      }
-                      max={location?.details?.guests}
-                      maxLength={location?.details?.guests?.length}
-                      pattern='[0-9]*'
-                      // maxLength={1}
-                    />
-                  </div>
-                </div>
-                <button
-                  disabled={!isDisabled}
-                  onClick={handleBooking}
-                  className={`text-white bg-custom-red text-center w-full rounded-md outline-none py-2 mt-2 capitalize ${
-                    isDisabled ? 'bg-opacity-100' : 'bg-opacity-40'
-                  }`}
-                >
-                  reserve
-                </button>
-                <>
-                  <table className='w-full mt-6'>
-                    <tbody>
-                      <TableRow
-                        label={
-                          <>
-                            <span>${location?.details?.price}</span>
-                            <span> X {bookingData.guests} guest(s)</span>
-                            <span> X {totalCost.numberOfNights} night(s)</span>
-                          </>
-                        }
-                        data={convertToDollars(totalCost.costPerNight)}
-                      />
-                      <TableRow
-                        label={<span>Cleaning fee</span>}
-                        data={convertToDollars(totalCost.cleaningFee)}
-                      />
-                      <TableRow
-                        label={<span>Service fee</span>}
-                        data={convertToDollars(totalCost.serviceFee)}
-                      />
-                      <TableRow
-                        label={<span>Taxes</span>}
-                        data={convertToDollars(totalCost.taxes)}
-                      />
-                      <tr className='w-full border'></tr>
-                      <TableRow
-                        label={
-                          <span
-                            className='font-bold text-lg
-                      '
-                          >
-                            Total
-                          </span>
-                        }
-                        data={convertToDollars(totalCost.total)}
-                      />
-                    </tbody>
-                  </table>
-                </>
-              </div>
+              <>
+                <BookingForm location={location} />
+              </>
             </div>
           </div>
         </Container>
@@ -341,15 +136,3 @@ const Location = () => {
 };
 
 export default Location;
-type tableRowTypes = {
-  label?: JSX.Element;
-  data?: string;
-};
-const TableRow = ({ label, data }: tableRowTypes) => {
-  return (
-    <tr className='flex justify-between '>
-      <td>{label}</td>
-      <td>{data}</td>
-    </tr>
-  );
-};
