@@ -17,7 +17,8 @@ const LocationsList = ({ locations, children }: Props) => {
     maximumFractionDigits: 0,
     minimumFractionDigits: 0,
   });
-  const link = 'locationId' in locations ? locations.locationId : locations.id;
+  const link =
+    'locationId' in locations ? locations?.locationId : locations?.id;
   return (
     <li key={locations?.id}>
       <div className='relative'>

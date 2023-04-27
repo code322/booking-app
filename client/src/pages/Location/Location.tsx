@@ -128,6 +128,12 @@ const Location = () => {
     });
   };
 
+  let today = new Date(
+    new Date().getTime() - new Date().getTimezoneOffset() * 60000
+  )
+    .toISOString()
+    .split('T')[0];
+
   return (
     <>
       {status !== 'succeeded' ? (
@@ -229,6 +235,8 @@ const Location = () => {
                         id='checkIn'
                         type='date'
                         value={bookingData.checkIn}
+                        min={today}
+                        required
                       />
                     </div>
                     <div className='flex flex-col flex-1 p-2'>
@@ -244,6 +252,8 @@ const Location = () => {
                         id='checkOut'
                         type='date'
                         value={bookingData.checkOut}
+                        min={today}
+                        required
                       />
                     </div>
                   </div>
