@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, memo } from 'react';
 
 import { Icon } from '@iconify/react';
 import { API_URL } from '../../helpers/api';
@@ -127,4 +127,4 @@ const Slides = ({
     </div>
   );
 };
-export default Slides;
+export default memo(Slides);

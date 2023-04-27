@@ -1,5 +1,5 @@
-import React, { useEffect, useLayoutEffect, useMemo, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import {
   getLocationById,
   selectLocationById,
@@ -10,10 +10,7 @@ import Container from '../../components/Container/Container';
 import { API_URL } from '../../helpers/api';
 import { Icon } from '@iconify/react';
 import Spinner from '../../components/Spinner';
-import { differenceInCalendarDays } from 'date-fns';
-import { convertToDollars } from '../../utils';
-import { addNewReservation } from '../../state/reservation/reservation';
-import { isLoggedInSelector } from '../../state/authSlicer/authSlicer';
+
 import Slides from '../../components/Slides/Slides';
 import BookingForm from '../../components/BookingForm/BookingForm';
 
@@ -43,8 +40,6 @@ const Location = () => {
       document.body.style.overflow = 'hidden';
     }
   }, [isExpanded]);
-
-  console.log('parent');
 
   return (
     <>
