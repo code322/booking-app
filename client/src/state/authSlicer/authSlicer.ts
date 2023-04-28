@@ -48,6 +48,7 @@ interface authInterface {
   user: {
     email: string;
     name: string;
+    id: string;
   };
   error?: any;
 }
@@ -59,6 +60,7 @@ const initialState: authInterface = {
   user: {
     email: '',
     name: '',
+    id: '',
   },
   error: null,
 };
@@ -82,6 +84,7 @@ const authSlice = createSlice({
         state.user = {
           email: '',
           name: '',
+          id: '',
         };
         state.error = null;
       })
@@ -110,6 +113,7 @@ const authSlice = createSlice({
           state.user = {
             email: '',
             name: '',
+            id: '',
           };
           state.error = action.payload;
         }
@@ -118,7 +122,7 @@ const authSlice = createSlice({
 });
 
 //selectors
-export const userSelector = (state: RootState) => state.authReducer.user;
+export const selectUser = (state: RootState) => state.authReducer.user;
 export const isLoggedInSelector = (state: RootState) =>
   state.authReducer.isLoggedIn;
 

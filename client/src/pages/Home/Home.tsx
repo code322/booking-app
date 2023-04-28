@@ -5,8 +5,6 @@ import {
   getAllLocations,
   selectLocations,
 } from '../../state/locations/locationsSlicer';
-import { API_URL } from '../../helpers/api';
-import { Link } from 'react-router-dom';
 import { Icon } from '@iconify/react';
 import FilterForm from '../FilterForm/FilterForm';
 import LocationsList from '../../components/Lists/LocationsList';

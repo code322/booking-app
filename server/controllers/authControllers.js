@@ -41,12 +41,10 @@ export const register = async (req, res) => {
       // domain: process.env.COOKIES_DOMAIN,
     });
 
+    delete user.password;
     res.status(201).json({
       accessToken,
-      user: {
-        name: user.name,
-        email: user.email,
-      },
+      user,
     });
   } catch (error) {
     res.status(409).json(error);
@@ -77,12 +75,10 @@ export const login = async (req, res) => {
       // domain: process.env.COOKIES_DOMAIN,
     });
 
+    delete user.password;
     res.status(201).json({
       accessToken,
-      user: {
-        name: user.name,
-        email: user.email,
-      },
+      user,
     });
   } catch (error) {
     res.status(409).json(error);
