@@ -16,9 +16,8 @@ export const authMiddleware = (req, res, next) => {
       if (err) {
         return res.status(401).json({ message: err.message, accessToken });
       }
-      // req.user = decoded;
+      req.user = decoded;
       next();
     });
   }
-  // res.status(401).json({ message: 'authorizaed', accessToken });
 };

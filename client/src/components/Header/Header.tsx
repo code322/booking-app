@@ -12,7 +12,7 @@ function Header() {
       <div className='px-3  flex  justify-between h-full items-center w-full  max-w-6xl'>
         {/* logo */}
         <Link to={'/'} className='h-10 w-10 overflow-hidden rounded-full'>
-          <img src='assets/logo.png' alt='' />
+          <img src='/assets/logo.png' alt='' />
         </Link>
         {/* nav */}
         <div className='flex items-center gap-4'>
