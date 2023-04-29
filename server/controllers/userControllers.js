@@ -1,6 +1,6 @@
 import db from '../config/db.js';
 
-export const getUserData = async (req, res) => {
+export const getUserList = async (req, res) => {
   const requestedUserId = parseInt(req.params.id);
   const currentUser = req.user;
 
@@ -38,4 +38,37 @@ export const getUserData = async (req, res) => {
   } else {
     res.status(401).json('Unauthorized');
   }
+};
+
+export const addNewList = async (req, res) => {
+  let location = req.body;
+  let userId = location.userId;
+  console.log(userId, location);
+  let details = JSON.stringify(location.details);
+  let photos = JSON.stringify(location.photos);
+  let utils = JSON.stringify(location.utils);
+
+  try {
+    const insertPlace = `INSERT INTO Locations(userId, details, photos, utils) VALUES (?,?,?,?)`;
+    let values = [userId, details, photos, utils];
+    const [data] = await db.query(insertPlace, values);
+    let result = await getLocation(data.insertId);
+
+    let response = {
+      ...result,
+      details: JSON.parse(result?.details),
+      photos: JSON.parse(result?.photos),
+      utils: JSON.parse(result?.utils),
+    };
+
+    res.status(200).json(response);
+  } catch (error) {
+    res.status(400).json(error.message);
+  }
+};
+
+const getLocation = async (id) => {
+  let query = 'SELECT * FROM Locations WHERE id=?';
+  const [result] = await db.query(query, [id]);
+  return result[0];
 };
