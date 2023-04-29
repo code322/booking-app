@@ -3,9 +3,10 @@ import { RootState } from './../store';
 import { API_URL } from './../../helpers/api';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { newLocationType } from '../../pages/LocationForm/LocationForm';
+
 import { axiosPrivate } from './../../helpers/api';
 import { filterType } from '../../pages/FilterForm/FilterForm';
+import { newLocationType } from '../userListSlice/userListTypes';
 
 export const getAllLocations = createAsyncThunk(
   'locations/getAllLocations',

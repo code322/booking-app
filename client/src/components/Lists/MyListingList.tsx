@@ -20,11 +20,11 @@ const List = ({ items, index, setShowModal, setModalInfo }: Props) => {
       className='flex gap-4  justify-between shadow-customShadow rounded-lg p-2 overflow-hidden'
     >
       <div className='flex gap-4 '>
-        {items.photos.length > 0 && (
+        {items?.photos?.length > 0 && (
           <Link to={`/location/${items?.id}`}>
             <img
               className='w-32 h-32 rounded-md'
-              src={`${API_URL}/uploads/${items.photos[0]}`}
+              src={`${API_URL}/uploads/${items?.photos[0]}`}
               alt=''
             />
           </Link>

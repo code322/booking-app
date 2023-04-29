@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import CheckBox from '../../components/CheckBoxes/CheckBoxes';
 import InputFields from '../../components/InputFields/InputFields';
 import UploadPhotos from '../../components/UploadPhotos/UploadPhotos';
-import { useAppDispatch } from '../../hooks/useTypeSelector';
+import { useAppDispatch, useAppSelector } from '../../hooks/useTypeSelector';
 import {
   addNewLocation,
   updateLocation,
@@ -15,27 +15,10 @@ import {
   utilsTypes,
 } from '../../helpers/types';
 import { useNavigate } from 'react-router-dom';
+import { selectUser } from '../../state/authSlicer/authSlicer';
+import { newLocationType } from '../../state/userListSlice/userListTypes';
+import { addNewList } from '../../state/userListSlice/userListSlice';
 
-export type newLocationType = {
-  details: {
-    title: string;
-    address: string;
-    description: string;
-    extraInfo: string;
-    checkIn: string;
-    checkOut: string;
-    guests: string;
-  };
-  photos: string[];
-  utils: {
-    wifi: boolean;
-    netflex: boolean;
-    hydro: boolean;
-    parking: boolean;
-    water: boolean;
-    gym: boolean;
-  };
-};
 interface Props {
   detailsData: detailsTypes;
   photosData: string[];
@@ -54,9 +37,12 @@ function LocationForm({
   const [photos, setPhotos] = useState<string[]>(photosData);
   const [details, setDetails] = useState<detailsTypes>(detailsData);
   const navigate = useNavigate();
+  const user = useAppSelector(selectUser);
+  console.log(user.id);
 
   let locationData = {
     id,
+    userId: user.id,
     details,
     photos,
     utils,
@@ -85,11 +71,12 @@ function LocationForm({
   async function handleSubmit(e: React.FormEvent<HTMLButtonElement>) {
     e.preventDefault();
     let newLocation: newLocationType = {
+      userId: user.id,
       details,
       photos,
       utils,
     };
-    dispatch(addNewLocation(newLocation) as any);
+    dispatch(addNewList(newLocation) as any);
     setPhotos([]);
     setUtils(initialUtils);
     setDetails(initialDetails);
@@ -99,6 +86,7 @@ function LocationForm({
     e.preventDefault();
 
     let update = {
+      userId: user.id,
       id,
       details,
       photos,

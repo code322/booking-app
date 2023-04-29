@@ -2,12 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Container from '../../components/Container/Container';
 import { useAppDispatch, useAppSelector } from '../../hooks/useTypeSelector';
-import {
-  deleteLocation,
-  getAllLocations,
-  getUserData,
-  selectLocations,
-} from '../../state/locations/locationsSlicer';
+import { deleteLocation } from '../../state/locations/locationsSlicer';
 import { API_URL } from '../../helpers/api';
 import Account from '../Account/Account';
 import { Icon } from '@iconify/react';
@@ -16,6 +11,10 @@ import { modalType } from '../MyBooking/MyBooking';
 import ModalMessage from '../../components/ModalMessage/ModalMessage';
 import List from '../../components/Lists/MyListingList';
 import { selectUser } from '../../state/authSlicer/authSlicer';
+import {
+  getUserList,
+  selectUsersList,
+} from '../../state/userListSlice/userListSlice';
 
 function Listing() {
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -35,10 +34,10 @@ function Listing() {
   const user = useAppSelector(selectUser);
   const dispatch = useAppDispatch();
   useEffect(() => {
-    dispatch(getUserData(user.id) as any);
+    dispatch(getUserList(user.id) as any);
   }, [dispatch, user]);
 
-  const locationsList = useAppSelector(selectLocations);
+  const locationsList = useAppSelector(selectUsersList);
 
   return (
     <Container>
