@@ -4,9 +4,6 @@ export const getUserData = async (req, res) => {
   const requestedUserId = parseInt(req.params.id);
   const currentUser = req.user;
 
-  console.log('made a request');
-
-  console.log(currentUser.id, requestedUserId, currentUser.isAdmin);
   if (currentUser.isAdmin) {
     try {
       const query = 'SELECT * FROM Locations';
