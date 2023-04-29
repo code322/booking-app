@@ -48,7 +48,7 @@ interface authInterface {
   user: {
     email: string;
     name: string;
-    id: string;
+    id: number;
   };
   error?: any;
 }
@@ -60,7 +60,7 @@ const initialState: authInterface = {
   user: {
     email: '',
     name: '',
-    id: '',
+    id: 0,
   },
   error: null,
 };
@@ -84,7 +84,7 @@ const authSlice = createSlice({
         state.user = {
           email: '',
           name: '',
-          id: '',
+          id: 0,
         };
         state.error = null;
       })
@@ -113,7 +113,7 @@ const authSlice = createSlice({
           state.user = {
             email: '',
             name: '',
-            id: '',
+            id: 0,
           };
           state.error = action.payload;
         }
