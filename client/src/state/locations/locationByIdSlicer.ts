@@ -28,6 +28,7 @@ interface locationByIdInterface {
 
 export const locationInitialState: locationType = {
   id: 0,
+  userId: 0,
   details: initialDetails,
   photos: [],
   utils: initialUtils,
