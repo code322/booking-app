@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks/useTypeSelector';
 import {
   deleteLocation,
   getAllLocations,
+  getUserData,
   selectLocations,
 } from '../../state/locations/locationsSlicer';
 import { API_URL } from '../../helpers/api';
@@ -14,6 +15,7 @@ import Modal from '../../components/Modal/Modal';
 import { modalType } from '../MyBooking/MyBooking';
 import ModalMessage from '../../components/ModalMessage/ModalMessage';
 import List from '../../components/Lists/MyListingList';
+import { selectUser } from '../../state/authSlicer/authSlicer';
 
 function Listing() {
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -30,11 +32,11 @@ function Listing() {
       document.body.style.overflow = 'hidden';
     }
   }, [showModal]);
-
+  const user = useAppSelector(selectUser);
   const dispatch = useAppDispatch();
   useEffect(() => {
-    dispatch(getAllLocations() as any);
-  }, [dispatch]);
+    dispatch(getUserData(user.id) as any);
+  }, [dispatch, user]);
 
   const locationsList = useAppSelector(selectLocations);
 

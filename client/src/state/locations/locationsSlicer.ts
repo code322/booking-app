@@ -21,6 +21,20 @@ export const getAllLocations = createAsyncThunk(
   }
 );
 
+export const getUserData = createAsyncThunk(
+  'locations/getUserData',
+  async (id: number, { rejectWithValue }) => {
+    try {
+      const { data } = await axiosPrivate.get(
+        `${API_URL}/api/users/user-data/${id}`
+      );
+      return data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
 export const addNewLocation = createAsyncThunk(
   'locations/addNewLocation',
   async (newLocation: newLocationType, { rejectWithValue }) => {
@@ -122,6 +136,18 @@ const locationSlice = createSlice({
       .addCase(getAllLocations.rejected, (state, action) => {
         state.status = 'failed';
         state.locations = [];
+        state.error = action.payload;
+      })
+      .addCase(getUserData.pending, (state) => {
+        state.status = 'idle';
+      })
+      .addCase(getUserData.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.locations = action.payload;
+        state.error = null;
+      })
+      .addCase(getUserData.rejected, (state, action) => {
+        state.status = 'failed';
         state.error = action.payload;
       })
       //add new location
