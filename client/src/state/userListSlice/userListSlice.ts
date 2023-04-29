@@ -34,6 +34,21 @@ export const addNewList = createAsyncThunk(
   }
 );
 
+export const updateUserList = createAsyncThunk(
+  'locations/updateUserList',
+  async (location: locationType, { rejectWithValue }) => {
+    try {
+      const { data } = await axiosPrivate.patch(
+        `/api/users/user-data/${location.userId}`,
+        location
+      );
+      return data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
 interface locationInterface {
   status: 'idle' | 'succeeded' | 'failed';
   locations: locationType[];
@@ -63,7 +78,7 @@ const usersSlice = createSlice({
         state.status = 'failed';
         state.error = action.payload;
       })
-      //add a new location
+      //add a new list
       .addCase(addNewList.pending, (state) => {
         state.status = 'idle';
       })
@@ -72,6 +87,20 @@ const usersSlice = createSlice({
         state.locations.push(action.payload);
       })
       .addCase(addNewList.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.payload;
+      })
+      //update a list
+      .addCase(updateUserList.pending, (state) => {
+        state.status = 'idle';
+      })
+      .addCase(updateUserList.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.locations = state.locations.map((location) =>
+          location.id === action.payload.id ? action.payload : location
+        );
+      })
+      .addCase(updateUserList.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.payload;
       });

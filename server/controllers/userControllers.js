@@ -73,4 +73,26 @@ const getLocation = async (id) => {
   return result[0];
 };
 
-export const updateUserList = async (req, res) => {};
+export const updateUserList = async (req, res) => {
+  let location = req.body;
+  let id = location.id;
+  let details = JSON.stringify(location?.details);
+  let photos = JSON.stringify(location?.photos);
+  let utils = JSON.stringify(location?.utils);
+  try {
+    let values = [details, photos, utils, id];
+    let update = 'UPDATE Locations SET details=? ,photos=? ,utils=? WHERE id=?';
+    const [data] = await db.query(update, values);
+
+    let result = await getLocation(id);
+    let response = {
+      ...result,
+      details: JSON.parse(result?.details),
+      photos: JSON.parse(result?.photos),
+      utils: JSON.parse(result?.utils),
+    };
+    res.status(200).json(response);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};

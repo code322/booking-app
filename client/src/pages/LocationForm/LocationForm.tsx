@@ -17,7 +17,10 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { selectUser } from '../../state/authSlicer/authSlicer';
 import { newLocationType } from '../../state/userListSlice/userListTypes';
-import { addNewList } from '../../state/userListSlice/userListSlice';
+import {
+  addNewList,
+  updateUserList,
+} from '../../state/userListSlice/userListSlice';
 
 interface Props {
   detailsData: detailsTypes;
@@ -93,7 +96,7 @@ function LocationForm({
       utils,
     };
 
-    dispatch(updateLocation(update) as any);
+    dispatch(updateUserList(update) as any);
     navigate(-1);
   }
 

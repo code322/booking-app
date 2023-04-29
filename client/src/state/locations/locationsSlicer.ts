@@ -145,7 +145,6 @@ const locationSlice = createSlice({
         state.status = 'idle';
       })
       .addCase(updateLocation.fulfilled, (state, action) => {
-        let updatedLocation = action.payload;
         state.status = 'succeeded';
         state.locations = state.locations.map((location) =>
           location.id === action.payload.id ? action.payload : location
