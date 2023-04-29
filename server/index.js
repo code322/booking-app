@@ -7,6 +7,7 @@ import locationRoutes from './routes/locationRoutes.js';
 import cookieParser from 'cookie-parser';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import userRoutes from './routes/userRoutes.js';
 import reservationRoutes from './routes/reservationRoutes.js';
 import corsOptions from './config/corsOptions.js';
 dotenv.config();
@@ -26,5 +27,6 @@ app.use('/api/auth', authRoutes);
 app.use('/api/upload', uploadPhotos);
 app.use('/api/location', locationRoutes);
 app.use('/api/reservation', reservationRoutes);
+app.use('/api/users', userRoutes);
 
 app.listen(PORT, () => console.log(`running in port ${PORT}`));

@@ -61,8 +61,8 @@ export const login = async (req, res) => {
     const validPassword = await bcrypt.compare(password, user.password);
     if (!validPassword) return res.status(409).json('Password is not valid.');
 
-    const accessToken = generateTokens.accessToken(user.id);
-    const refreshToken = generateTokens.refreshToken(user.id);
+    const accessToken = generateTokens.accessToken(user.id, user.isAdmin);
+    const refreshToken = generateTokens.refreshToken(user.id, user.isAdmin);
 
     if (!accessToken) return res.status(409).json('No access token');
     if (!refreshToken) return res.status(409).json('No refresh token');
@@ -138,7 +138,8 @@ export const refreshToken = (req, res) => {
     }
     const user = await getUserById(decoded?.id);
     if (!user) return res.status(401).json({ message: 'user not found' });
-    const accessToken = generateTokens.accessToken(decoded?.id);
+    console.log(decoded, 'this is decoded', decoded.isAdmin);
+    const accessToken = generateTokens.accessToken(decoded.id, decoded.isAdmin);
     res.json({ accessToken });
   });
 };
