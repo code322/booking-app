@@ -4,6 +4,7 @@ import { API_URL } from '../../helpers/api';
 
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { axiosPrivate } from '../../helpers/api';
+import { newLocationType } from './userListTypes';
 
 export const getUserList = createAsyncThunk(
   'locations/getUserList',
@@ -11,6 +12,20 @@ export const getUserList = createAsyncThunk(
     try {
       const { data } = await axiosPrivate.get(
         `${API_URL}/api/users/user-data/${id}`
+      );
+      return data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+export const addNewList = createAsyncThunk(
+  'locations/addNewList',
+  async (newLocation: newLocationType, { rejectWithValue }) => {
+    try {
+      const { data } = await axiosPrivate.post(
+        `${API_URL}/api/users/user-data/`,
+        newLocation
       );
       return data;
     } catch (error) {
@@ -35,6 +50,7 @@ const usersSlice = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder
+      // get all the list
       .addCase(getUserList.pending, (state) => {
         state.status = 'idle';
       })
@@ -44,6 +60,18 @@ const usersSlice = createSlice({
         state.error = null;
       })
       .addCase(getUserList.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.payload;
+      })
+      //add a new location
+      .addCase(addNewList.pending, (state) => {
+        state.status = 'idle';
+      })
+      .addCase(addNewList.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.locations.push(action.payload);
+      })
+      .addCase(addNewList.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.payload;
       });
