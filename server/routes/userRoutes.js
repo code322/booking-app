@@ -6,6 +6,6 @@ import { authMiddleware } from '../middlewares/authMiddleware.js';
 const router = express.Router();
 // get a user data
 router.get('/user-data/:id', authMiddleware, isAuthorized, getUserList);
-router.post('/user-data/', authMiddleware, isAuthorized, addNewList);
+router.post('/user-data/:id', authMiddleware, isAuthorized, addNewList);
 
 export default router;

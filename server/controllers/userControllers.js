@@ -72,3 +72,5 @@ const getLocation = async (id) => {
   const [result] = await db.query(query, [id]);
   return result[0];
 };
+
+export const updateUserList = async (req, res) => {};

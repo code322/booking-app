@@ -24,7 +24,7 @@ export const addNewList = createAsyncThunk(
   async (newLocation: newLocationType, { rejectWithValue }) => {
     try {
       const { data } = await axiosPrivate.post(
-        `${API_URL}/api/users/user-data/`,
+        `${API_URL}/api/users/user-data/${newLocation.userId}`,
         newLocation
       );
       return data;
