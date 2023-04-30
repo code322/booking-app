@@ -4,10 +4,7 @@ import CheckBox from '../../components/CheckBoxes/CheckBoxes';
 import InputFields from '../../components/InputFields/InputFields';
 import UploadPhotos from '../../components/UploadPhotos/UploadPhotos';
 import { useAppDispatch, useAppSelector } from '../../hooks/useTypeSelector';
-import {
-  addNewLocation,
-  updateLocation,
-} from '../../state/locations/locationsSlicer';
+
 import {
   detailsTypes,
   initialDetails,
@@ -41,7 +38,6 @@ function LocationForm({
   const [details, setDetails] = useState<detailsTypes>(detailsData);
   const navigate = useNavigate();
   const user = useAppSelector(selectUser);
-  console.log(user.id);
 
   let locationData = {
     id,

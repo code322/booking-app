@@ -6,10 +6,8 @@ import { API_URL } from '../../helpers/api';
 import { useAppDispatch } from '../../hooks/useTypeSelector';
 
 import axios from 'axios';
-import {
-  locationType,
-  updateLocation,
-} from '../../state/locations/locationsSlicer';
+import { locationType } from '../../state/locations/locationsSlicer';
+import { updateUserList } from '../../state/userListSlice/userListSlice';
 interface Props {
   photos: string[];
   setPhotos: React.Dispatch<React.SetStateAction<string[]>>;
@@ -72,7 +70,7 @@ function UploadPhotos({ photos, setPhotos, locationData }: Props) {
       setPhotos(() => photos.filter((_, i) => i !== index));
       let updatedPhoto = locationData.photos.filter((_, i) => i !== index);
       let updateData = { ...locationData, photos: updatedPhoto };
-      dispatch(updateLocation(updateData) as any);
+      dispatch(updateUserList(updateData) as any);
     } catch (error) {
       console.log(error);
     }

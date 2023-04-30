@@ -22,49 +22,6 @@ export const getAllLocations = createAsyncThunk(
   }
 );
 
-export const addNewLocation = createAsyncThunk(
-  'locations/addNewLocation',
-  async (newLocation: newLocationType, { rejectWithValue }) => {
-    try {
-      const { data } = await axiosPrivate.post(
-        `${API_URL}/api/location/new-location`,
-        newLocation
-      );
-      return data;
-    } catch (error) {
-      return rejectWithValue(error);
-    }
-  }
-);
-export const updateLocation = createAsyncThunk(
-  'locations/updateLocation',
-  async (location: locationType, { rejectWithValue }) => {
-    try {
-      const { data } = await axiosPrivate.patch(
-        `/api/location/update-location/${location.id}`,
-        location
-      );
-      return data;
-    } catch (error) {
-      return rejectWithValue(error);
-    }
-  }
-);
-
-export const deleteLocation = createAsyncThunk(
-  'locations/deleteLocation',
-  async (id: number, { rejectWithValue }) => {
-    try {
-      await axiosPrivate.delete(
-        `${API_URL}/api/location/delete-location/${id}`
-      );
-      return id;
-    } catch (error) {
-      return rejectWithValue(error);
-    }
-  }
-);
-
 export const getFilteredResult = createAsyncThunk(
   'filtered/getFilteredResult',
   async (params: filterType, { rejectWithValue, fulfillWithValue }) => {
@@ -127,49 +84,6 @@ const locationSlice = createSlice({
         state.error = action.payload;
       })
 
-      //add new location
-      .addCase(addNewLocation.pending, (state) => {
-        state.status = 'idle';
-      })
-      .addCase(addNewLocation.fulfilled, (state, action) => {
-        state.status = 'succeeded';
-        state.locations.push(action.payload);
-      })
-      .addCase(addNewLocation.rejected, (state, action) => {
-        state.status = 'failed';
-        state.error = action.payload;
-      })
-
-      //update location
-      .addCase(updateLocation.pending, (state) => {
-        state.status = 'idle';
-      })
-      .addCase(updateLocation.fulfilled, (state, action) => {
-        state.status = 'succeeded';
-        state.locations = state.locations.map((location) =>
-          location.id === action.payload.id ? action.payload : location
-        );
-      })
-      .addCase(updateLocation.rejected, (state, action) => {
-        state.status = 'failed';
-        state.error = action.payload;
-      })
-      //delete location
-      .addCase(deleteLocation.pending, (state) => {
-        state.status = 'idle';
-      })
-      .addCase(deleteLocation.fulfilled, (state, action) => {
-        state.status = 'succeeded';
-        let data = state.locations.filter(
-          (items) => items.id !== action.payload
-        );
-        state.locations = data;
-        state.error = null;
-      })
-      .addCase(deleteLocation.rejected, (state, action) => {
-        state.status = 'failed';
-        state.error = action.payload;
-      })
       .addCase(getFilteredResult.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.locations = action.payload;
