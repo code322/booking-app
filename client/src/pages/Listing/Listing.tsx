@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Container from '../../components/Container/Container';
 import { useAppDispatch, useAppSelector } from '../../hooks/useTypeSelector';
-import { deleteLocation } from '../../state/locations/locationsSlicer';
 import { API_URL } from '../../helpers/api';
 import Account from '../Account/Account';
 import { Icon } from '@iconify/react';
@@ -12,9 +11,11 @@ import ModalMessage from '../../components/ModalMessage/ModalMessage';
 import List from '../../components/Lists/MyListingList';
 import { selectUser } from '../../state/authSlicer/authSlicer';
 import {
+  deleteUserList,
   getUserList,
   selectUsersList,
 } from '../../state/userListSlice/userListSlice';
+import { idsType } from '../../state/userListSlice/userListTypes';
 
 function Listing() {
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -38,7 +39,14 @@ function Listing() {
   }, [dispatch, user]);
 
   const locationsList = useAppSelector(selectUsersList);
-
+  function handleYes() {
+    let ids: idsType = {
+      id: user.id,
+      listId: modalInfo.id,
+    };
+    dispatch(deleteUserList(ids) as any);
+    setShowModal(false);
+  }
   return (
     <Container>
       <div className='flex flex-col sm:flex-row gap-6'>
@@ -48,10 +56,7 @@ function Listing() {
           handleNo={() => {
             setShowModal(false);
           }}
-          handleYes={() => {
-            dispatch(deleteLocation(modalInfo.id) as any);
-            setShowModal(false);
-          }}
+          handleYes={handleYes}
         >
           <ModalMessage modalInfo={modalInfo} />
         </Modal>

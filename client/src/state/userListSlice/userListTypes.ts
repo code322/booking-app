@@ -19,3 +19,8 @@ export type newLocationType = {
     gym: boolean;
   };
 };
+
+export type idsType = {
+  id: number;
+  listId: number;
+};

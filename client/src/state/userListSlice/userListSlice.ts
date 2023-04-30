@@ -4,7 +4,8 @@ import { API_URL } from '../../helpers/api';
 
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { axiosPrivate } from '../../helpers/api';
-import { newLocationType } from './userListTypes';
+import { idsType, newLocationType } from './userListTypes';
+import { id } from 'date-fns/locale';
 
 export const getUserList = createAsyncThunk(
   'locations/getUserList',
@@ -43,6 +44,20 @@ export const updateUserList = createAsyncThunk(
         location
       );
       return data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const deleteUserList = createAsyncThunk(
+  'locations/deleteUserList',
+  async (ids: idsType, { rejectWithValue }) => {
+    try {
+      await axiosPrivate.delete(
+        `${API_URL}/api/users/user-data/${ids.id}/${ids.listId}`
+      );
+      return ids.listId;
     } catch (error) {
       return rejectWithValue(error);
     }
@@ -101,6 +116,22 @@ const usersSlice = createSlice({
         );
       })
       .addCase(updateUserList.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.payload;
+      })
+      // delete a list
+      .addCase(deleteUserList.pending, (state) => {
+        state.status = 'idle';
+      })
+      .addCase(deleteUserList.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        let data = state.locations.filter(
+          (items) => items.id !== action.payload
+        );
+        state.locations = data;
+        state.error = null;
+      })
+      .addCase(deleteUserList.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.payload;
       });
