@@ -2,12 +2,16 @@ import React, { useMemo, useState, memo } from 'react';
 import { convertToDollars } from '../../utils';
 import { differenceInCalendarDays } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
-import { isLoggedInSelector } from '../../state/authSlicer/authSlicer';
+import {
+  isLoggedInSelector,
+  selectUser,
+} from '../../state/authSlicer/authSlicer';
 import { useAppDispatch, useAppSelector } from '../../hooks/useTypeSelector';
 import { locationType } from '../../state/locations/locationsSlicer';
 import { addNewReservation } from '../../state/reservation/reservation';
 
 export type reserveType = {
+  userId: number;
   checkOut: string;
   checkIn: string;
   locationId: number;
@@ -66,6 +70,7 @@ const BookingForm = ({ location }: Props) => {
 
   const isDisabled = totalCost.numberOfNights ? true : false;
   const isLoggedIn = useAppSelector(isLoggedInSelector);
+  const user = useAppSelector(selectUser);
 
   const handleBooking = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -74,6 +79,7 @@ const BookingForm = ({ location }: Props) => {
       return;
     }
     let body: reserveType = {
+      userId: user.id,
       checkOut: checkOut,
       checkIn: checkIn,
       locationId: Number(location.id),

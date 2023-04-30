@@ -47,12 +47,13 @@ export const getAllReserves = async (req, res) => {
 };
 
 export const addNewReservation = async (req, res) => {
+  const userId = req.params.id;
   let { checkIn, checkOut, locationId, totalCost } = req.body;
 
   try {
-    const reserveLocation = `INSERT INTO Reservations(checkIn, checkOut, locationId, totalCost) VALUES (?,?,?,?)`;
+    const reserveLocation = `INSERT INTO Reservations(userId, checkIn, checkOut, locationId, totalCost) VALUES (?,?,?,?,?)`;
 
-    let values = [checkIn, checkOut, locationId, totalCost];
+    let values = [userId, checkIn, checkOut, locationId, totalCost];
 
     const [data] = await db.query(reserveLocation, values);
 

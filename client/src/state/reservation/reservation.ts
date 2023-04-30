@@ -21,9 +21,10 @@ export const getAllReservations = createAsyncThunk(
 export const addNewReservation = createAsyncThunk(
   'reservations/addNewReservation',
   async (body: reserveType, { rejectWithValue }) => {
+    let id = body.userId;
     try {
       const { data } = await axiosPrivate.post(
-        '/api/reservation/add-new-reservation',
+        `/api/reservation/add-new-reservation/${id}`,
         body
       );
 
