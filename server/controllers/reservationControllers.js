@@ -5,8 +5,11 @@ export const getAllReserves = async (req, res) => {
 
   if (currentUser.isAdmin) {
     try {
-      const locations =
-        'SELECT * FROM Locations INNER JOIN Reservations ON Locations.id = Reservations.locationId ';
+      const locations = `
+        SELECT * 
+        FROM Locations
+        JOIN Reservations ON Locations.id = Reservations.locationId
+        `;
       const [data] = await db.query(locations);
       const response = data.map((items) => {
         return {
@@ -23,11 +26,13 @@ export const getAllReserves = async (req, res) => {
     }
   } else if (currentUser.id === requestedUserId) {
     try {
-      const query = `SELECT r.*, l.*
-    FROM Reservations r
-    JOIN Locations l ON r.locationId = l.id
-    WHERE r.userId =?`;
-      const [data] = await db.query(query, [requestedUserId]);
+      const query = `
+        SELECT *
+        FROM Locations
+        JOIN Reservations ON Locations.id = Reservations.locationId
+        WHERE Reservations.userId = ?
+      `;
+      const [data] = await db.query(query, currentUser.id);
       const response = data.map((items) => {
         return {
           ...items,

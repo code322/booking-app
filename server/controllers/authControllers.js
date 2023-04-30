@@ -131,7 +131,6 @@ export const refreshToken = (req, res) => {
     }
     const user = await getUserById(decoded?.id);
     if (!user) return res.status(401).json({ message: 'user not found' });
-    console.log(decoded, 'this is decoded', decoded.isAdmin);
     const accessToken = generateTokens.accessToken(decoded.id, decoded.isAdmin);
     res.json({ accessToken });
   });
