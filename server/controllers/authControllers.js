@@ -18,17 +18,10 @@ export const register = async (req, res) => {
 
     await db.query(registerUser, values);
 
-    const access_token = process.env.ACCESS_TOKEN;
-    const refresh_token = process.env.REFRESH_TOKEN;
-
     const user = await getUser(email);
 
-    const accessToken = jwt.sign({ id: user.id }, access_token, {
-      expiresIn: 60 * 30,
-    });
-    const refreshToken = jwt.sign({ id: user.id }, refresh_token, {
-      expiresIn: '30d',
-    });
+    const accessToken = generateTokens.accessToken(user.id, user.isAdmin);
+    const refreshToken = generateTokens.refreshToken(user.id, user.isAdmin);
 
     if (!accessToken) return res.status(409).json('No access token');
     if (!refreshToken) return res.status(409).json('No refresh token');

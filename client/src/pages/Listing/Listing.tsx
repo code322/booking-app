@@ -33,6 +33,7 @@ function Listing() {
     }
   }, [showModal]);
   const user = useAppSelector(selectUser);
+  console.log(user);
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(getUserList(user.id) as any);
