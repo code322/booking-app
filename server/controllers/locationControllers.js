@@ -39,17 +39,6 @@ export const getLocationById = async (req, res) => {
   }
 };
 
-export const deleteLocation = async (req, res) => {
-  const id = req.params.id;
-  let deleteLocation = 'DELETE FROM Locations WHERE id=?';
-  try {
-    await db.query(deleteLocation, [id]);
-    return res.status(200).json('Deleted Successfully');
-  } catch (error) {
-    return res.status(400).json(error.message);
-  }
-};
-
 export const getFilteredLocations = async (req, res) => {
   const { query, minPrice, maxPrice, maxBeds } = req.query;
 

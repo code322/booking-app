@@ -96,3 +96,15 @@ export const updateUserList = async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 };
+
+export const deleteUserList = async (req, res) => {
+  const id = req.params.listId;
+  console.log(id);
+  let deleteLocation = 'DELETE FROM Locations WHERE id=?';
+  try {
+    await db.query(deleteLocation, [id]);
+    return res.status(200).json('Deleted Successfully');
+  } catch (error) {
+    return res.status(400).json(error.message);
+  }
+};
