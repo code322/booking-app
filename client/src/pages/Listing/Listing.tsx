@@ -61,8 +61,14 @@ function Listing() {
         >
           <ModalMessage modalInfo={modalInfo} />
         </Modal>
+
         <ul className='flex flex-col gap-4 flex-1'>
-          {locationsList &&
+          {locationsList?.length < 1 ? (
+            <Container>
+              <h1>Please add a new list.</h1>
+            </Container>
+          ) : (
+            locationsList &&
             locationsList.map((items, index) => {
               return (
                 <List
@@ -72,7 +78,8 @@ function Listing() {
                   setShowModal={setShowModal}
                 />
               );
-            })}
+            })
+          )}
         </ul>
       </div>
     </Container>
