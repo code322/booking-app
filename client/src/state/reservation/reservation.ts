@@ -6,10 +6,10 @@ import { reserveType } from '../../components/BookingForm/BookingForm';
 
 export const getAllReservations = createAsyncThunk(
   'reservations/getAllReservations',
-  async (_, { rejectWithValue }) => {
+  async (id: number, { rejectWithValue }) => {
     try {
       const { data } = await axiosPrivate.get(
-        '/api/reservation/get-all-reserves'
+        `/api/reservation/get-all-reserves/${id}`
       );
       return data;
     } catch (error) {

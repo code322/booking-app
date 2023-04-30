@@ -1,21 +1,48 @@
 import db from '../config/db.js';
 export const getAllReserves = async (req, res) => {
-  try {
-    const locations =
-      'SELECT * FROM Locations INNER JOIN Reservations ON Locations.id = Reservations.locationId ';
-    const [data] = await db.query(locations);
-    const response = data.map((items) => {
-      return {
-        ...items,
-        utils: JSON.parse(items.utils),
-        photos: JSON.parse(items.photos),
-        details: JSON.parse(items.details),
-      };
-    });
+  const requestedUserId = parseInt(req.params.id);
+  const currentUser = req.user;
 
-    res.status(201).json(response);
-  } catch (error) {
-    res.status(409).json(error.message);
+  if (currentUser.isAdmin) {
+    try {
+      const locations =
+        'SELECT * FROM Locations INNER JOIN Reservations ON Locations.id = Reservations.locationId ';
+      const [data] = await db.query(locations);
+      const response = data.map((items) => {
+        return {
+          ...items,
+          utils: JSON.parse(items.utils),
+          photos: JSON.parse(items.photos),
+          details: JSON.parse(items.details),
+        };
+      });
+
+      res.status(201).json(response);
+    } catch (error) {
+      res.status(409).json(error.message);
+    }
+  } else if (currentUser.id === requestedUserId) {
+    try {
+      const query = `SELECT r.*, l.*
+    FROM Reservations r
+    JOIN Locations l ON r.locationId = l.id
+    WHERE r.userId =?`;
+      const [data] = await db.query(query, [requestedUserId]);
+      const response = data.map((items) => {
+        return {
+          ...items,
+          utils: JSON.parse(items.utils),
+          photos: JSON.parse(items.photos),
+          details: JSON.parse(items.details),
+        };
+      });
+
+      res.status(201).json(response);
+    } catch (error) {
+      res.status(409).json(error.message);
+    }
+  } else {
+    res.status(401).json('Not authorized');
   }
 };
 

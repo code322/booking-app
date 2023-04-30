@@ -11,6 +11,7 @@ import {
 import Modal from '../../components/Modal/Modal';
 import ModalMessage from '../../components/ModalMessage/ModalMessage';
 import LocationsList from '../../components/Lists/LocationsList';
+import { selectUser } from '../../state/authSlicer/authSlicer';
 
 export type modalType = {
   message: string;
@@ -21,6 +22,7 @@ export type modalType = {
 const MyBooking = () => {
   const dispatch = useAppDispatch();
   const reservedList = useAppSelector(selectAllReservations);
+  console.log(reservedList);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [modalInfo, setModalInfo] = useState<modalType>({
     title: '',
@@ -28,8 +30,10 @@ const MyBooking = () => {
     message: '',
     id: 0,
   });
+
+  const user = useAppSelector(selectUser);
   useEffect(() => {
-    dispatch(getAllReservations() as any);
+    dispatch(getAllReservations(user.id) as any);
   }, [dispatch]);
 
   useEffect(() => {
