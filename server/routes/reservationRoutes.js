@@ -4,12 +4,12 @@ import {
   deleteReservation,
   getAllReserves,
 } from '../controllers/reservationControllers.js';
-import { authMiddleware } from '../middlewares/authMiddleware.js';
+import { isAuthenticated } from '../middlewares/isAuthenticated.js';
 
 let route = express.Router();
 
-route.post('/add-new-reservation', authMiddleware, addNewReservation);
-route.get('/get-all-reserves', authMiddleware, getAllReserves);
-route.delete('/delete-reservation/:id', authMiddleware, deleteReservation);
+route.post('/add-new-reservation', isAuthenticated, addNewReservation);
+route.get('/get-all-reserves', isAuthenticated, getAllReserves);
+route.delete('/delete-reservation/:id', isAuthenticated, deleteReservation);
 
 export default route;

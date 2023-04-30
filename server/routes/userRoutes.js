@@ -6,15 +6,15 @@ import {
   updateUserList,
 } from '../controllers/userControllers.js';
 import { isAuthorized } from '../middlewares/isAuthorized.js';
-import { authMiddleware } from '../middlewares/authMiddleware.js';
+import { isAuthenticated } from '../middlewares/isAuthenticated.js';
 
 const router = express.Router();
-router.get('/user-data/:id', authMiddleware, isAuthorized, getUserList);
-router.post('/user-data/:id', authMiddleware, isAuthorized, addNewList);
-router.patch('/user-data/:id', authMiddleware, isAuthorized, updateUserList);
+router.get('/user-data/:id', isAuthenticated, isAuthorized, getUserList);
+router.post('/user-data/:id', isAuthenticated, isAuthorized, addNewList);
+router.patch('/user-data/:id', isAuthenticated, isAuthorized, updateUserList);
 router.delete(
   '/user-data/:id/:listId',
-  authMiddleware,
+  isAuthenticated,
   isAuthorized,
   deleteUserList
 );

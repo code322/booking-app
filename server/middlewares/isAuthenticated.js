@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-export const authMiddleware = (req, res, next) => {
+export const isAuthenticated = (req, res, next) => {
   let authHeader = req.headers?.authorization || req?.headers?.Authorization;
 
   if (!authHeader) {
