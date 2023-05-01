@@ -20,7 +20,7 @@ const LocationsList = ({ locations, children }: Props) => {
     'locationId' in locations ? locations?.locationId : locations?.id;
 
   return (
-    <li key={locations?.id}>
+    <li>
       <div className='relative'>
         <Link to={`/location/${link}`}>
           <img

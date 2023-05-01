@@ -15,7 +15,6 @@ const List = ({ items, index, setShowModal, setModalInfo }: Props) => {
 
   return (
     <li
-      key={index}
       onClick={() => {}}
       className='flex gap-4  justify-between shadow-customShadow rounded-lg p-2 overflow-hidden'
     >

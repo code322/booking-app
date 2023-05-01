@@ -26,20 +26,21 @@ function Listing() {
     id: 0,
   });
 
+  const user = useAppSelector(selectUser);
+  const dispatch = useAppDispatch();
+  const locationsList = useAppSelector(selectUsersList);
+
   useEffect(() => {
     document.body.style.overflow = 'unset';
     if (showModal) {
       document.body.style.overflow = 'hidden';
     }
   }, [showModal]);
-  const user = useAppSelector(selectUser);
-  console.log(user);
-  const dispatch = useAppDispatch();
+
   useEffect(() => {
     dispatch(getUserList(user.id) as any);
   }, [dispatch, user]);
 
-  const locationsList = useAppSelector(selectUsersList);
   function handleYes() {
     let ids: idsType = {
       id: user.id,
@@ -72,6 +73,7 @@ function Listing() {
             locationsList.map((items, index) => {
               return (
                 <List
+                  key={items.id}
                   items={items}
                   index={index}
                   setModalInfo={setModalInfo}

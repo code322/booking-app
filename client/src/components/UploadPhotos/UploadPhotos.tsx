@@ -76,8 +76,6 @@ function UploadPhotos({ photos, setPhotos, locationData }: Props) {
     }
   }
 
-  console.log(photos);
-
   return (
     <>
       <div className='flex gap-2'>

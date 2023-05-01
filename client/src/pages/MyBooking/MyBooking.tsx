@@ -22,7 +22,7 @@ export type modalType = {
 const MyBooking = () => {
   const dispatch = useAppDispatch();
   const reservedList = useAppSelector(selectAllReservations);
-  console.log(reservedList);
+
   const [showModal, setShowModal] = useState<boolean>(false);
   const [modalInfo, setModalInfo] = useState<modalType>({
     title: '',
@@ -89,7 +89,7 @@ const MyBooking = () => {
               );
 
               return (
-                <LocationsList locations={locations}>
+                <LocationsList key={locations.id} locations={locations}>
                   <>
                     <div className='mt-2 flex justify-between '>
                       <div className='flex gap-2'>
