@@ -74,71 +74,76 @@ const MyBooking = () => {
         >
           <ModalMessage modalInfo={modalInfo} />
         </Modal>
+        {reservedList?.length < 1 ? (
+          <Container>
+            <h1 className='text-center'> Your booking is empty.</h1>
+          </Container>
+        ) : (
+          <ul className='grid sm:grid-cols-2 lg:grid-cols-3 gap-8 flex-1'>
+            {reservedList &&
+              reservedList?.map((locations) => {
+                let totalCost = Number(locations?.totalCost).toLocaleString(
+                  'en-US',
+                  {
+                    style: 'currency',
+                    currency: 'USD',
+                    maximumFractionDigits: 2,
+                    minimumFractionDigits: 2,
+                  }
+                );
 
-        <ul className='grid sm:grid-cols-2 lg:grid-cols-3 gap-8'>
-          {reservedList &&
-            reservedList?.map((locations) => {
-              let totalCost = Number(locations?.totalCost).toLocaleString(
-                'en-US',
-                {
-                  style: 'currency',
-                  currency: 'USD',
-                  maximumFractionDigits: 2,
-                  minimumFractionDigits: 2,
-                }
-              );
-
-              return (
-                <LocationsList key={locations.id} locations={locations}>
-                  <>
-                    <div className='mt-2 flex justify-between '>
-                      <div className='flex gap-2'>
-                        <div>
-                          <p className='text-gray-800 text-xs font-bold uppercase'>
-                            Check-In:
-                          </p>
-                          <p className='text-gray-600 text-xs'>
-                            {locations?.checkIn}
-                          </p>
+                return (
+                  <LocationsList key={locations.id} locations={locations}>
+                    <>
+                      <div className='mt-2 flex justify-between '>
+                        <div className='flex gap-2'>
+                          <div>
+                            <p className='text-gray-800 text-xs font-bold uppercase'>
+                              Check-In:
+                            </p>
+                            <p className='text-gray-600 text-xs'>
+                              {locations?.checkIn}
+                            </p>
+                          </div>
+                          <div>
+                            <p className='text-gray-800 text-xs font-bold uppercase'>
+                              checkout:
+                            </p>
+                            <p className='text-gray-600 text-xs'>
+                              {locations?.checkOut}
+                            </p>
+                          </div>
                         </div>
+
                         <div>
                           <p className='text-gray-800 text-xs font-bold uppercase'>
-                            checkout:
+                            Total Cost:
                           </p>
-                          <p className='text-gray-600 text-xs'>
-                            {locations?.checkOut}
+                          <p className='text-gray-600 text-xs text-end'>
+                            {totalCost}
                           </p>
                         </div>
                       </div>
-
-                      <div>
-                        <p className='text-gray-800 text-xs font-bold uppercase'>
-                          Total Cost:
-                        </p>
-                        <p className='text-gray-600 text-xs text-end'>
-                          {totalCost}
-                        </p>
-                      </div>
-                    </div>
-                    <button
-                      onClick={() =>
-                        handleCancelReservation(
-                          locations?.details?.title,
-                          locations?.details?.address,
-                          'Are you sure you want to cancel the reservation?',
-                          locations?.id
-                        )
-                      }
-                      className='bg-custom-red text-white
+                      <button
+                        onClick={() =>
+                          handleCancelReservation(
+                            locations?.details?.title,
+                            locations?.details?.address,
+                            'Are you sure you want to cancel the reservation?',
+                            locations?.id
+                          )
+                        }
+                        className='bg-custom-red text-white
                      w-full py-2 rounded-md mt-2'
-                    >
-                      Cancel
-                    </button>
-                  </>
-                </LocationsList>
-              );
-            })}
-        </ul>
+                      >
+                        Cancel
+                      </button>
+                    </>
+                  </LocationsList>
+                );
+              })}
+          </ul>
+        )}
       </div>
     </Container>
   );

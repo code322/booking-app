@@ -19,9 +19,22 @@ const __dirname = path.dirname(__filename);
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
+const PORT = process.env.PORT || 5000;
+
+app.use(function (req, res, next) {
+  res.setHeader(
+    'Access-Control-Allow-Methods',
+    'GET, POST, OPTIONS, PUT, PATCH, DELETE'
+  );
+  res.setHeader('Access-Control-Allow-Credentials', true);
+
+  next();
+});
+// middlewares
 app.use('/uploads', express.static(__dirname + '/uploads'));
 app.use(cors(corsOptions));
-const PORT = process.env.PORT || 5000;
+
+// routes
 app.get('/', (req, res) => res.send('home route'));
 app.use('/api/auth', authRoutes);
 app.use('/api/upload', uploadPhotos);
