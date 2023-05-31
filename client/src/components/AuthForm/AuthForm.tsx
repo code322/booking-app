@@ -9,7 +9,7 @@ import {
   authStatusSelector,
   clearError,
   errorSelector,
-} from '../../state/authSlicer/authSlicer';
+} from '../../state/auth/authSlice';
 
 type Props = {
   page: string;

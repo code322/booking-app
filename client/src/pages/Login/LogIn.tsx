@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import AuthForm from '../../components/AuthForm/AuthForm';
-import { isLoggedInSelector, login } from '../../state/authSlicer/authSlicer';
+import { isLoggedInSelector, login } from '../../state/auth/authSlice';
 import { useAppDispatch, useAppSelector } from '../../hooks/useTypeSelector';
 import { useLocation, useNavigate } from 'react-router-dom';
 export type loginTypes = {

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from '../hooks/useTypeSelector';
-import { isLoggedInSelector } from '../state/authSlicer/authSlicer';
+import { isLoggedInSelector } from '../state/auth/authSlice';
 
 import { axiosPrivate } from '../helpers/api';
 const PrivateRoutes = () => {

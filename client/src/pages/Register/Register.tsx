@@ -2,10 +2,7 @@ import { useEffect, useState } from 'react';
 import AuthForm from '../../components/AuthForm/AuthForm';
 import InputFields from '../../components/InputFields/InputFields';
 import { useAppDispatch, useAppSelector } from '../../hooks/useTypeSelector';
-import {
-  isLoggedInSelector,
-  register,
-} from '../../state/authSlicer/authSlicer';
+import { isLoggedInSelector, register } from '../../state/auth/authSlice';
 import { useNavigate } from 'react-router-dom';
 
 export type inputTypes = {

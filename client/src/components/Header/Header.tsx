@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/useTypeSelector';
-import { isLoggedInSelector, logout } from '../../state/authSlicer/authSlicer';
+import { isLoggedInSelector, logout } from '../../state/auth/authSlice';
 
 function Header() {
   const dispatch = useAppDispatch();

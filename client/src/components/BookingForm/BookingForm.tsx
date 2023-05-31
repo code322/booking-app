@@ -2,10 +2,7 @@ import React, { useMemo, useState, memo } from 'react';
 import { convertToDollars } from '../../utils';
 import { differenceInCalendarDays } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
-import {
-  isLoggedInSelector,
-  selectUser,
-} from '../../state/authSlicer/authSlicer';
+import { isLoggedInSelector, selectUser } from '../../state/auth/authSlice';
 import { useAppDispatch, useAppSelector } from '../../hooks/useTypeSelector';
 import { locationType } from '../../state/locations/locationsSlicer';
 import { addNewReservation } from '../../state/reservation/reservation';

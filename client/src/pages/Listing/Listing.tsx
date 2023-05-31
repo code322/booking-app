@@ -9,7 +9,7 @@ import Modal from '../../components/Modal/Modal';
 import { modalType } from '../MyBooking/MyBooking';
 import ModalMessage from '../../components/ModalMessage/ModalMessage';
 import List from '../../components/Lists/MyListingList';
-import { selectUser } from '../../state/authSlicer/authSlicer';
+import { selectUser } from '../../state/auth/authSlice';
 import {
   deleteUserList,
   getUserList,

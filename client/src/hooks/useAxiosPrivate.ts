@@ -1,4 +1,4 @@
-import { accessTokenSelector } from './../state/authSlicer/authSlicer';
+import { accessTokenSelector } from '../state/auth/authSlice';
 import { useAppSelector } from './useTypeSelector';
 import { axiosPrivate } from '../helpers/api';
 import { useEffect } from 'react';

@@ -1,6 +1,6 @@
 // import { axiosPrivate } from './../../helpers/api';
-import { RootState } from './../store';
-import { inputTypes } from './../../pages/Register/Register';
+import { RootState } from '../store';
+import { inputTypes } from '../../pages/Register/Register';
 import { createSlice, createAsyncThunk, isAnyOf } from '@reduxjs/toolkit';
 import { API_URL } from '../../helpers/api';
 import axios from 'axios';

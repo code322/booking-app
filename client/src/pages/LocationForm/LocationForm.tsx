@@ -12,7 +12,7 @@ import {
   utilsTypes,
 } from '../../helpers/types';
 import { useNavigate } from 'react-router-dom';
-import { selectUser } from '../../state/authSlicer/authSlicer';
+import { selectUser } from '../../state/auth/authSlice';
 import { newLocationType } from '../../state/userListSlice/userListTypes';
 import {
   addNewList,

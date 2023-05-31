@@ -11,7 +11,7 @@ import {
 import Modal from '../../components/Modal/Modal';
 import ModalMessage from '../../components/ModalMessage/ModalMessage';
 import LocationsList from '../../components/Lists/LocationsList';
-import { selectUser } from '../../state/authSlicer/authSlicer';
+import { selectUser } from '../../state/auth/authSlice';
 
 export type modalType = {
   message: string;
