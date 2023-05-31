@@ -6,7 +6,7 @@ import axios from 'axios';
 
 import { axiosPrivate } from './../../helpers/api';
 import { filterType } from '../../pages/FilterForm/FilterForm';
-import { newLocationType } from '../userListSlice/userListTypes';
+import { newLocationType } from '../userList/userListTypes';
 
 export const getAllLocations = createAsyncThunk(
   'locations/getAllLocations',

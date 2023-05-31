@@ -7,7 +7,7 @@ import { combineReducers } from 'redux';
 import locationsSlicer from './locations/locationsSlicer';
 import locationByIdSlicer from './locations/locationByIdSlicer';
 import reservationReducer from './reservation/reservation';
-import userReducer from './userListSlice/userListSlice';
+import userReducer from './userList/userListSlice';
 
 const reducers = combineReducers({
   authReducer,

@@ -13,11 +13,8 @@ import {
 } from '../../helpers/types';
 import { useNavigate } from 'react-router-dom';
 import { selectUser } from '../../state/auth/authSlice';
-import { newLocationType } from '../../state/userListSlice/userListTypes';
-import {
-  addNewList,
-  updateUserList,
-} from '../../state/userListSlice/userListSlice';
+import { newLocationType } from '../../state/userList/userListTypes';
+import { addNewList, updateUserList } from '../../state/userList/userListSlice';
 
 interface Props {
   detailsData: detailsTypes;

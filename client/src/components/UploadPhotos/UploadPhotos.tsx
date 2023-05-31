@@ -7,7 +7,7 @@ import { useAppDispatch } from '../../hooks/useTypeSelector';
 
 import axios from 'axios';
 import { locationType } from '../../state/locations/locationsSlicer';
-import { updateUserList } from '../../state/userListSlice/userListSlice';
+import { updateUserList } from '../../state/userList/userListSlice';
 interface Props {
   photos: string[];
   setPhotos: React.Dispatch<React.SetStateAction<string[]>>;

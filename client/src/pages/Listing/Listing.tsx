@@ -14,8 +14,8 @@ import {
   deleteUserList,
   getUserList,
   selectUsersList,
-} from '../../state/userListSlice/userListSlice';
-import { idsType } from '../../state/userListSlice/userListTypes';
+} from '../../state/userList/userListSlice';
+import { idsType } from '../../state/userList/userListTypes';
 
 function Listing() {
   const [showModal, setShowModal] = useState<boolean>(false);
