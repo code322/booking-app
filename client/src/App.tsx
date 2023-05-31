@@ -3,7 +3,7 @@ import Home from './pages/Home/Home';
 import LogIn from './pages/Login/LogIn';
 import Register from './pages/Register/Register';
 import Location from './pages/Location/Location';
-import PrivateRoutes from './utils/PrivateRoutes';
+import PrivateRoutes from './components/PrivateRoutes';
 import Locations from './pages/Listing/Listing';
 import AddNewLocation from './pages/AddNewLocation/AddNewLocation';
 import MyBooking from './pages/MyBooking/MyBooking';
