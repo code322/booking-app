@@ -3,12 +3,12 @@ import Home from './pages/Home/Home';
 import LogIn from './pages/Login/LogIn';
 import Register from './pages/Register/Register';
 import Location from './pages/Location/Location';
-import PrivateRoutes from './components/PrivateRoutes';
+import PrivateRoutes from './utils/PrivateRoutes';
 import Locations from './pages/Listing/Listing';
 import AddNewLocation from './pages/AddNewLocation/AddNewLocation';
 import MyBooking from './pages/MyBooking/MyBooking';
 import EditLocation from './pages/EditLocation/EditLocation';
-import Layout from './components/Layout';
+import Layout from './utils/Layout';
 import FilterResult from './pages/FilterResult/FilterResult';
 
 function App() {

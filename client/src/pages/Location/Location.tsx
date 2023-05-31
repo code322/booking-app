@@ -9,7 +9,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks/useTypeSelector';
 import Container from '../../components/Container/Container';
 import { API_URL } from '../../helpers/api';
 import { Icon } from '@iconify/react';
-import Spinner from '../../components/Spinner';
+import Spinner from '../../utils/Spinner';
 
 import Slides from '../../components/Slides/Slides';
 import BookingForm from '../../components/BookingForm/BookingForm';

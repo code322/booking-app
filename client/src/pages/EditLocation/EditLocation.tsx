@@ -9,7 +9,7 @@ import {
 } from '../../state/locations/locationByIdSlicer';
 import { useParams } from 'react-router-dom';
 import Container from '../../components/Container/Container';
-import Spinner from '../../components/Spinner';
+import Spinner from '../../utils/Spinner';
 
 const EditLocation = () => {
   const { id } = useParams();
