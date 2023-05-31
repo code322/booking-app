@@ -1,5 +1,5 @@
 import React, { useMemo, useState, memo } from 'react';
-import { convertToDollars } from '../../utils';
+import { convertToDollars } from '../../helpers/convertToDollars';
 import { differenceInCalendarDays } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
 import { isLoggedInSelector, selectUser } from '../../state/auth/authSlice';
