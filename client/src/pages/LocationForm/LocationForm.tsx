@@ -27,12 +27,16 @@ function LocationForm({
   detailsData,
   photosData,
   utilsData,
-  editMode,
+  editMode = false,
   id,
 }: Props) {
+  // State Variables
   const [utils, setUtils] = useState<utilsTypes>(utilsData);
   const [photos, setPhotos] = useState<string[]>(photosData);
   const [details, setDetails] = useState<detailsTypes>(detailsData);
+
+  // Redux dispatch and navigation
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const user = useAppSelector(selectUser);
 
@@ -44,6 +48,7 @@ function LocationForm({
     utils,
   };
 
+  //Event handlers
   function handleCheckBoxes(e: React.ChangeEvent<HTMLInputElement>) {
     const { id, checked } = e.target;
 
@@ -53,9 +58,7 @@ function LocationForm({
     });
   }
   function handleInput(
-    e:
-      | React.ChangeEvent<HTMLInputElement>
-      | React.ChangeEvent<HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) {
     const { name, value } = e.target;
     setDetails((preVal) => {
@@ -63,7 +66,6 @@ function LocationForm({
     });
   }
 
-  const dispatch = useAppDispatch();
   async function handleSubmit(e: React.FormEvent<HTMLButtonElement>) {
     e.preventDefault();
     let newLocation: newLocationType = {
@@ -92,6 +94,29 @@ function LocationForm({
     dispatch(updateUserList(update) as any);
     navigate(-1);
   }
+
+  // Dynamically render submit button based on edit mode
+  const renderSubmitButton = () => {
+    if (editMode) {
+      return (
+        <button
+          onClick={handleSave}
+          className='bg-custom-red mt-4 text-white rounded-md capitalize py-2 flex-1 border-transparent outline-none '
+        >
+          save
+        </button>
+      );
+    } else {
+      return (
+        <button
+          onClick={handleSubmit}
+          className='bg-custom-red mt-4 text-white rounded-md capitalize py-2 flex-1 border-transparent outline-none '
+        >
+          submit
+        </button>
+      );
+    }
+  };
 
   return (
     <form className='flex flex-col flex-1'>
@@ -249,21 +274,8 @@ function LocationForm({
       </Content>
 
       <div className='flex flex-col sm:flex-row sm:gap-4 justify-between mt-4'>
-        {editMode ? (
-          <button
-            onClick={handleSave}
-            className='bg-custom-red mt-4 text-white rounded-md capitalize py-2 flex-1 border-transparent outline-none '
-          >
-            save
-          </button>
-        ) : (
-          <button
-            onClick={handleSubmit}
-            className='bg-custom-red mt-4 text-white rounded-md capitalize py-2 flex-1 border-transparent outline-none '
-          >
-            submit
-          </button>
-        )}
+        {/* Dynamically render submit button */}
+        {renderSubmitButton()}
 
         <button
           onClick={(e) => {
