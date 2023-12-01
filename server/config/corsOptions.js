@@ -1,4 +1,9 @@
-import { allowedOrigins } from './allowedOrigins.js';
+import dotenv from 'dotenv';
+dotenv.config();
+
+const allowedOrigins = process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(',') : [];
+
+console.log(allowedOrigins);
 
 const corsOptions = {
   origin: (origin, callback) => {
